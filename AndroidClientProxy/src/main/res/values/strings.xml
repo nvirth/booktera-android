@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="default_connection_error_msg">Hiba a kapcsolatban.</string>
+  <string name="mock_applied_error_msg">Figyelem! Teszt adatok! </string>
+
+</resources>

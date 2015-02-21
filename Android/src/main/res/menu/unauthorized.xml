@@ -1,0 +1,17 @@
+<menu xmlns:a="http://schemas.android.com/apk/res/android"
+      xmlns:t="http://schemas.android.com/tools"
+      t:context="com.booktera.android.activities.base.AuthorizedActivity"
+    >
+  <item a:id="@+id/action_search" a:showAsAction="always"
+        a:icon="@drawable/search" a:title="@string/action_search"
+      />
+  <item a:id="@+id/action_categories" a:showAsAction="ifRoom"
+        a:icon="@drawable/categories" a:title="@string/action_categories"
+      />
+  <item a:id="@+id/action_login" a:showAsAction="ifRoom"
+        a:icon="@drawable/login" a:title="@string/action_login"
+      />
+  <item a:id="@+id/action_register" a:showAsAction="ifRoom"
+        a:icon="@drawable/register" a:title="@string/action_register"
+      />
+</menu>

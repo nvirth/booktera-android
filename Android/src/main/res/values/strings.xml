@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">BookTera</string>
+  <string name="action_login">Bejelentkezés</string>
+  <string name="action_search">Keresés</string>
+  <string name="action_cart">Vásárlás</string>
+  <string name="action_categories">Kategóriák</string>
+  <string name="action_logout">Kijelentkezés</string>
+  <string name="action_register">Regisztráció</string>
+  <string name="action_profile">Profilom</string>
+  <string name="action_sell">Eladás</string>
+  <string name="main_header_highlighteds">Kiemeltek</string>
+  <string name="main_header_newests">Legújabbak</string>
+  <string name="main_header_introduction">Mi is ez?</string>
+  <string name="lightning">&#x21af;</string>
+  <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+    est laborum.
+  </string>
+  <string name="bookBlockCtx_gotoUsersProducts">\"%s\" könyvei</string>
+  <!--<string name="bookBlockCtx_gotoUsersProducts">\"%s\" felhasználó könyvei</string>-->
+  <string name="bookBlockCtx_gotoProductGroup">\"%s\" könyvek</string>
+  <!--<string name="bookBlockCtx_gotoProductGroup">\"%s\" könyvek megtekintése</string>-->
+  <string name="bookBlockCtx_addToCart">Kosárba!</string>
+  <string name="bookBlockCtx_addToExchangeCart">Csere-kosárba!</string>
+  <string name="bookBlockCtx_removeFromCart">Kivétel a kosárból</string>
+  <string name="bookBlockCtx_changeQuantityInCart">Mennyiség módosítása</string>
+  <string name="bookBlockCtx_changeQuantityInExchangeCart">Csere-mennyiség módosítása</string>
+  <string name="bookBlockCtx_removeFromExchangeCart">Kivétel a csere-kosárból</string>
+
+</resources>

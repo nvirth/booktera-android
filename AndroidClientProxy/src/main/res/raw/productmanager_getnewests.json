@@ -1,0 +1,223 @@
+{"BookBlockType": 0, "Paging": {
+    "ActualPageNumber": 2,
+    "NumberOfPages": 2,
+    "NumberOfProducts": 16,
+    "ProductsPerPage": 8
+}, "Products": [
+    {
+        "Product": {
+            "Description": "Vadonat új, bőr kötéses könyv; ajándéknak tökéletes.",
+            "HowMany": 3,
+            "ID": 310,
+            "ImageUrl": null,
+            "IsDownloadable": false,
+            "PriceString": "2 262 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Ferkeszabo",
+            "UserName": "Ferkeszabo"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Ross Macdonald",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.",
+            "FriendlyUrl": "A-masik-ferfi",
+            "ImageUrl": "PG-A-masik-ferfi-831726.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Európa Könyvkiadó",
+            "RatingPoints": 0,
+            "SubTitle": "",
+            "SumOfRatings": 0,
+            "Title": "A másik férfi"
+        }
+    },
+    {
+        "Product": {
+            "Description": "A képeken látható állapotú a könyv",
+            "HowMany": 1,
+            "ID": 139,
+            "ImageUrl": "P-A-pokol-szinei-862485.jpg",
+            "IsDownloadable": false,
+            "PriceString": "3 248 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "KriX",
+            "UserName": "KriX"
+        },
+        "ProductGroup": {
+            "AuthorNames": "dr. Popper Péter",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "A \"Színes pokol\" olvasmányos, könnyed stílusban megírt művészetpszichológiai tanulmány, a 80-as években íródott és azóta számos kiadást ért meg. Témája a színész és a színház, mint pszichológiai műhely. Komédiás és varázsló, az átváltozások titkai, színésztípusok, a színész méltósága - a tanulmány főbb fejezetei.A kötetben helyet kapott Popper Péter két korábbi drámája, melyet a Pesti Vigadóban mutattak be. Az \"Útvesztő\" egy rendházban történt gyilkosság nyomozásáról, az \"Isten komédiásai\" a színésznő és a \"civil\" kapcsolatáról: szerelméről és szakításáról szól.A mindvégig feszült, izgalmas cselekmény bonyolítása a szerző sokoldalú tehetségéről tanúskodik.",
+            "FriendlyUrl": "A-pokol-szinei",
+            "ImageUrl": "PG-A-pokol-szinei-55173.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Saxum Kiadó",
+            "RatingPoints": 0,
+            "SubTitle": "Színes pokol - Útvesztő - Isten komédiásai",
+            "SumOfRatings": 0,
+            "Title": "A pokol színei"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Gyönyörű képekkel illusztrált nagyméretű, keménykötésű kiadvány.",
+            "HowMany": 1,
+            "ID": 173,
+            "ImageUrl": null,
+            "IsDownloadable": true,
+            "PriceString": "4 788 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Hypnotyx",
+            "UserName": "Hypnotyx"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Lente Gábor, Kovács Lajos, Gunda Tamás, Csupor Dezső",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"(...) A Szegedi Tudományegyetem és a Debreceni Egyetem négy kutatója ara a feladatra vállalkozott, hogy megpróbál a sok-sok tévhitünk közül száz olyannal szembesíteni bennünket, amelyek valamilyen módon köthetők a kémia tudományához és kémiai ismereteink hiányosságaihoz. Jogos-e a mesterséges anyagoktól való félelmünk? Igaz-e, hogy a természetes anyagok csak jók és egészségesek lehetnek? Mi a veszélyesebb: az ismert mellékhatású gyógyszerek vagy az ismeretlen hatású \"csodaszerek\" szedése? Valóban a \"bio\"-e a jövő az élelmiszerek és az üzemanyagok terén? Ilyen és ehhez hasonló kérdések húzódnak meg a tudományos igényesség és az olvasmányosság határán egyensúlyozó írások mögött. (...)\" (Tóth Zoltán)",
+            "FriendlyUrl": "Szaz-kemiai-mitosz",
+            "ImageUrl": "PG-Szaz-kemiai-mitosz-830920.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Akadémiai Kiadó",
+            "RatingPoints": 0,
+            "SubTitle": "Tévhitek, félreértések, magyarázatok",
+            "SumOfRatings": 0,
+            "Title": "Száz kémiai mítosz"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Hiánytalan, jó állpotban azaz kisebb elszíneződések vannak , borító enyhén kopottas lapoknál kisebb szakadások , első lap a képeken látható , talán ez a legsérültebb , itt van egy két centis szakadás. ",
+            "HowMany": 1,
+            "ID": 180,
+            "ImageUrl": "P-Aktiv-szabalyozas-vagy-gazdasagpolitikai-nihilizmus-840905.jpg",
+            "IsDownloadable": false,
+            "PriceString": "4 554 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Gyuszu",
+            "UserName": "Gyuszu"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Galbács Péter",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"Ez a könyv egy igazságkereső mű. Elolvasását javaslom mindazoknak, akik a közgazdaságtan versengő elméleteinek felszínes ismerete alapján arra a következtetésre jutottak, hogy e tudományterületen relatív minden állítás. E könyv nemcsak elmélyítheti tudásunkat, de kiváló módszertanú, logikusan érvelő kritikai elemzéssel rávilágít arra is, hogy melyik irányzat milyen módon és mértékben segítette megismerni -vagy éppen félreismerni- a makrogazdaság működését, s ezáltal hogyan járult hozzá a monetáris és a fiskális politika megalapozásához, illetve hogyan lehetett okozója téves gazdaságpolitikai döntéseknek. A könyv olykor \"csak\" fontos kérdések megfogalmazásáig jut el, megadva a továbbgondolás esélyét az igazság kereséséhez csatlakozó, elmélyült olvasójának.\" ( Dr. Pulay Gyula)",
+            "FriendlyUrl": "Aktiv-szabalyozas-vagy-gazdasagpolitikai-nihilizmus",
+            "ImageUrl": "PG-Aktiv-szabalyozas-vagy-gazdasagpolitikai-nihilizmus-273629.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Akadémiai Kiadó",
+            "RatingPoints": 0,
+            "SubTitle": "",
+            "SumOfRatings": 0,
+            "Title": "Aktív szabályozás vagy gazdaságpolitikai nihilizmus?"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Hiánytalan, jó állpotban azaz kisebb elszíneződések vannak , borító enyhén kopottas lapoknál kisebb szakadások , első lap a képeken látható , talán ez a legsérültebb , itt van egy két centis szakadás. ",
+            "HowMany": 1,
+            "ID": 174,
+            "ImageUrl": null,
+            "IsDownloadable": false,
+            "PriceString": "4 368 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Alvarez",
+            "UserName": "Alvarez"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Lente Gábor, Kovács Lajos, Gunda Tamás, Csupor Dezső",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"(...) A Szegedi Tudományegyetem és a Debreceni Egyetem négy kutatója ara a feladatra vállalkozott, hogy megpróbál a sok-sok tévhitünk közül száz olyannal szembesíteni bennünket, amelyek valamilyen módon köthetők a kémia tudományához és kémiai ismereteink hiányosságaihoz. Jogos-e a mesterséges anyagoktól való félelmünk? Igaz-e, hogy a természetes anyagok csak jók és egészségesek lehetnek? Mi a veszélyesebb: az ismert mellékhatású gyógyszerek vagy az ismeretlen hatású \"csodaszerek\" szedése? Valóban a \"bio\"-e a jövő az élelmiszerek és az üzemanyagok terén? Ilyen és ehhez hasonló kérdések húzódnak meg a tudományos igényesség és az olvasmányosság határán egyensúlyozó írások mögött. (...)\" (Tóth Zoltán)",
+            "FriendlyUrl": "Szaz-kemiai-mitosz",
+            "ImageUrl": "PG-Szaz-kemiai-mitosz-830920.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Akadémiai Kiadó",
+            "RatingPoints": 0,
+            "SubTitle": "Tévhitek, félreértések, magyarázatok",
+            "SumOfRatings": 0,
+            "Title": "Száz kémiai mítosz"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Néhány lapja hiányzik, de egyékbént jó állapotban van",
+            "HowMany": 1,
+            "ID": 301,
+            "ImageUrl": null,
+            "IsDownloadable": true,
+            "PriceString": "2 808 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Teklberry",
+            "UserName": "Teklberry"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Ross Macdonald",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.",
+            "FriendlyUrl": "A-masik-ferfi",
+            "ImageUrl": "PG-A-masik-ferfi-831726.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Európa Könyvkiadó",
+            "RatingPoints": 0,
+            "SubTitle": "",
+            "SumOfRatings": 0,
+            "Title": "A másik férfi"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Fűzött, remek állapotban (felvágatlan), sok oldal reklámmal. ",
+            "HowMany": 3,
+            "ID": 276,
+            "ImageUrl": "P-Vampirzona-203012.jpg",
+            "IsDownloadable": false,
+            "PriceString": "3 079 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "TakacsZsolt",
+            "UserName": "TakacsZsolt"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Kresley Cole",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "A RITA-díjat besöprő Kresley Cole egy kegyetlen démon kufár és az őt elbűvölő, gyönyörű fiatal fél lény felvillanyozó történetével folytatja nagy sikerű \"Halhatatlanok alkonyat után\" című sorozatát. Egy igéző szépség, akit nem birtokolhat, de akinek ellen mégsem állhat...Cadeon Woede-nak nincs nyugta, míg ki nem küszöböli a csorbát, mely szüntelen kísérti. Csakhogy amint megszerzi megváltása kulcsát, a fél lény Holly Ashwint, máris rájön, hogy a nő, akit saját céljaira akar használni, majd eldobni, éppúgy kísérti, mint a múltja.Egy megkínzott harcos, akitől rettegnie kéne, de akit megtagadni nem tud...Az emberként felnevelt Holly-nak sejtelme sincs, hogy a félelmetes legendák a valóságról szólnak, míg össze nem találkozik egy goromba démonnal, s az valami érthetetlen oknál fogva óvja, mint a szeme világát. A mítosz és a hatalom érzéki, új világába taszítva, Holly hamarosan eleped védelmező démona tüzesérintéséért. S megadja magát a sötét vágyaknak...Épp csak kivívja Holly bizalmát, s mondjon le máris róla? Árulja el legvadabb álmai beteljesítőjét, szíve rabul ejtőjét?",
+            "FriendlyUrl": "Vampirzona",
+            "ImageUrl": "PG-Vampirzona-280233.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Ulpius-ház Könyvkiadó",
+            "RatingPoints": 0,
+            "SubTitle": "Halhatatlanok alkonyat után sorozat 5.",
+            "SumOfRatings": 0,
+            "Title": "Vámpírzóna"
+        }
+    },
+    {
+        "Product": {
+            "Description": "Alig használt, sajtszagú könyv eladó",
+            "HowMany": 1,
+            "ID": 303,
+            "ImageUrl": "P-A-masik-ferfi-776085.jpg",
+            "IsDownloadable": false,
+            "PriceString": "2 184 Ft",
+            "ProductInOrderId": -1,
+            "UserFriendlyUrl": "Ocean",
+            "UserName": "Ocean"
+        },
+        "ProductGroup": {
+            "AuthorNames": "Ross Macdonald",
+            "CategoryFriendlyUrl": null,
+            "CategoryFullPath": null,
+            "Description": "\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.",
+            "FriendlyUrl": "A-masik-ferfi",
+            "ImageUrl": "PG-A-masik-ferfi-831726.jpg",
+            "IsCheckedByAdmin": false,
+            "PublisherName": "Európa Könyvkiadó",
+            "RatingPoints": 0,
+            "SubTitle": "",
+            "SumOfRatings": 0,
+            "Title": "A másik férfi"
+        }
+    }
+]}

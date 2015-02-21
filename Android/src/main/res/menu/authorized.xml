@@ -1,0 +1,23 @@
+<menu xmlns:a="http://schemas.android.com/apk/res/android"
+      xmlns:t="http://schemas.android.com/tools"
+      t:context="com.booktera.android.activities.base.AuthorizedActivity"
+    >
+  <item a:id="@+id/action_search" a:showAsAction="always"
+        a:icon="@drawable/search" a:title="@string/action_search"
+      />
+  <item a:id="@+id/action_cart" a:showAsAction="ifRoom"
+        a:icon="@drawable/cart" a:title="@string/action_cart"
+      />
+  <item a:id="@+id/action_categories" a:showAsAction="ifRoom"
+        a:icon="@drawable/categories" a:title="@string/action_categories"
+      />
+  <item a:id="@+id/action_profile" a:showAsAction="ifRoom"
+        a:title="@string/action_profile"
+      />
+  <item a:id="@+id/action_sell" a:showAsAction="ifRoom"
+        a:title="@string/action_sell"
+      />
+  <item a:id="@+id/action_logout" a:showAsAction="ifRoom"
+        a:title="@string/action_logout"
+      />
+</menu>

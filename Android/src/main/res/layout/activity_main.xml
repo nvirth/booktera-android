@@ -1,0 +1,25 @@
+<RelativeLayout
+    xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:t="http://schemas.android.com/tools"
+    a:layout_width="match_parent"
+    a:layout_height="match_parent"
+    a:paddingLeft="@dimen/activity_horizontal_margin"
+    a:paddingRight="@dimen/activity_horizontal_margin"
+    a:paddingBottom="10dp"
+    a:background="@drawable/background_light"
+    t:context="com.booktera.android.activities.MainActivity">
+
+  <android.support.v4.view.ViewPager
+      a:id="@+id/mainPager"
+      a:layout_width="match_parent"
+      a:layout_height="match_parent"
+      >
+    <android.support.v4.view.PagerTabStrip
+        a:id="@+id/mainPagerHeader"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:layout_gravity="top"
+        />
+  </android.support.v4.view.ViewPager>
+
+</RelativeLayout>
