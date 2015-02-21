@@ -8,18 +8,18 @@ import com.booktera.androidclientproxy.lib.proxy.Services;
 public class NewestsFragment extends BookBlocksFragment
 {
     @Override
-    protected void loadData(View view)
+    protected void loadData()
     {
         if (MainVM.Instance.getNewestProducts() == null)
             Services.ProductManager.getNewests(2, 8, 16,
                 bookBlockPLVM ->
                 {
                     MainVM.Instance.setNewestProducts(bookBlockPLVM);
-                    applyData(view, bookBlockPLVM);
+                    applyData(bookBlockPLVM);
                 }
                 , null);
         else
-            applyData(view, MainVM.Instance.getNewestProducts());
+            applyData(MainVM.Instance.getNewestProducts());
     }
 }
 

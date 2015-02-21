@@ -1,12 +1,21 @@
 package com.booktera.android.common.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
 import com.booktera.android.common.Config;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
+import com.booktera.androidclientproxy.lib.utils.Action_1;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 public class Utils
@@ -80,5 +89,40 @@ public class Utils
         ).show();
     }
 
+    //endregion
+
+    //region runInFragmentTransaction
+   public static void runInFragmentTransaction(FragmentActivity fragmentActivity, Action_1<FragmentTransaction> action)
+    {
+        FragmentManager manager = fragmentActivity.getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        action.run(transaction);
+
+        transaction.commit();
+    }
+    //endregion
+
+    //region hideKeyboard
+    public static void hideKeyboard(Fragment fragment)
+    {
+        FragmentActivity activity = fragment.getActivity();
+        hideKeyboard(activity);
+    }
+    public static void hideKeyboard(FragmentActivity activity)
+    {
+        if (activity == null)
+            return;
+
+        View focusedView = activity.getCurrentFocus();
+        if (focusedView == null)
+            return;
+
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager == null)
+            return;
+
+        inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+    }
     //endregion
 }

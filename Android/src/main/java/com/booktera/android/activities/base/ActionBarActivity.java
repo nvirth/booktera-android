@@ -1,8 +1,10 @@
 package com.booktera.android.activities.base;
 
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.booktera.android.R;
+import com.booktera.android.activities.SearchActivity;
 import com.booktera.android.common.UserData;
 
 /**
@@ -81,7 +83,8 @@ public class ActionBarActivity extends BaseActivity
     }
     private void onSearchClicked()
     {
-        showToast("The Search menu item is not implemented yet. ");
+        Intent gotoSearchIntent = new Intent(this, SearchActivity.class);
+        startActivity(gotoSearchIntent);
     }
     private void onCategoriesClicked()
     {

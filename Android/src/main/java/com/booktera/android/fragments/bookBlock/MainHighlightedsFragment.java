@@ -8,18 +8,18 @@ import com.booktera.androidclientproxy.lib.proxy.Services;
 public class MainHighlightedsFragment extends BookBlocksFragment
 {
     @Override
-    protected void loadData(View view)
+    protected void loadData()
     {
         if (MainVM.Instance.getMainHighlightedProducts() == null)
             Services.ProductManager.getMainHighlighteds(1, 8,
                 bookBlockPLVM ->
                 {
                     MainVM.Instance.setMainHighlightedProducts(bookBlockPLVM);
-                    applyData(view, bookBlockPLVM);
+                    applyData(bookBlockPLVM);
                 }
                 , null);
         else
-            applyData(view, MainVM.Instance.getMainHighlightedProducts());
+            applyData(MainVM.Instance.getMainHighlightedProducts());
     }
 }
 

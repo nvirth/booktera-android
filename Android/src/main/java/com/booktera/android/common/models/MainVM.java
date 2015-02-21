@@ -15,23 +15,23 @@ public class MainVM
 
     // --
 
-    private BookBlockPLVM MainHighlightedProducts;
-    private BookBlockPLVM NewestProducts;
+    private BookBlockPLVM mainHighlightedProducts;
+    private BookBlockPLVM newestProducts;
 
     public BookBlockPLVM getMainHighlightedProducts()
     {
-        return MainHighlightedProducts;
+        return mainHighlightedProducts;
     }
     public void setMainHighlightedProducts(BookBlockPLVM mainHighlightedProducts)
     {
-        MainHighlightedProducts = mainHighlightedProducts;
+        this.mainHighlightedProducts = mainHighlightedProducts;
     }
     public BookBlockPLVM getNewestProducts()
     {
-        return NewestProducts;
+        return newestProducts;
     }
     public void setNewestProducts(BookBlockPLVM newestProducts)
     {
-        NewestProducts = newestProducts;
+        this.newestProducts = newestProducts;
     }
 }

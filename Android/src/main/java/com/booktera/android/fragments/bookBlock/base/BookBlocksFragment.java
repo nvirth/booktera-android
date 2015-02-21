@@ -20,6 +20,7 @@ public abstract class BookBlocksFragment extends Fragment
     class ViewHolder
     {
         ListView bookBlocksLv;
+        TextView bookBlocks_noResult;
 
         public ViewHolder()
         {
@@ -41,6 +42,7 @@ public abstract class BookBlocksFragment extends Fragment
         private void construct(View view)
         {
             bookBlocksLv = (ListView) view.findViewById(R.id.bookBlocksLv);
+            bookBlocks_noResult = (TextView) view.findViewById(R.id.bookBlocks_noResult);
         }
     }
 
@@ -49,7 +51,7 @@ public abstract class BookBlocksFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_book_blocks, container, false);
         vh = new ViewHolder(view);
-        loadData(view);
+        loadData();
 
         return view;
     }
@@ -58,18 +60,26 @@ public abstract class BookBlocksFragment extends Fragment
      * While implementing, you have to call {@link #applyData(android.view.View, com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM)}
      * with the (asynchronously)downloaded/cached data
      */
-    protected abstract void loadData(View view);
+    protected abstract void loadData();
 
-    protected void applyData(View view, BookBlockPLVM data)
+    protected void applyData(BookBlockPLVM data)
     {
         getActivity().runOnUiThread(() ->
         {
-            BookBlockArrayAdapter bookBlockArrayAdapter = new BookBlockArrayAdapter(
-                getActivity().getApplicationContext(),
-                data
-            );
+            if (data.getProducts().isEmpty())
+            {
+                vh.bookBlocks_noResult.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                BookBlockArrayAdapter bookBlockArrayAdapter = new BookBlockArrayAdapter(
+                    getActivity().getApplicationContext(),
+                    data
+                );
 
-            vh.bookBlocksLv.setAdapter(bookBlockArrayAdapter);
+                vh.bookBlocksLv.setAdapter(bookBlockArrayAdapter);
+                vh.bookBlocks_noResult.setVisibility(View.GONE);
+            }
         });
     }
 }

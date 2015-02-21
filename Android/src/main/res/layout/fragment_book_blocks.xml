@@ -4,12 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.booktera.android.HighlightedProductsFragment">
-
+  <TextView
+      android:id="@+id/bookBlocks_noResult"
+      android:text="@string/_no_results_"
+      android:visibility="gone"
+      tools:visibility="visible"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_gravity="center"
+      android:textSize="30sp"
+      />
   <ListView
+      android:id="@+id/bookBlocksLv"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginTop="8dp"
-      android:id="@+id/bookBlocksLv"
       android:divider="@android:color/transparent"
       android:dividerHeight="23dp"
       >
