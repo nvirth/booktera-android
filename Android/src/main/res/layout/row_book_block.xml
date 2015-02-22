@@ -43,7 +43,7 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="13sp"
             tools:text="UserName"
             android:textColor="@color/BookBlock_Text"
             />
@@ -56,7 +56,7 @@
               android:layout_weight="1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:textSize="15sp"
+              android:textSize="13sp"
               tools:text="1 db"
               android:textColor="@color/BookBlock_Text"
               />
@@ -64,7 +64,7 @@
               android:id="@+id/isDownloadable"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:textSize="15sp"
+              android:textSize="13sp"
               android:text="@string/lightning"
               android:textColor="@color/BookBlock_Text"
               android:textStyle="bold"
@@ -72,12 +72,12 @@
           <TextView
               android:id="@+id/price"
               android:layout_weight="3"
-              android:gravity="end"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:textSize="15sp"
-              tools:text="2 500 Ft"
+              android:gravity="end"
+              android:textSize="13sp"
               android:textColor="@color/BookBlock_Text"
+              tools:text="2 500 Ft"
               />
         </LinearLayout>
       </LinearLayout>
@@ -102,7 +102,7 @@
         android:id="@+id/subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="13sp"
         tools:text="Big sbutitle, maybe it also takse multiple rows"
         android:textColor="@color/BookBlock_Text"
         />

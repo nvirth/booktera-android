@@ -95,6 +95,7 @@ public class BookBlock
         else
         {
             vh.userName.setVisibility(View.GONE);
+            vh.quantity.setVisibility(View.GONE);
         }
 
         vh.price.setText(vm.getProduct().getPriceString());
@@ -103,7 +104,7 @@ public class BookBlock
         vh.authorNames.setText(vm.getProductGroup().getAuthorNames());
 
         if (!vm.getProduct().getIsDownloadable())
-            vh.isDownloadable.setVisibility(View.INVISIBLE);
+            vh.isDownloadable.setVisibility(View.GONE);
 
         Utils.setProductImage(vm, vh.bookImage);
     }
