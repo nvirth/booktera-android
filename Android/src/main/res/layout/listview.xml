@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.booktera.android.HighlightedProductsFragment">
+    tools:context="com.booktera.android.HighlightedProductsFragment"
+    >
   <TextView
-      android:id="@+id/bookBlocks_noResult"
+      android:id="@+id/listviewNoResults"
       android:text="@string/_no_results_"
       android:visibility="gone"
       tools:visibility="visible"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:gravity="center"
       android:layout_gravity="center"
       android:textSize="30sp"
       />
   <ListView
-      android:id="@+id/bookBlocksLv"
+      android:id="@+id/listviewListView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginTop="8dp"

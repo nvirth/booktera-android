@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="BookBlock_ImageBottom">#CCDCDCDC</color>
-  <color name="BookBlock_Text">#000000</color>
+  <color name="TextColor_Main">#000000</color>
   <color name="BookBlock_Author">#707070</color>
 
   <!-- X11 -->

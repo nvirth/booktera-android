@@ -1,11 +1,15 @@
 package com.booktera.android.common.models;
 
+import com.booktera.android.common.models.base.MapCache;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Norbert on 2015.02.09..
  */
-public class SearchVM
+public class SearchVM extends MapCache<String, BookBlockPLVM>
 {
     public static SearchVM Instance = new SearchVM();
 
@@ -15,23 +19,12 @@ public class SearchVM
 
     // --
 
-    private BookBlockPLVM searchResults;
-    private String searchText = "";
-
-    public BookBlockPLVM getSearchResults()
+    public BookBlockPLVM getSearchResults(String searchText)
     {
-        return searchResults;
+        return getValue(searchText);
     }
-    public void setSearchResults(BookBlockPLVM searchResults)
+    public void setSearchResults(String searchText, BookBlockPLVM searchResults)
     {
-        this.searchResults = searchResults;
-    }
-    public String getSearchText()
-    {
-        return searchText;
-    }
-    public void setSearchText(String searchText)
-    {
-        this.searchText = searchText;
+        setValue(searchText, searchResults);
     }
 }

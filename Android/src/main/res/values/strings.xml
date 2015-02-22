@@ -33,5 +33,8 @@
   <string name="title_activity_search">Keresés</string>
   <string name="search_">Keresés…</string>
   <string name="_no_results_">(Nincs találat)</string>
+  <string name="category_header_subcategories">Alkategóriák</string>
+  <string name="category_header_books">Könyvek</string>
+  <string name="_choose_a_category_">(Válassz egy kategóriát)</string>
 
 </resources>

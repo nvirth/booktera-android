@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.booktera.android.R;
+import com.booktera.android.activities.CategoryActivity;
 import com.booktera.android.activities.SearchActivity;
 import com.booktera.android.common.UserData;
 
@@ -88,7 +89,8 @@ public class ActionBarActivity extends BaseActivity
     }
     private void onCategoriesClicked()
     {
-        showToast("The Categories menu item is not implemented yet. ");
+        Intent gotoCategorioesIntent = new Intent(this, CategoryActivity.class);
+        startActivity(gotoCategorioesIntent);
     }
     private void onLoginClicked()
     {
