@@ -147,6 +147,11 @@ public abstract class RestServiceClientBase
                     else
                         showDefaultErrorMessage();
                 }
+                catch (Exception e)
+                {
+                    Log.e(tag, "sendRequest", e);
+                    throw e;
+                }
                 finally
                 {
                     if (httpClient != null)
@@ -308,7 +313,10 @@ public abstract class RestServiceClientBase
         for (Map.Entry<String, Object> param : data.entrySet())
         {
             String key = URLEncoder.encode(param.getKey(), ENCODING);
-            String value = URLEncoder.encode(param.getValue().toString(), ENCODING);
+            String value = param.getValue() == null
+                ? ""
+                : URLEncoder.encode(param.getValue().toString(), ENCODING);
+
             sb.append(key).append("=").append(value).append("&");
         }
         sb.deleteCharAt(sb.length() - 1); // Remove last '&'

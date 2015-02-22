@@ -17,9 +17,17 @@ public class ProductManagerClient extends RestServiceClientBase implements IProd
     }
 
     @Override
-    public InCategoryPLVM getProductsInCategory(String categoryFriendlyUrl, int pageNumber, int productsPerPage)
+    public void getProductsInCategory(String categoryFriendlyUrl, int pageNumber, int productsPerPage, Action_1<InCategoryPLVM> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        throw new UnsupportedOperationException();
+        Request<InCategoryPLVM> request = new Request<>(InCategoryPLVM.class, 3);
+        request.requestUrl = baseAddress + "/GetProductsInCategory";
+        request.todoWithResponse = todoWithResponse;
+        request.todoIfResponseFailed = todoIfResponseFailed;
+        request.requestData.put("categoryFriendlyUrl", categoryFriendlyUrl);
+        request.requestData.put("pageNumber", pageNumber);
+        request.requestData.put("productsPerPage", productsPerPage);
+
+        sendRequest(request);
     }
 
     @Override

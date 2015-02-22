@@ -10,7 +10,7 @@ import org.apache.http.HttpResponse;
  */
 public interface IProductManagerClient
 {
-    InCategoryPLVM getProductsInCategory(String categoryFriendlyUrl, int pageNumber, int productsPerPage);
+    void getProductsInCategory(String categoryFriendlyUrl, int pageNumber, int productsPerPage, Action_1<InCategoryPLVM> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
     void getMainHighlighteds(int pageNumber, int productsPerPage, Action_1<BookBlockPLVM> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
     void getNewests(int pageNumber, int productsPerPage, int numOfProducts, Action_1<BookBlockPLVM> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
     //RefSupport<String> userName,

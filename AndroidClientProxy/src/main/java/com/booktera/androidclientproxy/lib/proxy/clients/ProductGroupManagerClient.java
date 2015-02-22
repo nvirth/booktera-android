@@ -20,7 +20,7 @@ public class ProductGroupManagerClient extends RestServiceClientBase implements 
     @Override
     public void search(String searchText, int pageNumber, int productsPerPage, boolean needCategory, Action_1<BookBlockPLVM> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        Request<BookBlockPLVM> request = new Request<>(BookBlockPLVM.class, 3);
+        Request<BookBlockPLVM> request = new Request<>(BookBlockPLVM.class, 4);
         request.requestUrl = baseAddress + "/Search";
         request.todoWithResponse = todoWithResponse;
         request.todoIfResponseFailed = todoIfResponseFailed;
