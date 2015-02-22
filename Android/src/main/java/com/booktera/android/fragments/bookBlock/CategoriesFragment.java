@@ -81,7 +81,6 @@ public class CategoriesFragment extends ListViewFragmentBase
             // -- Fetch data
             if (data.getChildCategoriesWithProducts().size() == 1) // Leaf category
             {
-                data.getChildCategoriesWithProducts().clear();
                 vh.noResultTextView.setVisibility(View.VISIBLE);
             }
             else
