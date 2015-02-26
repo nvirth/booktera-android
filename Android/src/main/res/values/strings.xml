@@ -36,5 +36,6 @@
   <string name="category_header_subcategories">Alkategóriák</string>
   <string name="category_header_books">Könyvek</string>
   <string name="_choose_a_category_">(Válassz egy kategóriát)</string>
+  <string name="_someones_books">&#160;könyvei</string>
 
 </resources>

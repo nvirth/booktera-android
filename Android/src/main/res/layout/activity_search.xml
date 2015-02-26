@@ -21,10 +21,5 @@
       android:drawableRight="@drawable/search_dark"
       android:drawableEnd="@drawable/search_dark"
       />
-  <LinearLayout
-      android:id="@+id/searchResultsFragment_container"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      />
+  <include layout="@layout/fragment_container" />
 </LinearLayout>

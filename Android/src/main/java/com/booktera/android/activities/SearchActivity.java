@@ -83,7 +83,7 @@ public class SearchActivity extends ActionBarActivity
         // Here happens the search, by creating a new fragment
         runInFragmentTransaction(
             transaction -> transaction.replace(
-                R.id.searchResultsFragment_container,
+                R.id.fragmentContainer,
                 SearchFragment.newInstance(searchInput)
             ));
     }

@@ -11,11 +11,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.booktera.android.R;
 import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
+import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 
 public abstract class ListViewFragmentBase extends Fragment
 {
-    private static final String tag = ListViewFragmentBase.class.toString();
+    protected final String tag = ((Object) this).getClass().toString();
     protected ViewHolder vh;
 
     protected class ViewHolder
@@ -27,12 +28,7 @@ public abstract class ListViewFragmentBase extends Fragment
         {
             View view = getView();
             if (view == null)
-            {
-                String msg = "The getView() call ended up with a null";
-                RuntimeException e = new RuntimeException(msg);
-                Log.e(tag, msg, e);
-                throw e;
-            }
+                Utils.error("The getView() call ended up with a null", tag);
 
             construct(view);
         }

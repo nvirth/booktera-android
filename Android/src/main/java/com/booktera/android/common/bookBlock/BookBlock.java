@@ -1,8 +1,8 @@
 package com.booktera.android.common.bookBlock;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -10,53 +10,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
+import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.androidclientproxy.lib.enums.BookBlockType;
+import com.booktera.android.fragments.bookBlock.UsersProductsFragment;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
-import com.booktera.androidclientproxy.lib.enums.TransactionType;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
-
-import java.util.List;
 
 /**
  * Created by Norbert on 2015.02.10..
  */
 public class BookBlock
 {
-    public static final String tag = BookBlock.class.toString();
+    private static final String tag = BookBlock.class.toString();
 
-    public static class DataHolder
-    {
-        static abstract class Base
-        {
-            public List<InBookBlockPVM> products;
-            public int actualPosition;
-        }
-
-        static class Normal extends Base
-        {
-            public BookBlockType bookBlockType;
-        }
-
-        static class UserOrder extends Base
-        {
-            public TransactionType transactionType;
-            public UserOrderPLVM.UserOrderVM userOrder;
-            public List<InBookBlockPVM> exchangeProducts;
-
-
-            /**
-             * TODO leírást javítani ha majd aktuális lesz
-             * This is a helper for the global context menu in App.xaml. This indicates whenever
-             * the product can be added to an Exchange cart. This is possible only, if one is
-             * at the SearchPage, and went with the flag 'forExchange' true
-             */
-            public boolean isAddToExchangeCartPossible;
-        }
-    }
+    //region ViewHolder
 
     public static class ViewHolder
     {
@@ -82,34 +53,55 @@ public class BookBlock
         }
     }
 
-    public static void fill(ViewHolder vh, InBookBlockPVM vm)
+    //endregion
+
+    private InBookBlockPVM vm;
+    private ViewHolder vh;
+    private View bookBlockView;
+    private Context context;
+    //TODO this shouldn't be here: dataHolder in BookBlock
+    private BookBlockDataHolder.Base dataHolder;
+
+    private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
+
+    public BookBlock(InBookBlockPVM vm, View bookBlockView, Context context, BookBlockDataHolder.Base dataHolder)
     {
-        //TODO ellenőrizni h az if-ek jók-e, amikor már lesz megfelelő view
+        this.vm = vm;
+        this.bookBlockView = bookBlockView;
+        this.context = context;
+        this.dataHolder = dataHolder;
+
+        this.vh = new BookBlock.ViewHolder(bookBlockView);
+    }
+
+    public void fill()
+    {
+        //TODO check the if-s, when corresponding view will exist
+
         // E.g. by ProductGroup, we don't have UserName. In this case, we have to tighten the
         // cover at the BookBlockImage's bottom
         if (vm.getProduct().getUserName() != null)
-        {
             vh.userName.setText(vm.getProduct().getUserName());
-            vh.quantity.setText(vm.getProduct().getHowMany() + " db");
-        }
         else
-        {
             vh.userName.setVisibility(View.GONE);
+
+        if (vm.getProduct().getHowMany() != -1)
+            vh.quantity.setText(vm.getProduct().getHowMany() + " db");
+        else
             vh.quantity.setVisibility(View.GONE);
-        }
+
+        if (!vm.getProduct().getIsDownloadable())
+            vh.isDownloadable.setVisibility(View.GONE);
 
         vh.price.setText(vm.getProduct().getPriceString());
         vh.title.setText(vm.getProductGroup().getTitle());
         vh.subTitle.setText(vm.getProductGroup().getSubTitle());
         vh.authorNames.setText(vm.getProductGroup().getAuthorNames());
 
-        if (!vm.getProduct().getIsDownloadable())
-            vh.isDownloadable.setVisibility(View.GONE);
-
         Utils.setProductImage(vm, vh.bookImage);
     }
 
-    public static void setupContextMenu(View bookBlockView, Context context, ViewHolder vh, InBookBlockPVM vm, DataHolder.Base dataHolder)
+    public void setupContextMenu()
     {
         bookBlockView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
         {
@@ -131,8 +123,8 @@ public class BookBlock
             boolean isExchangeProduct = false;
             boolean existsCustomerName = false;
             boolean existsVendorName = false;
-            DataHolder.UserOrder userOrderPLVM = dataHolder instanceof DataHolder.UserOrder
-                ? (DataHolder.UserOrder) dataHolder
+            BookBlockDataHolder.UserOrder userOrderPLVM = dataHolder instanceof BookBlockDataHolder.UserOrder
+                ? (BookBlockDataHolder.UserOrder) dataHolder
                 : null;
             if (userOrderPLVM != null)
             {
@@ -193,56 +185,59 @@ public class BookBlock
         });
     }
 
-    public static void enable(@IdRes int menuItemID, ContextMenu menu)
+    public void enable(@IdRes int menuItemID, ContextMenu menu)
     {
         enable(menu.findItem(menuItemID));
     }
-    public static void enable(MenuItem menuItem)
+    public void enable(MenuItem menuItem)
     {
         menuItem.setVisible(true);
         menuItem.setEnabled(true);
         menuItem.setOnMenuItemClickListener(fetchClickListener(menuItem));
     }
-    public static MenuItem.OnMenuItemClickListener fetchClickListener(MenuItem menuItem)
+    public MenuItem.OnMenuItemClickListener fetchClickListener(MenuItem menuItem)
     {
         switch (menuItem.getItemId())
         {
             case R.id.bookBlockCtx_gotoUsersProducts:
-                return CtxMenuClickListeners.gotoUsersProducts();
+                return ctxMenuClickListeners.gotoUsersProducts();
             case R.id.bookBlockCtx_gotoProductGroup:
-                return CtxMenuClickListeners.gotoProductGroup();
+                return ctxMenuClickListeners.gotoProductGroup();
             case R.id.bookBlockCtx_addToCart:
-                return CtxMenuClickListeners.addToCart();
+                return ctxMenuClickListeners.addToCart();
             case R.id.bookBlockCtx_addToExchangeCart:
-                return CtxMenuClickListeners.addToExchangeCart();
+                return ctxMenuClickListeners.addToExchangeCart();
             case R.id.bookBlockCtx_removeFromCart:
-                return CtxMenuClickListeners.removeFromCart();
+                return ctxMenuClickListeners.removeFromCart();
             case R.id.bookBlockCtx_changeQuantityInCart:
-                return CtxMenuClickListeners.changeQuantityInCart();
+                return ctxMenuClickListeners.changeQuantityInCart();
             case R.id.bookBlockCtx_changeQuantityInExchangeCart:
-                return CtxMenuClickListeners.changeQuantityInExchangeCart();
+                return ctxMenuClickListeners.changeQuantityInExchangeCart();
             case R.id.bookBlockCtx_removeFromExchangeCart:
-                return CtxMenuClickListeners.removeFromExchangeCart();
+                return ctxMenuClickListeners.removeFromExchangeCart();
 
             default:
-                String msg = "Unrecognised MenuItemID: " + menuItem.getItemId();
-                RuntimeException e = new RuntimeException(msg);
-                Log.e(tag, msg, e);
-                throw e;
+                Utils.error("Unrecognised MenuItemID: " + menuItem.getItemId(), tag);
+                return null; // unreachable
         }
     }
 
-    static class CtxMenuClickListeners
+    class CtxMenuClickListeners
     {
-        public static MenuItem.OnMenuItemClickListener gotoUsersProducts()
+        public MenuItem.OnMenuItemClickListener gotoUsersProducts()
         {
             return item -> {
-                Utils.showToast("ctx_gotoUsersProducts is not implemented yet");
+                Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
+                intent.putExtra(UsersProductsFragment.PARAM_USER_FU, vm.getProduct().getUserFriendlyUrl());
+                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
                 return true;
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener gotoProductGroup()
+        public MenuItem.OnMenuItemClickListener gotoProductGroup()
         {
             return item -> {
                 Utils.showToast("ctx_gotoProductGroup is not implemented yet");
@@ -250,7 +245,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener addToCart()
+        public MenuItem.OnMenuItemClickListener addToCart()
         {
             return item -> {
                 Utils.showToast("ctx_addToCart is not implemented yet");
@@ -258,7 +253,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener addToExchangeCart()
+        public MenuItem.OnMenuItemClickListener addToExchangeCart()
         {
             return item -> {
                 Utils.showToast("ctx_addToExchangeCart is not implemented yet");
@@ -266,7 +261,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener removeFromCart()
+        public MenuItem.OnMenuItemClickListener removeFromCart()
         {
             return item -> {
                 Utils.showToast("ctx_removeFromCart is not implemented yet");
@@ -274,7 +269,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener changeQuantityInCart()
+        public MenuItem.OnMenuItemClickListener changeQuantityInCart()
         {
             return item -> {
                 Utils.showToast("ctx_changeQuantityInCart is not implemented yet");
@@ -282,7 +277,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener changeQuantityInExchangeCart()
+        public MenuItem.OnMenuItemClickListener changeQuantityInExchangeCart()
         {
             return item -> {
                 Utils.showToast("ctx_changeQuantityInExchangeCart is not implemented yet");
@@ -290,7 +285,7 @@ public class BookBlock
             };
         }
 
-        public static MenuItem.OnMenuItemClickListener removeFromExchangeCart()
+        public MenuItem.OnMenuItemClickListener removeFromExchangeCart()
         {
             return item -> {
                 Utils.showToast("ctx_removeFromExchangeCart is not implemented yet");

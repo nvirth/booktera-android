@@ -14,9 +14,9 @@ import java.util.List;
 public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
 {
     public static final int layoutResourceId = R.layout.row_book_block;
-    Context context;
+    private Context context;
 
-    BookBlock.DataHolder.Base data;
+    private BookBlockDataHolder.Base data;
 
     public BookBlockArrayAdapter(Context context, BookBlockPLVM data)
     {
@@ -24,7 +24,7 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
 
         this.context = context;
 
-        BookBlock.DataHolder.Normal regularBBdata = new BookBlock.DataHolder.Normal();
+        BookBlockDataHolder.Normal regularBBdata = new BookBlockDataHolder.Normal();
         regularBBdata.bookBlockType = data.getBookBlockType();
         regularBBdata.products = data.getProducts();
 
@@ -36,7 +36,7 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
 
         this.context = context;
 
-        BookBlock.DataHolder.UserOrder userOrderData = new BookBlock.DataHolder.UserOrder();
+        BookBlockDataHolder.UserOrder userOrderData = new BookBlockDataHolder.UserOrder();
         userOrderData.products = data.getProducts();
         userOrderData.exchangeProducts = data.getExchangeProducts();
         userOrderData.transactionType = data.getTransactionType();
@@ -48,26 +48,20 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
     @Override
     public View getView(int position, View bookBlockView, ViewGroup parent)
     {
-        boolean wasFirst = false;
+        data.actualPosition = position;
+        InBookBlockPVM vm = data.products.get(position);
+
         if (bookBlockView == null)
         {
-            wasFirst = true;
-
             LayoutInflater inflater = LayoutInflater.from(context);
             bookBlockView = inflater.inflate(layoutResourceId, parent, false);
             bookBlockView.setTag(new BookBlock.ViewHolder(bookBlockView));
         }
 
-        data.actualPosition = position;
-        InBookBlockPVM vm = data.products.get(position);
-        if (vm != null)
-        {
-            BookBlock.ViewHolder vh = (BookBlock.ViewHolder) bookBlockView.getTag();
-            BookBlock.fill(vh, vm);
-
-            if (wasFirst)
-                BookBlock.setupContextMenu(bookBlockView, context, vh, vm, data);
-        }
+        BookBlock.ViewHolder vh = (BookBlock.ViewHolder) bookBlockView.getTag();
+        BookBlock bookBlock = new BookBlock(vm, bookBlockView, context, data);
+        bookBlock.fill();
+        bookBlock.setupContextMenu();
 
         return bookBlockView;
     }

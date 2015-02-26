@@ -92,7 +92,7 @@ public class Utils
     //endregion
 
     //region runInFragmentTransaction
-   public static void runInFragmentTransaction(FragmentActivity fragmentActivity, Action_1<FragmentTransaction> action)
+    public static void runInFragmentTransaction(FragmentActivity fragmentActivity, Action_1<FragmentTransaction> action)
     {
         FragmentManager manager = fragmentActivity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -125,4 +125,12 @@ public class Utils
         inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
     }
     //endregion
+
+    /**
+     * Logs the msg as error, then throws a RuntimeException with it
+     */
+    public static void error(String msg, String tag)
+    {
+        com.booktera.androidclientproxy.lib.utils.Utils.error(msg, tag);
+    }
 }

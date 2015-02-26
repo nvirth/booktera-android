@@ -7,6 +7,8 @@ import com.booktera.androidclientproxy.lib.utils.Action_1;
 
 public class BaseActivity extends FragmentActivity
 {
+    protected final String tag = this.getClass().toString();
+
     /**
      * Shows a Toast with length: Toast.LENGTH_SHORT
      */
