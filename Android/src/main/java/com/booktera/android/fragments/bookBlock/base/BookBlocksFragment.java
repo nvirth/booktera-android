@@ -1,13 +1,13 @@
 package com.booktera.android.fragments.bookBlock.base;
 
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 
 public abstract class BookBlocksFragment extends ListViewFragmentBase
 {
-    private static final String tag = BookBlocksFragment.class.toString();
-
     /**
      * While implementing, you have to call {@link #applyData(com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM)}
      * with the (asynchronously)downloaded/cached data
@@ -17,6 +17,8 @@ public abstract class BookBlocksFragment extends ListViewFragmentBase
 
     protected void applyData(BookBlockPLVM data)
     {
+        FragmentActivity activityForDebug = getActivity();
+
         getActivity().runOnUiThread(() ->
         {
             if (data.getProducts().isEmpty())
@@ -25,8 +27,12 @@ public abstract class BookBlocksFragment extends ListViewFragmentBase
             }
             else
             {
+                //TODO remove after found the null exception
+                Log.d(tag, "getActivity(): " + getActivity());
+                Log.d(tag, "activityForDebug: " + activityForDebug);
+
                 BookBlockArrayAdapter bookBlockArrayAdapter = new BookBlockArrayAdapter(
-                    getActivity().getApplicationContext(),
+                    getActivity().getApplicationContext(),//TODO there was here a nll reference exception once!
                     data
                 );
 
