@@ -5,7 +5,7 @@ import android.net.http.AndroidHttpClient;
 import android.util.Log;
 import com.booktera.androidclientproxy.lib.R;
 import com.booktera.androidclientproxy.lib.proxy.Request;
-import com.booktera.androidclientproxy.lib.utils.Helpers;
+import com.booktera.androidclientproxy.lib.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
@@ -82,9 +82,7 @@ public abstract class RestServiceClientBase
         if (resources == null || sendErrorMsgAction == null)
         {
             String msg = "RestServiceClientBase.resources and .sendErrorMsgAction must be initialized";
-            RuntimeException e = new RuntimeException(msg);
-            Log.e(tag, msg, e);
-            throw e;
+            Utils.error(msg, tag);
         }
 
         // It will be "com.booktera.android" every time, but safe to get it this way :)
@@ -114,8 +112,8 @@ public abstract class RestServiceClientBase
                     httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 
                     httpClient = AndroidHttpClient.newInstance(userAgent);
-                    HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
-                    HttpConnectionParams.setSoTimeout(httpClient.getParams(), 5000);
+                    HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 5000); //TODO is setConnectionTimeout ok?
+                    HttpConnectionParams.setSoTimeout(httpClient.getParams(), 7000);
 
                     Log.v(tag, "Sending request to: " + r.requestUrl);
                     response = httpClient.execute(request, httpContext);
@@ -199,7 +197,7 @@ public abstract class RestServiceClientBase
         if (statusCode == HttpStatus.SC_FORBIDDEN
             || statusCode == HttpStatus.SC_UNAUTHORIZED)
         {
-            //TODO átirányítás a Login page-re!
+            //TODO redirect to Login page!
             handled = true;
             throw new UnsupportedOperationException();
         }
@@ -222,7 +220,7 @@ public abstract class RestServiceClientBase
     private <T> T fetchResponse(InputStream is, Class<T> type) throws IOException
     {
         if (is == null)
-            throw new RuntimeException(tag + ": The fn fetchResponse(...) shouldn't get null InputStream arg. ");
+            Utils.error("The fn fetchResponse(...) shouldn't get null InputStream arg. ", tag);
 
         try
         {
@@ -231,7 +229,7 @@ public abstract class RestServiceClientBase
             // This would be the fastest version
             //return new Gson().fromJson(reader, type);
             // But while developing, we sometimes want to see the received entity too
-            String entityStr = Helpers.readToEnd(reader);
+            String entityStr = Utils.readToEnd(reader);
             return new Gson().fromJson(entityStr, type);
         }
         catch (JsonParseException e)
@@ -261,7 +259,8 @@ public abstract class RestServiceClientBase
                 httpRequest = new HttpPut(r.requestUrl);
                 break;
             default:
-                throw new RuntimeException("Unknown http request type: " + r.httpPostVerb);
+                Utils.error("Unknown http request type: " + r.httpPostVerb, tag);
+                return null; // unreachable
         }
 
         if (r.httpPostVerb != HttpPostVerb.NON_POST__GET)

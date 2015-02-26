@@ -6,6 +6,7 @@ import com.booktera.androidclientproxy.lib.proxy.Request;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
 import com.booktera.androidclientproxy.lib.proxy.clients.interfaces.IProductManagerClient;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
+import com.booktera.androidclientproxy.lib.utils.Action_2;
 import org.apache.http.HttpResponse;
 
 public class ProductManagerClient extends RestServiceClientBase implements IProductManagerClient
@@ -57,11 +58,32 @@ public class ProductManagerClient extends RestServiceClientBase implements IProd
         sendRequest(request);
     }
 
-    //RefSupport<String> userName,
     @Override
-    public BookBlockPLVM getUsersProductsByFriendlyUrl(String friendlyUrl, int pageNumber, int productsPerPage, boolean forExchange)
+    public void getUsersProductsByFriendlyUrl(String friendlyUrl, int pageNumber, int productsPerPage, Action_2<BookBlockPLVM, String> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        throw new UnsupportedOperationException();
+        getUsersProductsByFriendlyUrl(friendlyUrl, pageNumber, productsPerPage, false, todoWithResponse, todoIfResponseFailed);
+    }
+    @Override
+    public void getUsersProductsByFriendlyUrl(String friendlyUrl, int pageNumber, int productsPerPage, boolean forExchange, Action_2<BookBlockPLVM, String> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    {
+        Request<GetUsersProductsByFriendlyUrlResult> request = new Request<>(GetUsersProductsByFriendlyUrlResult.class, 4);
+        request.requestUrl = baseAddress + "/GetUsersProductsByFriendlyUrl";
+        request.requestData.put("friendlyUrl", friendlyUrl);
+        request.requestData.put("pageNumber", pageNumber);
+        request.requestData.put("productsPerPage", productsPerPage);
+        request.requestData.put("forExchange", forExchange);
+        request.todoIfResponseFailed = todoIfResponseFailed;
+        request.todoWithResponse = res -> {
+            if (todoWithResponse != null)
+                todoWithResponse.run(res.GetUsersProductsByFriendlyUrlResult, res.userName);
+        };
+        sendRequest(request);
+    }
+
+    static class GetUsersProductsByFriendlyUrlResult
+    {
+        BookBlockPLVM GetUsersProductsByFriendlyUrlResult;
+        String userName;
     }
 
     @Override
