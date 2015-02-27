@@ -1,40 +1,29 @@
 package com.booktera.android.fragments.bookBlock;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.booktera.android.R;
 import com.booktera.android.activities.CategoryActivity;
-import com.booktera.android.common.bookBlock.BookBlock;
-import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.CategoriesVM;
-import com.booktera.android.common.models.ProductsInCategoryVM;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
 import com.booktera.android.fragments.bookBlock.base.ListViewFragmentBase;
-import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
-import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryCWPLVM;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryPLVM;
-import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoriesFragment extends ListViewFragmentBase
 {
-    public static final String CATEGORY_FRIENDLY_URL = "CATEGORY_FRIENDLY_URL";
     private String categoryFriendlyUrl;
 
     public static CategoriesFragment newInstance(String categoryFriendlyUrl)
     {
         Bundle args = new Bundle();
-        args.putString(CATEGORY_FRIENDLY_URL, categoryFriendlyUrl);
+        args.putString(Constants.PARAM_CATEGORY_FU, categoryFriendlyUrl);
 
         CategoriesFragment fragment = new CategoriesFragment();
         fragment.setArguments(args);
@@ -47,7 +36,7 @@ public class CategoriesFragment extends ListViewFragmentBase
     {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
-            categoryFriendlyUrl = getArguments().getString(CATEGORY_FRIENDLY_URL);
+            categoryFriendlyUrl = getArguments().getString(Constants.PARAM_CATEGORY_FU);
     }
 
     @Override
@@ -106,7 +95,7 @@ public class CategoriesFragment extends ListViewFragmentBase
                         String categoryFU = inCategoryPLVM.getCategory().getFriendlyUrl();
 
                         Intent gotoSubcategoryIntent = new Intent(getActivity(), CategoryActivity.class);
-                        gotoSubcategoryIntent.putExtra(CategoryActivity.PARAM_CATEGORY_FU, categoryFU);
+                        gotoSubcategoryIntent.putExtra(Constants.PARAM_CATEGORY_FU, categoryFU);
 
                         startActivity(gotoSubcategoryIntent);
                     });

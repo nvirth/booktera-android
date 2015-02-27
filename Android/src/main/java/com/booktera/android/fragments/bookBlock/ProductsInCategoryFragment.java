@@ -3,23 +3,21 @@ package com.booktera.android.fragments.bookBlock;
 import android.os.Bundle;
 import android.view.View;
 import com.booktera.android.R;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.ProductsInCategoryVM;
-import com.booktera.android.common.models.SearchVM;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
-import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
 public class ProductsInCategoryFragment extends BookBlocksFragment
 {
-    public static final String CATEGORY_FRIENDLY_URL = "CATEGORY_FRIENDLY_URL";
     private String categoryFriendlyUrl;
 
     public static ProductsInCategoryFragment newInstance(String categoryFriendlyUrl)
     {
         Bundle args = new Bundle();
-        args.putString(CATEGORY_FRIENDLY_URL, categoryFriendlyUrl);
+        args.putString(Constants.PARAM_CATEGORY_FU, categoryFriendlyUrl);
 
         ProductsInCategoryFragment fragment = new ProductsInCategoryFragment();
         fragment.setArguments(args);
@@ -32,7 +30,7 @@ public class ProductsInCategoryFragment extends BookBlocksFragment
     {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
-            categoryFriendlyUrl = getArguments().getString(CATEGORY_FRIENDLY_URL);
+            categoryFriendlyUrl = getArguments().getString(Constants.PARAM_CATEGORY_FU);
     }
 
     @Override

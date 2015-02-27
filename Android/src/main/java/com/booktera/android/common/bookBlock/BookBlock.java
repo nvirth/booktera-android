@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
 import com.booktera.android.activities.UsersProductsActivity;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.android.fragments.bookBlock.UsersProductsFragment;
@@ -228,7 +229,7 @@ public class BookBlock
         {
             return item -> {
                 Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
-                intent.putExtra(UsersProductsFragment.PARAM_USER_FU, vm.getProduct().getUserFriendlyUrl());
+                intent.putExtra(Constants.PARAM_USER_FU, vm.getProduct().getUserFriendlyUrl());
                 //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

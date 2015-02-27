@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import com.booktera.android.R;
 import com.booktera.android.activities.base.ActionBarActivity;
 import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
+import com.booktera.android.common.Constants;
 import com.booktera.android.fragments.bookBlock.CategoriesFragment;
 import com.booktera.android.fragments.bookBlock.MainHighlightedsFragment;
 import com.booktera.android.fragments.bookBlock.ProductsInCategoryFragment;
@@ -15,7 +16,6 @@ import com.booktera.androidclientproxy.lib.models.EntityFramework.Category;
 
 public class CategoryActivity extends ActionBarActivity
 {
-    public static final String PARAM_CATEGORY_FU = "PARAM_CATEGORY_FRIENDLY_URL";
     FragmentPagerAdapter categoryPagerAdapter;
 
     @Override
@@ -38,7 +38,7 @@ public class CategoryActivity extends ActionBarActivity
             super(fm);
 
             if (data != null)
-                categoryFriendlyUrl = data.getString(PARAM_CATEGORY_FU);
+                categoryFriendlyUrl = data.getString(Constants.PARAM_CATEGORY_FU);
         }
 
         @Override

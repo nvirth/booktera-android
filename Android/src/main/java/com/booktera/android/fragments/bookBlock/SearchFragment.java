@@ -1,6 +1,7 @@
 package com.booktera.android.fragments.bookBlock;
 
 import android.os.Bundle;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.SearchVM;
 import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
@@ -8,13 +9,12 @@ import com.booktera.androidclientproxy.lib.proxy.Services;
 
 public class SearchFragment extends BookBlocksFragment
 {
-    public static final String PARAM_SEARCH_INPUT = "PARAM_SEARCH_INPUT";
     private String searchText;
 
     public static SearchFragment newInstance(String searchInput)
     {
         Bundle args = new Bundle();
-        args.putString(PARAM_SEARCH_INPUT, searchInput);
+        args.putString(Constants.PARAM_SEARCH_INPUT, searchInput);
 
         SearchFragment fragment = new SearchFragment();
         fragment.setArguments(args);
@@ -27,7 +27,7 @@ public class SearchFragment extends BookBlocksFragment
     {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
-            searchText = getArguments().getString(PARAM_SEARCH_INPUT);
+            searchText = getArguments().getString(Constants.PARAM_SEARCH_INPUT);
     }
 
     @Override

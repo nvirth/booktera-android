@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.booktera.android.R;
 import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.android.fragments.bookBlock.SearchFragment;
 import com.booktera.android.fragments.bookBlock.UsersProductsFragment;
@@ -28,7 +29,7 @@ public class UsersProductsActivity extends ActionBarActivity
         Bundle bundle = getIntent().getExtras();
         if(bundle == null)
             Utils.error(noUserFUmsg, tag);
-        String userFU = bundle.getString(UsersProductsFragment.PARAM_USER_FU);
+        String userFU = bundle.getString(Constants.PARAM_USER_FU);
         if(userFU == null)
             Utils.error(noUserFUmsg, tag);
         return userFU;
