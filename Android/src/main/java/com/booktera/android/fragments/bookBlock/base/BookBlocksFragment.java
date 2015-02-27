@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
+import com.booktera.android.fragments.base.ListViewFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 
 public abstract class BookBlocksFragment extends ListViewFragmentBase

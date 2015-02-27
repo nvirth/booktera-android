@@ -17,21 +17,11 @@ public class UsersProductsActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_products);
 
+        String userFU = extractParam(Constants.PARAM_USER_FU);
         runInFragmentTransaction(
             transaction -> transaction.replace(
                 R.id.fragmentContainer,
-                UsersProductsFragment.newInstance(extractUserFU())
+                UsersProductsFragment.newInstance(userFU)
             ));
-    }
-    private String extractUserFU()
-    {
-        String noUserFUmsg = "You can't call this activity without passing this parameter: userFU";
-        Bundle bundle = getIntent().getExtras();
-        if(bundle == null)
-            Utils.error(noUserFUmsg, tag);
-        String userFU = bundle.getString(Constants.PARAM_USER_FU);
-        if(userFU == null)
-            Utils.error(noUserFUmsg, tag);
-        return userFU;
     }
 }

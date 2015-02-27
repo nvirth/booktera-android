@@ -26,6 +26,9 @@
     <activity android:name=".activities.UsersProductsActivity"
               android:label="@string/app_name"
         />
+    <activity android:name=".activities.ProductGroupDetailsActivity"
+              android:label="@string/app_name"
+        />
   </application>
 
 </manifest>

@@ -1,0 +1,26 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    >
+  <LinearLayout
+      android:id="@+id/fragmentContainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <include layout="@layout/row_book_block"/>
+    <TextView
+        android:id="@+id/product_group_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"
+        android:textSize="19sp"
+        android:textColor="@color/TextColor_Main"
+        tools:text="@string/loremIpsum"
+        />
+  </LinearLayout>
+</ScrollView>

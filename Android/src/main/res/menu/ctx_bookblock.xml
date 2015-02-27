@@ -2,13 +2,13 @@
     >
   <item
       a:id="@+id/bookBlockCtx_gotoUsersProducts"
-      a:title="@string/bookBlockCtx_gotoUsersProducts"
+      a:title="@string/bookBlockCtx_gotoUsersProducts_Format"
       a:visible="false"
       a:enabled="false"
       />
   <item
       a:id="@+id/bookBlockCtx_gotoProductGroup"
-      a:title="@string/bookBlockCtx_gotoProductGroup"
+      a:title="@string/bookBlockCtx_gotoProductGroup_Format"
       a:visible="false"
       a:enabled="false"
       />

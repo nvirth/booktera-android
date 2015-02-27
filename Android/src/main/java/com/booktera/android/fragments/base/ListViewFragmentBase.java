@@ -1,4 +1,4 @@
-package com.booktera.android.fragments.bookBlock.base;
+package com.booktera.android.fragments.base;
 
 
 import android.os.Bundle;
@@ -14,9 +14,8 @@ import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 
-public abstract class ListViewFragmentBase extends Fragment
+public abstract class ListViewFragmentBase extends BaseFragment
 {
-    protected final String tag = ((Object) this).getClass().toString();
     protected ViewHolder vh;
 
     protected class ViewHolder

@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         tools:text="Norbert Virth"
-        android:textColor="@color/BookBlock_Author"
+        android:textColor="@color/TextColor_Lighter"
         />
   </LinearLayout>
 </LinearLayout>

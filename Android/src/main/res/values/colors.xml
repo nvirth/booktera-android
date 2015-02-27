@@ -2,7 +2,7 @@
 <resources>
   <color name="BookBlock_ImageBottom">#CCDCDCDC</color>
   <color name="TextColor_Main">#000000</color>
-  <color name="BookBlock_Author">#707070</color>
+  <color name="TextColor_Lighter">#707070</color>
 
   <!-- X11 -->
   <color name="White">#FFFFFF</color>

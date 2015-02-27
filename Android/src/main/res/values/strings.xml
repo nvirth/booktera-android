@@ -20,9 +20,9 @@
   <string name="main_header_newests">Legújabbak</string>
   <string name="main_header_introduction">Mi is ez?</string>
   <string name="lightning">↯</string>
-  <string name="bookBlockCtx_gotoUsersProducts">\"%s\" könyvei</string>
+  <string name="bookBlockCtx_gotoUsersProducts_Format">\"%s\" könyvei</string>
   <!-- <string name="bookBlockCtx_gotoUsersProducts">\"%s\" felhasználó könyvei</string> -->
-  <string name="bookBlockCtx_gotoProductGroup">\"%s\" könyvek</string>
+  <string name="bookBlockCtx_gotoProductGroup_Format">\"%s\" könyvek</string>
   <!-- <string name="bookBlockCtx_gotoProductGroup">\"%s\" könyvek megtekintése</string> -->
   <string name="bookBlockCtx_addToCart">Kosárba!</string>
   <string name="bookBlockCtx_addToExchangeCart">Csere-kosárba!</string>
@@ -37,5 +37,16 @@
   <string name="category_header_books">Könyvek</string>
   <string name="_choose_a_category_">(Válassz egy kategóriát)</string>
   <string name="_someones_books">&#160;könyvei</string>
+  <string name="productGroupDetails_header_details">Részletek</string>
+  <string name="productGroupDetails_header_books">Könyvek</string>
+  <string name="productGroupDetails_header_statistics">Adatok</string>
+  <string name="title_activity_productGroupDetails_Format">%s - Könyvek</string>
+  <string name="productGroupDetails_statistics_publisher">Kiadó:</string>
+  <string name="productGroupDetails_statistics_authors">Szerző(k):</string>
+  <string name="productGroupDetails_statistics_category">Kategória:</string>
+  <string name="productGroupDetails_statistics_numOfActiveBooks">Aktív könyvek a csoportban:</string>
+  <string name="productGroupDetails_statistics_numOfPassiveBooks">Elfogyott könyvek a csoportban:</string>
+  <string name="productGroupDetails_statistics_numOfFinishedTransactions">Befejezett vásárlások száma a csoportban:
+  </string>
 
 </resources>

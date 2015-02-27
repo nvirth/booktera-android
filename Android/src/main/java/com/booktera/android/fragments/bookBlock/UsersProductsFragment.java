@@ -30,19 +30,7 @@ public class UsersProductsFragment extends BookBlocksFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        userFU = extractUserFU();
-    }
-
-    private String extractUserFU()
-    {
-        String noUserFUmsg = "You can't call this fragment without passing this parameter: userFU";
-        Bundle bundle = getArguments();
-        if (bundle == null)
-            Utils.error(noUserFUmsg, tag);
-        String userFU = bundle.getString(Constants.PARAM_USER_FU);
-        if (userFU == null)
-            Utils.error(noUserFUmsg, tag);
-        return userFU;
+        userFU = extractParam(Constants.PARAM_USER_FU);
     }
 
     @Override

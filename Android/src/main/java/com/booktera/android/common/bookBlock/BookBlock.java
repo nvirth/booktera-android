@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
+import com.booktera.android.activities.ProductGroupDetailsActivity;
 import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
@@ -81,7 +82,7 @@ public class BookBlock
 
         // E.g. by ProductGroup, we don't have UserName. In this case, we have to tighten the
         // cover at the BookBlockImage's bottom
-        if (vm.getProduct().getUserName() != null)
+        if (!Utils.isNullOrEmpty(vm.getProduct().getUserName()))
             vh.userName.setText(vm.getProduct().getUserName());
         else
             vh.userName.setVisibility(View.GONE);
@@ -241,7 +242,12 @@ public class BookBlock
         public MenuItem.OnMenuItemClickListener gotoProductGroup()
         {
             return item -> {
-                Utils.showToast("ctx_gotoProductGroup is not implemented yet");
+                Intent intent = new Intent(BookteraApplication.getAppContext(), ProductGroupDetailsActivity.class);
+                intent.putExtra(Constants.PARAM_PRODUCT_GROUP_FU, vm.getProductGroup().getFriendlyUrl());
+                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
                 return true;
             };
         }

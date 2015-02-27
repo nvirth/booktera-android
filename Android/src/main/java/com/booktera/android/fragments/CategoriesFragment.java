@@ -1,4 +1,4 @@
-package com.booktera.android.fragments.bookBlock;
+package com.booktera.android.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import com.booktera.android.activities.CategoryActivity;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.CategoriesVM;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.base.ListViewFragmentBase;
+import com.booktera.android.fragments.base.ListViewFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryCWPLVM;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;

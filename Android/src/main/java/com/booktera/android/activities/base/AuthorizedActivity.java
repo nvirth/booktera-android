@@ -11,7 +11,7 @@ import com.booktera.android.R;
  * this page, went on; then logged out, we will go back in history (recursively) to the first
  * un-AuthorizedActivity page
  */
-public class AuthorizedActivity extends ActionBarActivity {
+public abstract class AuthorizedActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,7 +11,7 @@ import com.booktera.android.common.UserData;
 /**
  * Handles the ActionBar for all the Activities
  */
-public class ActionBarActivity extends BaseActivity
+public abstract class ActionBarActivity extends BaseActivity
 {
 
     @Override

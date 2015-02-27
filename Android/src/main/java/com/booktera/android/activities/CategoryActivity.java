@@ -9,10 +9,8 @@ import com.booktera.android.R;
 import com.booktera.android.activities.base.ActionBarActivity;
 import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
 import com.booktera.android.common.Constants;
-import com.booktera.android.fragments.bookBlock.CategoriesFragment;
-import com.booktera.android.fragments.bookBlock.MainHighlightedsFragment;
+import com.booktera.android.fragments.CategoriesFragment;
 import com.booktera.android.fragments.bookBlock.ProductsInCategoryFragment;
-import com.booktera.androidclientproxy.lib.models.EntityFramework.Category;
 
 public class CategoryActivity extends ActionBarActivity
 {

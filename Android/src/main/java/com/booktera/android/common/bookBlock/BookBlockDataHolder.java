@@ -29,18 +29,18 @@ import java.util.List;
  */
 public class BookBlockDataHolder
 {
-    static abstract class Base
+    public static abstract class Base
     {
         public List<InBookBlockPVM> products;
         public int actualPosition;
     }
 
-    static class Normal extends Base
+    public static class Normal extends Base
     {
         public BookBlockType bookBlockType;
     }
 
-    static class UserOrder extends Base
+    public static class UserOrder extends Base
     {
         public TransactionType transactionType;
         public UserOrderPLVM.UserOrderVM userOrder;

@@ -10,6 +10,8 @@ import java.util.Map;
  */
 public class MapCache<TKey, TValue>
 {
+    protected final String tag = ((Object) this).getClass().toString();
+
     private Map<TKey, TValue> _cache = new HashMap<>();
     protected TValue getValue(TKey key)
     {

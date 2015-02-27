@@ -2,6 +2,7 @@ package com.booktera.android.common.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -126,6 +127,7 @@ public class Utils
     }
     //endregion
 
+    //region Log
     /**
      * Logs the msg as error, then throws a RuntimeException with it
      */
@@ -133,4 +135,26 @@ public class Utils
     {
         com.booktera.androidclientproxy.lib.utils.Utils.error(msg, tag);
     }
+    //endregion
+
+    //region extractParam
+    /**
+     * Extracts the given parameter from the Bundle. Throws error if it/the bundle is null.
+     */
+    public static String extractParam(Bundle bundle, String paramName, String tag, String msg)
+    {
+        if (bundle == null)
+        {
+            Utils.error(msg, tag);
+            return null; // unreachable
+        }
+
+        String userFU = bundle.getString(paramName);
+        if (userFU == null)
+            Utils.error(msg, tag);
+
+        return userFU;
+    }
+    //endregion
+
 }
