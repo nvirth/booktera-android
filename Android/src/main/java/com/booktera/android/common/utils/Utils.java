@@ -1,7 +1,9 @@
 package com.booktera.android.common.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,7 +40,11 @@ public class Utils
     }
     public static boolean isNullOrEmpty(CharSequence str)
     {
-        return str == null || str.equals("");
+        if (str == null)
+            return true;
+
+        str = str instanceof String ? str : str.toString();
+        return str.equals("");
     }
 
     //endregion
@@ -157,4 +164,25 @@ public class Utils
     }
     //endregion
 
+    public static void disableOrEnableControls(ViewGroup vg, boolean enable)
+    {
+        for (int i = 0; i < vg.getChildCount(); i++)
+        {
+            View child = vg.getChildAt(i);
+            if (child instanceof ViewGroup)
+                disableOrEnableControls((ViewGroup) child, enable);
+            else
+                child.setEnabled(enable);
+        }
+    }
+
+    public static void alert(Context context, String title, String message)
+    {
+        new AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setNeutralButton(android.R.string.ok, (dialog, which) -> {/*do nothing*/})
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
+    }
 }

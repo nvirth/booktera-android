@@ -48,5 +48,15 @@
   <string name="productGroupDetails_statistics_numOfPassiveBooks">Elfogyott könyvek a csoportban:</string>
   <string name="productGroupDetails_statistics_numOfFinishedTransactions">Befejezett vásárlások száma a csoportban:
   </string>
+  <string name="login_userName_label">Felhasználó név:</string>
+  <string name="login_password_label">Jelszó:</string>
+  <string name="login_loginBtn">Bejelentkezés</string>
+  <string name="login_registerBtn">Regisztráció</string>
+  <string name="title_activity_login">Bejelentkezés</string>
+  <string name="Error_">Hiba!</string>
+  <string name="UserName_and_or_password_mustn_t_be_empty">Felhasználó név és/vagy jelszó nem lehet üres.</string>
+  <string name="Successful_login">Sikeres bejelentkezés</string>
+  <string name="Wrong_userName_and_or_password">Hibás felhasználó név és/vagy jelszó</string>
+  <string name="Successfully_logged_out_">Sikeresen kijelentkeztél.</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.booktera.android.common;
 
+import com.booktera.android.BuildConfig;
+
 /**
  * Created by Norbert on 2015.02.07..
  */
@@ -10,4 +12,7 @@ public class Config
     public static final String ProductImagesUrlDirFormat = ProductImagesUrlDir + "/%1s";
     public static final String UserImagesUrlDir = _imagesUrlDir + "/UserImages";
     public static final String UserImagesUrlDirFormat = UserImagesUrlDir + "/%1s";
+
+    //todo test this in debug/release mode
+    public static final boolean IsDebug = BuildConfig.DEBUG; // || true;
 }

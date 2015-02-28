@@ -5,24 +5,49 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.booktera.android.R;
 import com.booktera.android.activities.CategoryActivity;
+import com.booktera.android.activities.LoginActivity;
 import com.booktera.android.activities.SearchActivity;
 import com.booktera.android.common.UserData;
+import com.booktera.android.common.utils.Utils;
+import com.booktera.androidclientproxy.lib.proxy.Services;
 
 /**
  * Handles the ActionBar for all the Activities
  */
 public abstract class ActionBarActivity extends BaseActivity
 {
+    private Boolean _wasAuthenticated;
+
+    private boolean authLevelChanged()
+    {
+        return _wasAuthenticated != null && _wasAuthenticated != UserData.Instace.isAuthenticated();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        int menuTemplateId = UserData.Instace.isAuthenticated()
+        _wasAuthenticated = UserData.Instace.isAuthenticated();
+
+        int menuTemplateId = _wasAuthenticated
             ? R.menu.authorized
             : R.menu.unauthorized;
 
         getMenuInflater().inflate(menuTemplateId, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        refreshMenuIfNeeded();
+    }
+
+    private void refreshMenuIfNeeded()
+    {
+        if (authLevelChanged())
+            invalidateOptionsMenu();
     }
 
     @Override
@@ -80,21 +105,34 @@ public abstract class ActionBarActivity extends BaseActivity
     }
     private void onLogoutClicked()
     {
-        showToast("The Logout menu item is not implemented yet. ");
+        Services.Authentication.logout(
+            () -> runOnUiThread(() -> {
+                    UserData.Instace.setAuthenticated(false);
+                    UserData.Instace.setUserName(null);
+                    UserData.Instace.setUserId(0);
+
+                    showToast(getString(R.string.Successfully_logged_out_));
+
+                    // Step back one, if it's an auth required page.
+                    // This step will start a chain back-process, and also refresh the menu
+                    if (this instanceof AuthorizedActivity)
+                        ((AuthorizedActivity) this).goBackIfUnauthorized(); // == finish();
+                    else
+                        refreshMenuIfNeeded();
+                }
+            ));
     }
     private void onSearchClicked()
     {
-        Intent gotoSearchIntent = new Intent(this, SearchActivity.class);
-        startActivity(gotoSearchIntent);
+        startActivity(new Intent(this, SearchActivity.class));
     }
     private void onCategoriesClicked()
     {
-        Intent gotoCategorioesIntent = new Intent(this, CategoryActivity.class);
-        startActivity(gotoCategorioesIntent);
+        startActivity(new Intent(this, CategoryActivity.class));
     }
     private void onLoginClicked()
     {
-        showToast("The Login menu item is not implemented yet. ");
+        startActivity(new Intent(this, LoginActivity.class));
     }
     private void onRegisterClicked()
     {

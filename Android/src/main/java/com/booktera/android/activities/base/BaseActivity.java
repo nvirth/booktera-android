@@ -14,16 +14,16 @@ public abstract class BaseActivity extends FragmentActivity
     /**
      * Shows a Toast with length: Toast.LENGTH_SHORT
      */
-    public void showToast(String msg)
+    protected void showToast(String msg)
     {
         Utils.showToast(msg);
     }
-    public void showToast(String msg, boolean isLong)
+    protected void showToast(String msg, boolean isLong)
     {
         Utils.showToast(msg, isLong);
     }
 
-    public void runInFragmentTransaction(Action_1<FragmentTransaction> action)
+    protected void runInFragmentTransaction(Action_1<FragmentTransaction> action)
     {
         Utils.runInFragmentTransaction(this, action);
     }
@@ -39,4 +39,8 @@ public abstract class BaseActivity extends FragmentActivity
         return Utils.extractParam(bundle, paramName, tag, errorMsg);
     }
 
+    protected void alert(String title, String message)
+    {
+        Utils.alert(this, title, message);
+    }
 }
