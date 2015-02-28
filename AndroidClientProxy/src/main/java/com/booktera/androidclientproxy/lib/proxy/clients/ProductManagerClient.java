@@ -58,11 +58,17 @@ public class ProductManagerClient extends RestServiceClientBase implements IProd
         sendRequest(request);
     }
 
+    /**
+     * @param todoWithResponse Action_2[BookBlockPLVM: usersProducts, String: userName]
+     */
     @Override
     public void getUsersProductsByFriendlyUrl(String friendlyUrl, int pageNumber, int productsPerPage, Action_2<BookBlockPLVM, String> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
         getUsersProductsByFriendlyUrl(friendlyUrl, pageNumber, productsPerPage, false, todoWithResponse, todoIfResponseFailed);
     }
+    /**
+     * @param todoWithResponse Action_2[BookBlockPLVM: usersProducts, String: userName]
+     */
     @Override
     public void getUsersProductsByFriendlyUrl(String friendlyUrl, int pageNumber, int productsPerPage, boolean forExchange, Action_2<BookBlockPLVM, String> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
