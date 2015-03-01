@@ -5,6 +5,7 @@ import android.net.http.AndroidHttpClient;
 import android.util.Log;
 import com.booktera.androidclientproxy.lib.R;
 import com.booktera.androidclientproxy.lib.proxy.Request;
+import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -32,7 +33,12 @@ import java.util.concurrent.Executors;
 
 /**
  * This class is used for communicating with the backend REST services.
- * Note: Initialization required, by calling the setDefaultErrorMsgAction method!
+ * Note: Initialization required:
+ * <ul>
+ *     <li>setRedirectToLoginAction</li>
+ *     <li>setSendErrorMsgAction</li>
+ *     <li>setResources</li>
+ * </ul>
  */
 public abstract class RestServiceClientBase
 {
@@ -50,6 +56,18 @@ public abstract class RestServiceClientBase
     protected String resourcePackageName;
 
     // -- Props
+
+    //region redirectToLoginAction
+    private static Action redirectToLoginAction;
+    public static Action getRedirectToLoginAction()
+    {
+        return redirectToLoginAction;
+    }
+    public static void setRedirectToLoginAction(Action redirectToLoginAction)
+    {
+        RestServiceClientBase.redirectToLoginAction = redirectToLoginAction;
+    }
+    //endregion
 
     //region sendErrorMsgAction
     private static Action_1<String> sendErrorMsgAction;
@@ -199,12 +217,12 @@ public abstract class RestServiceClientBase
         if (statusCode == HttpStatus.SC_FORBIDDEN
             || statusCode == HttpStatus.SC_UNAUTHORIZED)
         {
-            //todo redirect to Login page!
+            //todo test with auth pages: redirectToLoginAction.run();
+            redirectToLoginAction.run();
             handled = true;
-            throw new UnsupportedOperationException();
         }
 
-        if (todoIfResponseFailed != null && !handled)//todo this here is nok
+        if (todoIfResponseFailed != null && !handled)
             todoIfResponseFailed.run(response);
         else
             showDefaultErrorMessage();

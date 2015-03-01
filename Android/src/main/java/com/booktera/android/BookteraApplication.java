@@ -2,10 +2,12 @@ package com.booktera.android;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
+import com.booktera.android.activities.LoginActivity;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
 
 /**
@@ -42,6 +44,10 @@ public class BookteraApplication extends Application
                 () -> Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show()
             ));
         RestServiceClientBase.setResources(getAppResources());
+        RestServiceClientBase.setRedirectToLoginAction(
+            () -> handler.post(() ->
+                    startActivity(new Intent(this, LoginActivity.class))
+            ));
     }
 
     public static Resources getAppResources()

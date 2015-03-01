@@ -13,6 +13,5 @@ public class Config
     public static final String UserImagesUrlDir = _imagesUrlDir + "/UserImages";
     public static final String UserImagesUrlDirFormat = UserImagesUrlDir + "/%1s";
 
-    //todo test this in debug/release mode
-    public static final boolean IsDebug = BuildConfig.DEBUG; // || true;
+    public static final boolean IsDebug = BuildConfig.DEBUG;
 }
