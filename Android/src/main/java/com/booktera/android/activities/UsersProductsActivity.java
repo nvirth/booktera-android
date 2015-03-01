@@ -1,15 +1,12 @@
 package com.booktera.android.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.activities.base.UnAuthorizedActivity;
 import com.booktera.android.common.Constants;
-import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.SearchFragment;
 import com.booktera.android.fragments.bookBlock.UsersProductsFragment;
 
-public class UsersProductsActivity extends ActionBarActivity
+public class UsersProductsActivity extends UnAuthorizedActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)

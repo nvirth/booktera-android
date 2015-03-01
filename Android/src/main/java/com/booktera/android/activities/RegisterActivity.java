@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
 import com.booktera.android.activities.base.AuthenticationActivityBase;
 import com.booktera.android.common.Config;
 import com.booktera.android.common.Constants;

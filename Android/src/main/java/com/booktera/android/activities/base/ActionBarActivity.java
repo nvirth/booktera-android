@@ -13,9 +13,10 @@ import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
 /**
- * Handles the ActionBar for all the Activities
+ * Handles the ActionBar for all the Activities.
+ * All of the Activities derive from this, because all of them have ActionBar
  */
-public abstract class ActionBarActivity extends BaseActivity
+abstract class ActionBarActivity extends BaseActivity
 {
     private Boolean _wasAuthenticated;
 

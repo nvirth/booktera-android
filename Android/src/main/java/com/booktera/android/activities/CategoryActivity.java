@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.activities.base.UnAuthorizedActivity;
 import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
 import com.booktera.android.common.Constants;
 import com.booktera.android.fragments.CategoriesFragment;
 import com.booktera.android.fragments.bookBlock.ProductsInCategoryFragment;
 
-public class CategoryActivity extends ActionBarActivity
+public class CategoryActivity extends UnAuthorizedActivity
 {
     FragmentPagerAdapter categoryPagerAdapter;
 

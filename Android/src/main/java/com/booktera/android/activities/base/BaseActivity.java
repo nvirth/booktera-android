@@ -8,7 +8,10 @@ import com.booktera.android.common.Constants;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 
-public abstract class BaseActivity extends FragmentActivity
+/**
+ * This is the base of all the Activities in this app
+ */
+abstract class BaseActivity extends FragmentActivity
 {
     protected final String tag = ((Object) this).getClass().toString();
 

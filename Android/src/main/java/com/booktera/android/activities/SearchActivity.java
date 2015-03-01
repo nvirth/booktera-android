@@ -8,11 +8,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.activities.base.UnAuthorizedActivity;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.android.fragments.bookBlock.SearchFragment;
 
-public class SearchActivity extends ActionBarActivity
+public class SearchActivity extends UnAuthorizedActivity
 {
     protected ViewHolder vh;
 

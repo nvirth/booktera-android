@@ -9,13 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.widget.RelativeLayout;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.activities.base.UnAuthorizedActivity;
 import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
 import com.booktera.android.fragments.LoremIpsumFragment;
 import com.booktera.android.fragments.bookBlock.MainHighlightedsFragment;
 import com.booktera.android.fragments.bookBlock.NewestsFragment;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends UnAuthorizedActivity
 {
     FragmentPagerAdapter mainPagerAdapter;
 

@@ -6,6 +6,17 @@ import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
+/**
+ * This class only holds some common logic for Activities dealing with authentication <br />
+ * <br />
+ * Type hierarchy:
+ <pre>
+ BaseActivity
+    ActionBarActivity
+        UnAuthorizedActivity
+            AuthenticationActivityBase
+ </pre>
+ */
 public abstract class AuthenticationActivityBase extends UnAuthorizedActivity
 {
     protected void doLogin(String userName, String password, ViewGroup root)

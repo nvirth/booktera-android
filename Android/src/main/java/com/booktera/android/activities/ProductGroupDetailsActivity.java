@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
+import com.booktera.android.activities.base.UnAuthorizedActivity;
 import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.ProductGroupDetailsVM;
@@ -16,7 +16,7 @@ import com.booktera.android.fragments.bookBlock.ProductGroupDetails_BooksFragmen
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookRowPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-public class ProductGroupDetailsActivity extends ActionBarActivity
+public class ProductGroupDetailsActivity extends UnAuthorizedActivity
 {
     FragmentPagerAdapter pgPagerAdapter;
 
