@@ -22,7 +22,6 @@ public class UserProfileManagerClient extends RestServiceClientBase implements I
     {
         Request<UserProfileEditVM> request = new Request<>(UserProfileEditVM.class);
         request.requestUrl = baseAddress + "/GetForEdit";
-        request.httpPostVerb = HttpPostVerb.POST;
         request.todoWithResponse = todoWithResult;
 
         sendRequest(request);

@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.booktera.android.R;
-import com.booktera.android.activities.CategoryActivity;
-import com.booktera.android.activities.LoginActivity;
-import com.booktera.android.activities.RegisterActivity;
-import com.booktera.android.activities.SearchActivity;
+import com.booktera.android.activities.*;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.proxy.Services;
@@ -99,7 +96,7 @@ abstract class ActionBarActivity extends BaseActivity
     }
     private void onProfileClicked()
     {
-        showToast("The Profile menu item is not implemented yet. ");
+        startActivity(new Intent(this, ProfileActivity.class));
     }
     private void onSellClicked()
     {

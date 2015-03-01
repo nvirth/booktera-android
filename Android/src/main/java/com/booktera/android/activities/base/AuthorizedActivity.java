@@ -27,7 +27,6 @@ public abstract class AuthorizedActivity extends ActionBarActivity
 
     public void goBackIfUnauthorized()
     {
-        //todo test with auth pages: goBackIfUnauthorized()
         if (!UserData.Instace.isAuthenticated())
             finish();
     }

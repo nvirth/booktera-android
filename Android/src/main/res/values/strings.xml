@@ -72,5 +72,10 @@
   </string>
   <string name="Successful_registration">Sikeres regisztráció!</string>
   <string name="The_system_will_now_automatically_log_you_in">A rendszer most automatikusan be fog léptetni.</string>
+  <string name="profile_fullName_label">Teljes név:</string>
+  <string name="profile_email_label">E-mail cím:</string>
+  <string name="profile_phoneNumber_label">Telefon szám:</string>
+  <string name="profile_editBtn">Szerkesztés</string>
+  <string name="title_activity_profile">Profilom</string>
 
 </resources>

@@ -51,23 +51,23 @@ public class Utils
 
     //region setImage
 
+    public static void setUserImage(String imageFile, ImageView imageView)
+    {
+        setImage(imageFile, imageView, Config.UserImagesUrlDirFormat);
+    }
     public static void setProductImage(InBookBlockPVM inBookBlockPVM, ImageView imageView)
     {
-        setImage(inBookBlockPVM, imageView, Config.ProductImagesUrlDirFormat);
+        String imageFile = Utils.ifNullOrEmpty(
+            inBookBlockPVM.getProduct().getImageUrl(),
+            inBookBlockPVM.getProductGroup().getImageUrl()
+        );
+        setImage(imageFile, imageView, Config.ProductImagesUrlDirFormat);
     }
-    public static void setUserImage(InBookBlockPVM inBookBlockPVM, ImageView imageView)
-    {
-        setImage(inBookBlockPVM, imageView, Config.UserImagesUrlDirFormat);
-    }
-    private static void setImage(InBookBlockPVM inBookBlockPVM, ImageView imageView, String imageDirUrlFormat)
+    private static void setImage(String imageFile, ImageView imageView, String imageDirUrlFormat)
     {
         String url = null;
         try
         {
-            String imageFile = Utils.ifNullOrEmpty(
-                inBookBlockPVM.getProduct().getImageUrl(),
-                inBookBlockPVM.getProductGroup().getImageUrl()
-            );
             url = String.format(imageDirUrlFormat, imageFile);
             UrlImageViewHelper.setUrlDrawable(imageView, url, R.drawable.no_image);
         }
