@@ -178,10 +178,14 @@ public class Utils
 
     public static void alert(Context context, String title, String message)
     {
+        alert(context, title, message, (dialog, which) -> {/*do nothing*/});
+    }
+    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener onClick)
+    {
         new AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(message)
-            .setNeutralButton(android.R.string.ok, (dialog, which) -> {/*do nothing*/})
+            .setNeutralButton(android.R.string.ok, onClick)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show();
     }

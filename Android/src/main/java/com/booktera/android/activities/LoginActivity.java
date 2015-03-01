@@ -1,32 +1,20 @@
 package com.booktera.android.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.ActionBarActivity;
-import com.booktera.android.common.BookteraFragmentPagerAdapterBase;
+import com.booktera.android.activities.base.AuthenticationActivityBase;
 import com.booktera.android.common.Config;
-import com.booktera.android.common.UserData;
-import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.LoremIpsumFragment;
-import com.booktera.android.fragments.bookBlock.MainHighlightedsFragment;
-import com.booktera.android.fragments.bookBlock.NewestsFragment;
-import com.booktera.androidclientproxy.lib.proxy.Services;
+import com.booktera.android.common.Constants;
 
-public class LoginActivity extends ActionBarActivity
+public class LoginActivity extends AuthenticationActivityBase
 {
     protected ViewHolder vh;
+    private static final int dummyRequestCode = 1;
 
     class ViewHolder
     {
@@ -54,41 +42,17 @@ public class LoginActivity extends ActionBarActivity
         vh = new ViewHolder(this);
 
         vh.loginBtn.setOnClickListener(v -> {
-            if (Utils.isNullOrEmpty(vh.userName.getText()) || Utils.isNullOrEmpty(vh.password.getText()))
-            {
-                alert(getString(R.string.Error_), getString(R.string.UserName_and_or_password_mustn_t_be_empty));
-                return;
-            }
-
-            Utils.disableOrEnableControls(vh.root,/*enable*/ false);
-
             String userName = vh.userName.getText().toString();
-            Services.Authentication.login(
-                userName,
-                vh.password.getText().toString(),
-                /*persistent*/ false,
-                (wasSuccessful, userId) -> runOnUiThread(() -> {
-                    if (wasSuccessful)
-                    {
-                        UserData.Instace.setAuthenticated(true);
-                        UserData.Instace.setUserName(userName);
-                        UserData.Instace.setUserId(userId);
-
-                        showToast(getString(R.string.Successful_login));
-
-                        finish();
-                    }
-                    else
-                    {
-                        alert(getString(R.string.Error_), getString(R.string.Wrong_userName_and_or_password));
-                        Utils.disableOrEnableControls(vh.root,/*enable*/ true);
-                    }
-                }));
+            String password = vh.password.getText().toString();
+            doLogin(userName, password, vh.root);
         });
         vh.registerBtn.setOnClickListener(v -> {
-            //todo implement the register button
-            showToast("The registerBtn menu item is not implemented yet. ");
-            return;
+            Intent intent = new Intent(this, RegisterActivity.class);
+            intent.putExtra(Constants.PARAM_USER_NAME, vh.userName.getText().toString());
+            intent.putExtra(Constants.PARAM_PASSWORD, vh.password.getText().toString());
+
+            // We will end up in 'onActivityResult' if the registration was successful
+            startActivityForResult(intent, dummyRequestCode);
         });
 
         if (Config.IsDebug)
@@ -98,4 +62,11 @@ public class LoginActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // We came back from successful Registration
+        if(resultCode == RESULT_OK)
+            finish();
+    }
 }

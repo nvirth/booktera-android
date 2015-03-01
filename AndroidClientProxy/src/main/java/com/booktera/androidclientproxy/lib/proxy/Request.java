@@ -26,6 +26,10 @@ public class Request<T>
     public String requestUrl;
     public HttpPostVerb httpPostVerb = HttpPostVerb.NON_POST__GET;
     public Action_1<T> todoWithResponse;
+
+    /**
+     * Action_1[HttpResponse: Response]. Null if there was some network error.
+     */
     public Action_1<HttpResponse> todoIfResponseFailed;
     public Action todoAfterResponseReceived;
 

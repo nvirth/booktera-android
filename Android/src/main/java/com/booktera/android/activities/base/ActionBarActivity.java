@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.booktera.android.R;
 import com.booktera.android.activities.CategoryActivity;
 import com.booktera.android.activities.LoginActivity;
+import com.booktera.android.activities.RegisterActivity;
 import com.booktera.android.activities.SearchActivity;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
@@ -136,6 +137,6 @@ public abstract class ActionBarActivity extends BaseActivity
     }
     private void onRegisterClicked()
     {
-        showToast("The Register menu item is not implemented yet. ");
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

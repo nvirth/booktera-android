@@ -1,5 +1,6 @@
 package com.booktera.android.activities.base;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -42,5 +43,9 @@ public abstract class BaseActivity extends FragmentActivity
     protected void alert(String title, String message)
     {
         Utils.alert(this, title, message);
+    }
+    protected void alert(String title, String message, DialogInterface.OnClickListener onClick)
+    {
+        Utils.alert(this, title, message, onClick);
     }
 }

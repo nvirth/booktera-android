@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
 
@@ -21,6 +22,10 @@ public class BookteraApplication extends Application
         _this = this;
 
         InitRestServiceClientBase();
+
+        // Because we sometimes can't get even a StackTrace while observing an unhandled exception during debugging
+        Thread.setDefaultUncaughtExceptionHandler((thread, ex) ->
+            Log.e(this.getClass().toString(), "Unhandled exception occurred", ex));
     }
 
     /**

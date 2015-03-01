@@ -49,14 +49,28 @@
   <string name="productGroupDetails_statistics_numOfFinishedTransactions">Befejezett vásárlások száma a csoportban:
   </string>
   <string name="login_userName_label">Felhasználó név:</string>
+  <string name="register_userName_label">Felhasználó név:</string>
   <string name="login_password_label">Jelszó:</string>
+  <string name="register_password_label">Jelszó:</string>
   <string name="login_loginBtn">Bejelentkezés</string>
   <string name="login_registerBtn">Regisztráció</string>
+  <string name="register_registerBtn">Regisztráció</string>
   <string name="title_activity_login">Bejelentkezés</string>
   <string name="Error_">Hiba!</string>
   <string name="UserName_and_or_password_mustn_t_be_empty">Felhasználó név és/vagy jelszó nem lehet üres.</string>
   <string name="Successful_login">Sikeres bejelentkezés</string>
   <string name="Wrong_userName_and_or_password">Hibás felhasználó név és/vagy jelszó</string>
   <string name="Successfully_logged_out_">Sikeresen kijelentkeztél.</string>
+  <string name="register_email_label">E-mail cím:</string>
+  <string name="register_confirmPassword_label">Jelszó újra:</string>
+  <string name="title_activity_register">Regisztráció</string>
+  <string name="None_of_the_input_fields_may_be_empty">Egyik beviteli mező sem lehet üres.</string>
+  <string name="The_password_and_the_confirm_password_aren_t_equal">A jelszó és az ellenőrző jelszó nem egyeznek meg.
+  </string>
+  <string name="Unsuccessful_registration_error_msg">A regisztráció nem sikerült. Ellenőrizd, hogy érvényes e-mail címet
+    adtál-e meg, esetleg próbálkozz más felhasználó névvel.
+  </string>
+  <string name="Successful_registration">Sikeres regisztráció!</string>
+  <string name="The_system_will_now_automatically_log_you_in">A rendszer most automatikusan be fog léptetni.</string>
 
 </resources>

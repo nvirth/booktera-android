@@ -142,6 +142,8 @@ public abstract class RestServiceClientBase
 
                     if (mockAppliedSuccessfully)
                         showMockAppliedErrorMessage();
+                    else if (r.todoIfResponseFailed != null)
+                        r.todoIfResponseFailed.run(null);
                     else
                         showDefaultErrorMessage();
                 }
@@ -197,12 +199,12 @@ public abstract class RestServiceClientBase
         if (statusCode == HttpStatus.SC_FORBIDDEN
             || statusCode == HttpStatus.SC_UNAUTHORIZED)
         {
-            //TODO redirect to Login page!
+            //todo redirect to Login page!
             handled = true;
             throw new UnsupportedOperationException();
         }
 
-        if (todoIfResponseFailed != null && !handled)
+        if (todoIfResponseFailed != null && !handled)//todo this here is nok
             todoIfResponseFailed.run(response);
         else
             showDefaultErrorMessage();
@@ -276,7 +278,7 @@ public abstract class RestServiceClientBase
         String jsonData;
         if (requestData.containsKey("")) // -- Prepared
         {
-            jsonData = new Gson().toJson(requestData.get(""));
+            jsonData = (String) requestData.get("");
 
             if (requestData.size() > 1)
             {
