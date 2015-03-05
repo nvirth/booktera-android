@@ -1,28 +1,19 @@
 package com.booktera.android.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.booktera.android.R;
-import com.booktera.android.activities.base.AuthenticationActivityBase;
 import com.booktera.android.activities.base.AuthorizedActivity;
-import com.booktera.android.common.Config;
-import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
-import com.booktera.android.common.models.ProductGroupDetailsVM;
 import com.booktera.android.common.models.ProfileVM;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.androidclientproxy.lib.models.ProductModels.BookRowPLVM;
 import com.booktera.androidclientproxy.lib.models.UserProfileEditVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
-
-import java.util.Date;
-import java.util.Random;
 
 public class ProfileActivity extends AuthorizedActivity
 {
@@ -57,20 +48,24 @@ public class ProfileActivity extends AuthorizedActivity
         setContentView(R.layout.activity_profile);
         vh = new ViewHolder(this);
 
-        vh.editBtn.setOnClickListener(v -> {/*todo  vh.editBtn.setOnClickListener*/});
+        vh.editBtn.setOnClickListener(v -> {
+                ProfileVM.refreshEditableInstance();
+                startActivityForResult(new Intent(this, ProfileEditActivity.class), dummyRequestCode);
+            }
+        );
 
         loadData();
     }
 
     private void loadData()
     {
-        UserProfileEditVM userProfile = ProfileVM.Instance.getUserProfile();
+        UserProfileEditVM userProfile = ProfileVM.SavedInstance.getUserProfile();
         if (userProfile != null)
             applyData(userProfile);
         else
             Services.UserProfileManager.getForEdit(
                 userProfileEditVM -> runOnUiThread(() -> {
-                    ProfileVM.Instance.setUserProfile(userProfileEditVM);
+                    ProfileVM.SavedInstance.setUserProfile(userProfileEditVM);
                     applyData(userProfileEditVM);
                 }));
     }
@@ -82,5 +77,12 @@ public class ProfileActivity extends AuthorizedActivity
         vh.email.setText(userProfile.getEMail());
         vh.phoneNumber.setText(userProfile.getPhoneNumber());
         Utils.setUserImage(userProfile.getImageUrl(), vh.userImage);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // refresh
+        loadData();
     }
 }

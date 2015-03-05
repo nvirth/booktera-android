@@ -27,7 +27,7 @@ public abstract class AuthenticationActivityBase extends UnAuthorizedActivity
             return;
         }
 
-        Utils.disableOrEnableControls(root,/*enable*/ false);
+        Utils.disableControls(root);
 
         Services.Authentication.login(userName, password,/*persistent*/ false,
             (wasSuccessful, userId) -> runOnUiThread(() -> {
@@ -44,7 +44,7 @@ public abstract class AuthenticationActivityBase extends UnAuthorizedActivity
                 else
                 {
                     alert(getString(R.string.Error_), getString(R.string.Wrong_userName_and_or_password));
-                    Utils.disableOrEnableControls(root,/*enable*/ true);
+                    Utils.enableControls(root);
                 }
             }));
     }

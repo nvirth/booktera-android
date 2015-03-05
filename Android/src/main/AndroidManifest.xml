@@ -38,6 +38,9 @@
     <activity android:name=".activities.ProfileActivity"
               android:label="@string/title_activity_profile"
         />
+    <activity android:name=".activities.ProfileEditActivity"
+              android:label="@string/title_activity_profileEdit"
+        />
   </application>
 
 </manifest>

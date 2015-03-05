@@ -164,7 +164,15 @@ public class Utils
     }
     //endregion
 
-    public static void disableOrEnableControls(ViewGroup vg, boolean enable)
+    public static void disableControls(ViewGroup vg)
+    {
+        disableOrEnableControls(vg, /*enable*/ false);
+    }
+    public static void enableControls(ViewGroup vg)
+    {
+        disableOrEnableControls(vg, /*enable*/ true);
+    }
+    private static void disableOrEnableControls(ViewGroup vg, boolean enable)
     {
         for (int i = 0; i < vg.getChildCount(); i++)
         {

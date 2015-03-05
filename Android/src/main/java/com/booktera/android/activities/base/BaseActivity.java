@@ -14,6 +14,7 @@ import com.booktera.androidclientproxy.lib.utils.Action_1;
 abstract class BaseActivity extends FragmentActivity
 {
     protected final String tag = ((Object) this).getClass().toString();
+    protected static final int dummyRequestCode = 1;
 
     /**
      * Shows a Toast with length: Toast.LENGTH_SHORT

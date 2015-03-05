@@ -2,7 +2,6 @@ package com.booktera.androidclientproxy.lib.models;
 
 public class UserProfileEditVM
 {
-
     private String PhoneNumber;
     public String getPhoneNumber()
     {
@@ -47,6 +46,15 @@ public class UserProfileEditVM
         FullName = value;
     }
 
+    // --
+
+    public UserProfileEditVM(UserProfileEditVM instance)
+    {
+        PhoneNumber = instance.PhoneNumber;
+        EMail = instance.EMail;
+        ImageUrl = instance.ImageUrl;
+        FullName = instance.FullName;
+    }
 }
 
 

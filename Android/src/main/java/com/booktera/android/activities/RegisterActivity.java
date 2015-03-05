@@ -72,7 +72,7 @@ public class RegisterActivity extends AuthenticationActivityBase
                 return;
             }
 
-            Utils.disableOrEnableControls(vh.root,/*enable*/ false);
+            Utils.disableControls(vh.root);
 
             Services.Registration.register(userName, email, password, confirmPassword,
                 /*Success*/
@@ -89,7 +89,7 @@ public class RegisterActivity extends AuthenticationActivityBase
                         alert(getString(R.string.Error_), getString(com.booktera.androidclientproxy.lib.R.string.default_connection_error_msg));
                     else
                         alert(getString(R.string.Error_), getString(R.string.Unsuccessful_registration_error_msg));
-                    Utils.disableOrEnableControls(vh.root,/*enable*/ true);
+                    Utils.enableControls(vh.root);
                 }));
         });
 

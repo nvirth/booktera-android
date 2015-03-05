@@ -14,7 +14,6 @@ import com.booktera.android.common.Constants;
 public class LoginActivity extends AuthenticationActivityBase
 {
     protected ViewHolder vh;
-    private static final int dummyRequestCode = 1;
 
     class ViewHolder
     {
