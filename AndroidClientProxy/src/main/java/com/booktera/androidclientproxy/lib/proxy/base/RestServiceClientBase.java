@@ -4,13 +4,14 @@ import android.content.res.Resources;
 import android.net.http.AndroidHttpClient;
 import android.util.Log;
 import com.booktera.androidclientproxy.lib.R;
-import com.booktera.androidclientproxy.lib.proxy.Request;
-import com.booktera.androidclientproxy.lib.utils.Action;
-import com.booktera.androidclientproxy.lib.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
 import com.booktera.androidclientproxy.lib.enums.HttpRequestHeader;
+import com.booktera.androidclientproxy.lib.proxy.Request;
+import com.booktera.androidclientproxy.lib.utils.Action;
+import com.booktera.androidclientproxy.lib.utils.Action_1;
+import com.booktera.androidclientproxy.lib.utils.GsonHelper;
+import com.booktera.androidclientproxy.lib.utils.Utils;
+import com.google.gson.JsonParseException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -22,7 +23,6 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import com.booktera.androidclientproxy.lib.utils.Action_1;
 
 import java.io.*;
 import java.net.URI;
@@ -250,7 +250,7 @@ public abstract class RestServiceClientBase
             //return new Gson().fromJson(reader, type);
             // But while developing, we sometimes want to see the received entity too
             String entityStr = Utils.readToEnd(reader);
-            return new Gson().fromJson(entityStr, type);
+            return GsonHelper.getGson().fromJson(entityStr, type);
         }
         catch (JsonParseException e)
         {
@@ -301,13 +301,13 @@ public abstract class RestServiceClientBase
             if (requestData.size() > 1)
             {
                 String msg = "The request contained either raw and prepared data elements. Raw elements will be ignored. Data : ";
-                msg += new Gson().toJson(requestData);
+                msg += GsonHelper.getGson().toJson(requestData);
                 Log.w(tag, msg);
             }
         }
         else // -- Raw
         {
-            jsonData = new Gson().toJson(requestData);
+            jsonData = GsonHelper.getGson().toJson(requestData);
         }
 
         HttpEntityEnclosingRequestBase entityRequest = (HttpEntityEnclosingRequestBase) httpRequest;

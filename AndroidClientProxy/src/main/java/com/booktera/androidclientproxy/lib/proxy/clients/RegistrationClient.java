@@ -3,6 +3,7 @@ package com.booktera.androidclientproxy.lib.proxy.clients;
 import com.booktera.androidclientproxy.lib.models.AccountModels.RegisterVM;
 import com.booktera.androidclientproxy.lib.models.UserAddressVM;
 import com.booktera.androidclientproxy.lib.proxy.clients.interfaces.IRegistrationClient;
+import com.booktera.androidclientproxy.lib.utils.GsonHelper;
 import com.google.gson.Gson;
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
 import org.apache.http.HttpResponse;
@@ -49,7 +50,7 @@ public class RegistrationClient extends RestServiceClientBase implements IRegist
         userAddressVM.setZipCode("1010");
         registerVM.setUserAddress(userAddressVM);
 
-        return new Gson().toJson(registerVM);
+        return GsonHelper.getGson().toJson(registerVM);
     }
 }
 
