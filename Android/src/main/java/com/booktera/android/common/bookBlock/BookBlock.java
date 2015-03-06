@@ -61,19 +61,22 @@ public class BookBlock
     private ViewHolder vh;
     private View bookBlockView;
     private Context context;
-    //TODO this shouldn't be here: dataHolder in BookBlock
+    //todo this shouldn't be here: dataHolder in BookBlock
     private BookBlockDataHolder.Base dataHolder;
 
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
     public BookBlock(InBookBlockPVM vm, View bookBlockView, Context context, BookBlockDataHolder.Base dataHolder)
     {
+        this(vm, new ViewHolder(bookBlockView), bookBlockView, context, dataHolder);
+    }
+    public BookBlock(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Context context, BookBlockDataHolder.Base dataHolder)
+    {
         this.vm = vm;
+        this.vh = vh;
         this.bookBlockView = bookBlockView;
         this.context = context;
         this.dataHolder = dataHolder;
-
-        this.vh = new BookBlock.ViewHolder(bookBlockView);
     }
 
     public void fill()

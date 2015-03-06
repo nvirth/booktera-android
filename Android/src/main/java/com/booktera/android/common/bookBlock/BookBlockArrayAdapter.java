@@ -59,7 +59,7 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
         }
 
         BookBlock.ViewHolder vh = (BookBlock.ViewHolder) bookBlockView.getTag();
-        BookBlock bookBlock = new BookBlock(vm, bookBlockView, context, data);
+        BookBlock bookBlock = new BookBlock(vm, vh, bookBlockView, context, data);
         bookBlock.fill();
         bookBlock.setupContextMenu();
 

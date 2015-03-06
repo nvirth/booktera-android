@@ -1,6 +1,5 @@
 package com.booktera.android.common.utils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,6 +39,7 @@ public class Utils
     }
     public static boolean isNullOrEmpty(CharSequence str)
     {
+        //todo use TextUtils
         if (str == null)
             return true;
 
@@ -164,6 +164,7 @@ public class Utils
     }
     //endregion
 
+    //region Disable/Enable Controls
     public static void disableControls(ViewGroup vg)
     {
         disableOrEnableControls(vg, /*enable*/ false);
@@ -183,7 +184,9 @@ public class Utils
                 child.setEnabled(enable);
         }
     }
+    //endregion
 
+    //region alert
     public static void alert(Context context, String title, String message)
     {
         alert(context, title, message, (dialog, which) -> {/*do nothing*/});
@@ -197,4 +200,5 @@ public class Utils
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show();
     }
+    //endregion
 }

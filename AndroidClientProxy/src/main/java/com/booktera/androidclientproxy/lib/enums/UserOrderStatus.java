@@ -310,6 +310,33 @@ public enum UserOrderStatus
 
     // -- Not exist in DB
     @SerializedName("100")
-    CartDeleting
+    CartDeleting;
+
+    public String toDescriptionString()
+    {
+        switch (this)
+        {
+            // Normal
+            case Cart:
+                return "Kosárban";
+            case BuyedWaiting:
+                return "Válaszra vár";
+            case BuyedExchangeOffered:
+                return "Csere ajánlva";
+            case FinalizedExchange:
+                return "Véglegesített tranzakció cserével";
+            case FinalizedCash:
+                return "Véglegesített tranzakció fizetéssel";
+            case Finished:
+                return "Befejezett tranzakció";
+
+            // Not exist in DB
+            case CartDeleting:
+                return "Kosár törlés alatt";
+
+            default:
+                return toString();
+        }
+    }
 }
 

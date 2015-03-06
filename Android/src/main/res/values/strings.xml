@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Space: &#160; -->
+  <!-- '<': &lt; -->
+  <!-- '>': &gt; -->
+
   <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
     ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
     ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -86,5 +90,15 @@
   <string name="profileEdit_save_failureErrorMessage">Nem sikerült módosítani az adataid. Ellenőrizd, hogy érvényes
     e-mail címet/telefon számot adtál-e meg. Ha így van, valószínűleg már foglalt az általad választott e-mail cím.
   </string>
+  <string name="userOrder_sumAmount">A rendelés összege:&#160;</string>
+  <string name="userOrder_sumCustomerFee_format">Ebből jutalék: %s</string>
+  <string name="userOrder_customersFeePercent_format" formatted="false">&#160;(%s%)</string>
+  <string name="userOrder_status">A rendelés állapota:&#160;</string>
+  <string name="userOrder_books_mainLabel"><u>A KOSÁR TARTALMA</u></string>
+  <string name="userOrder_exchangeBooks_mainLabel"><u>A CSERE-KOSÁR</u></string>
+  <string name="Your_feedback_">A Te értékelésed:&#160;</string>
+  <string name="The_vendors_feedback_">Az eladó értékelése:&#160;</string>
+  <string name="The_customers_feedback_">A vevő értékelése:&#160;</string>
+
 
 </resources>
