@@ -1,8 +1,11 @@
 package com.booktera.androidclientproxy.lib.proxy.clients.interfaces;
 
+import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 import org.apache.http.HttpResponse;
+
+import java.util.List;
 
 /**
  * Created by Norbert on 2015.02.01..
@@ -25,4 +28,8 @@ public interface ITransactionManagerClient
     void finalizeOrderDenyExchange(int userOrderId, Action todoAfterResponseReceived, Action_1<HttpResponse> todoIfResponseFailed);
     void closeOrderSuccessful(int userOrderId, Action todoAfterResponseReceived, Action_1<HttpResponse> todoIfResponseFailed);
     void closeOrderUnsuccessful(int userOrderId, Action todoAfterResponseReceived, Action_1<HttpResponse> todoIfResponseFailed);
+
+    void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
+    void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
+    void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
 }

@@ -1,6 +1,7 @@
 package com.booktera.androidclientproxy.lib.proxy.clients;
 
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
+import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.clients.interfaces.ITransactionManagerClient;
 import org.apache.http.HttpResponse;
 import com.booktera.androidclientproxy.lib.utils.Action;
@@ -237,52 +238,44 @@ public class TransactionManagerClient extends RestServiceClientBase implements I
 
     }
 
-    //TODO implement the remaining TransactionManagerClient
-//    public void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<ObservableCollection<UserOrderPlvmWp>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
-//    {
-//        sendRequest(new Request<ObservableCollection<UserOrderPlvmWp>>());
-//    }
-//
-//    /// <summary>
-//    /// http://localhost:50135/TransactionManagerService.svc/GetUsersCartsVM?customerId=&vendorId=1
-//    /// </summary>
-//    private String getUsersCartsVM_BuildRequest(Integer customerId, Integer vendorId)
-//    {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(baseAddress).append("/GetUsersCartsVM").append("?customerId=").append(customerId).append("&vendorId=").append(vendorId);
-//        return stringBuilder.toString();
-//    }
-//
-//    public void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<ObservableCollection<UserOrderPlvmWp>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
-//    {
-//        sendRequest(new Request<ObservableCollection<UserOrderPlvmWp>>());
-//    }
-//
-//    /// <summary>
-//    /// http://localhost:50135/TransactionManagerService.svc/GetUsersInProgressOrdersVM?customerId=&vendorId=1
-//    /// </summary>
-//    private String getUsersInProgressOrdersVM_BuildRequest(Integer customerId, Integer vendorId)
-//    {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(baseAddress).append("/GetUsersInProgressOrdersVM").append("?customerId=").append(customerId).append("&vendorId=").append(vendorId);
-//        return stringBuilder.toString();
-//    }
-//
-//    public void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<ObservableCollection<UserOrderPlvmWp>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
-//    {
-//        sendRequest(new Request<ObservableCollection<UserOrderPlvmWp>>());
-//    }
-//
-//    /// <summary>
-//    /// http://localhost:50135/TransactionManagerService.svc/GetUsersFinishedTransactionsVM?customerId=&vendorId=1
-//    /// </summary>
-//    private String getUsersFinishedTransactionsVM_BuildRequest(Integer customerId, Integer vendorId)
-//    {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(baseAddress).append("/GetUsersFinishedTransactionsVM").append("?customerId=").append(customerId).append("&vendorId=").append(vendorId);
-//        return stringBuilder.toString();
-//    }
+    @Override
+    public void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    {
+        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        request.requestUrl = baseAddress + "/GetUsersCartsVM";
+        request.todoWithResponse = todoWithResponse;
+        request.todoIfResponseFailed = todoIfResponseFailed;
+        request.requestData.put("customerId", customerId);
+        request.requestData.put("vendorId", vendorId);
 
+        sendRequest(request);
+    }
+
+    @Override
+    public void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    {
+        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        request.requestUrl = baseAddress + "/GetUsersInProgressOrdersVM";
+        request.todoWithResponse = todoWithResponse;
+        request.todoIfResponseFailed = todoIfResponseFailed;
+        request.requestData.put("customerId", customerId);
+        request.requestData.put("vendorId", vendorId);
+
+        sendRequest(request);
+    }
+
+    @Override
+    public void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    {
+        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        request.requestUrl = baseAddress + "/GetUsersFinishedTransactionsVM";
+        request.todoWithResponse = todoWithResponse;
+        request.todoIfResponseFailed = todoIfResponseFailed;
+        request.requestData.put("customerId", customerId);
+        request.requestData.put("vendorId", vendorId);
+
+        sendRequest(request);
+    }
 }
 
 

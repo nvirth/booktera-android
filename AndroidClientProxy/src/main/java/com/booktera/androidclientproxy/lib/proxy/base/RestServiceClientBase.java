@@ -130,7 +130,7 @@ public abstract class RestServiceClientBase
                     httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 
                     httpClient = AndroidHttpClient.newInstance(userAgent);
-                    HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 5000); //TODO is setConnectionTimeout ok?
+                    HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 5000);
                     HttpConnectionParams.setSoTimeout(httpClient.getParams(), 7000);
 
                     Log.v(tag, "Sending request to: " + r.requestUrl);
