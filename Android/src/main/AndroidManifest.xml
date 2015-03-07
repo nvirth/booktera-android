@@ -41,6 +41,12 @@
     <activity android:name=".activities.ProfileEditActivity"
               android:label="@string/title_activity_profileEdit"
         />
+    <activity android:name=".activities.BuysActivity"
+              android:label="@string/title_activity_buys"
+        />
+    <activity android:name=".activities.SellsActivity"
+              android:label="@string/title_activity_sells"
+        />
   </application>
 
 </manifest>

@@ -19,7 +19,10 @@ import com.booktera.android.R;
 import com.booktera.android.common.Config;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
+import com.booktera.androidclientproxy.lib.utils.Func_2;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
+import java.io.Serializable;
 
 public class Utils
 {
@@ -39,7 +42,7 @@ public class Utils
     }
     public static boolean isNullOrEmpty(CharSequence str)
     {
-        //todo use TextUtils
+        //TODO use TextUtils
         if (str == null)
             return true;
 
@@ -144,11 +147,46 @@ public class Utils
     }
     //endregion
 
-    //region extractParam
+    //region extractStringParam
     /**
      * Extracts the given parameter from the Bundle. Throws error if it/the bundle is null.
      */
-    public static String extractParam(Bundle bundle, String paramName, String tag, String msg)
+    public static String extractStringParam(Bundle bundle, String paramName, String tag, String msg)
+    {
+        //java.lang.NoClassDefFoundError: android.os.BaseBundle
+        //return extractParamCore(bundle, paramName, tag, msg, BaseBundle::getString);
+        return extractParamCore(bundle, paramName, tag, msg,
+            (_bundle,_paramName) ->
+            _bundle.getString(_paramName));
+    }
+    /**
+     * Extracts the given parameter from the Bundle. Throws error if it/the bundle is null.
+     */
+    public static Serializable extractSerializableParam(Bundle bundle, String paramName, String tag, String msg)
+    {
+        return extractParamCore(bundle, paramName, tag, msg, Bundle::getSerializable);
+    }
+    /**
+     * Extracts the given parameter from the Bundle. Throws error if the bundle is null.
+     * If there is no int value in the bundle with the given key, returns 0.
+     */
+    public static int extractIntParam(Bundle bundle, String paramName, String tag, String msg)
+    {
+        //java.lang.NoClassDefFoundError: android.os.BaseBundle
+        //return extractParamCore(bundle, paramName, tag, msg, BaseBundle::getInt);
+        return extractParamCore(bundle, paramName, tag, msg,
+            (_bundle, _paramName) ->
+            _bundle.getInt(_paramName));
+    }
+    /**
+     * Extracts the given parameter from the Bundle. Throws error if the bundle is null.
+     * If there is no boolean value in the bundle with the given key, returns false.
+     */
+    public static boolean extractBooleanParam(Bundle bundle, String paramName, String tag, String msg)
+    {
+        return extractParamCore(bundle, paramName, tag, msg, Bundle::getBoolean);
+    }
+    private static <T> T extractParamCore(Bundle bundle, String paramName, String tag, String msg, Func_2<Bundle, String, T> bundleGetFunc)
     {
         if (bundle == null)
         {
@@ -156,11 +194,11 @@ public class Utils
             return null; // unreachable
         }
 
-        String userFU = bundle.getString(paramName);
-        if (userFU == null)
+        T param = bundleGetFunc.run(bundle, paramName);
+        if (param == null)
             Utils.error(msg, tag);
 
-        return userFU;
+        return param;
     }
     //endregion
 

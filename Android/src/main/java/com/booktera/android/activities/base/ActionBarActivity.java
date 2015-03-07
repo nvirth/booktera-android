@@ -88,11 +88,9 @@ abstract class ActionBarActivity extends BaseActivity
         }
     }
 
-    //TODO implement ActionBar clicks
-
     private void onCartClicked()
     {
-        showToast("The Cart menu item is not implemented yet. ");
+        startActivity(new Intent(this, BuysActivity.class));
     }
     private void onProfileClicked()
     {
@@ -100,7 +98,7 @@ abstract class ActionBarActivity extends BaseActivity
     }
     private void onSellClicked()
     {
-        showToast("The Sell menu item is not implemented yet. ");
+        startActivity(new Intent(this, SellsActivity.class));
     }
     private void onLogoutClicked()
     {

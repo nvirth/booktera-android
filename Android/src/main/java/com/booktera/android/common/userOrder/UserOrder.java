@@ -1,28 +1,32 @@
 package com.booktera.android.common.userOrder;
 
-import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
+import com.booktera.android.common.bookBlock.BookBlock;
 import com.booktera.android.common.utils.CurrencyFormatter;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.TransactionType;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
+import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
-import com.booktera.androidclientproxy.lib.utils.Action_1;
-import com.booktera.androidclientproxy.lib.utils.Func_1;
+
+import java.util.List;
 
 /**
  * Created by Norbert on 2015.03.06..
  */
-//todo UserOrderArrayAdapter
 public class UserOrder
 {
     private static final String tag = UserOrder.class.toString();
+    private static final Resources r = BookteraApplication.getAppResources();
 
     //region ViewHolder
 
@@ -38,10 +42,12 @@ public class UserOrder
         public TextView feedbackCustomer_value;
         public TextView feedbackVendor_label;
         public TextView feedbackVendor_value;
-        public LinearLayout books_fragmentContainer;
-        public LinearLayout exchangeBooks_fragmentContainer;
+        public LinearLayout booksContainer;
+        public LinearLayout exchangeBooksContainer;
         public LinearLayout statusPanel;
         public LinearLayout feedbackPanel;
+        public LinearLayout root;
+        public LinearLayout exchangeBooksPanel;
 
         public ViewHolder(View view)
         {
@@ -55,10 +61,12 @@ public class UserOrder
             feedbackCustomer_value = (TextView) view.findViewById(R.id.userOrder_feedbackCustomer_value);
             feedbackVendor_label = (TextView) view.findViewById(R.id.userOrder_feedbackVendor_label);
             feedbackVendor_value = (TextView) view.findViewById(R.id.userOrder_feedbackVendor_value);
-            books_fragmentContainer = (LinearLayout) view.findViewById(R.id.userOrder_books_fragmentContainer);
-            exchangeBooks_fragmentContainer = (LinearLayout) view.findViewById(R.id.userOrder_exchangeBooks_fragmentContainer);
+            booksContainer = (LinearLayout) view.findViewById(R.id.userOrder_books_container);
+            exchangeBooksContainer = (LinearLayout) view.findViewById(R.id.userOrder_exchangeBooks_container);
             statusPanel = (LinearLayout) view.findViewById(R.id.userOrder_status_panel);
             feedbackPanel = (LinearLayout) view.findViewById(R.id.userOrder_feedbackPanel);
+            root = (LinearLayout) view.findViewById(R.id.userOrder_root);
+            exchangeBooksPanel = (LinearLayout) view.findViewById(R.id.userOrder_exchangeBooksPanel);
         }
     }
 
@@ -66,21 +74,21 @@ public class UserOrder
 
     private UserOrderPLVM plvm;
     private ViewHolder vh;
-    private View bookBlockView;
-    private Context context;
+    private View userOrderView;
+    private FragmentActivity activity;
 
     //private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
-    public UserOrder(UserOrderPLVM plvm, View bookBlockView, Context context)
+    public UserOrder(UserOrderPLVM plvm, View userOrderView, FragmentActivity activity)
     {
-        this(plvm, new UserOrder.ViewHolder(bookBlockView), bookBlockView, context);
+        this(plvm, new UserOrder.ViewHolder(userOrderView), userOrderView, activity);
     }
-    public UserOrder(UserOrderPLVM plvm, ViewHolder vh, View bookBlockView, Context context)
+    public UserOrder(UserOrderPLVM plvm, ViewHolder vh, View userOrderView, FragmentActivity activity)
     {
         this.plvm = plvm;
         this.vh = vh;
-        this.bookBlockView = bookBlockView;
-        this.context = context;
+        this.userOrderView = userOrderView;
+        this.activity = activity;
     }
 
     public void fill()
@@ -88,7 +96,6 @@ public class UserOrder
         // Shortcuts, aliases
         UserOrderPLVM.UserOrderVM uo = plvm.getUserOrder();
         TransactionType tt = plvm.getTransactionType();
-        Resources r = BookteraApplication.getAppResources();
         String format;
 
         // Calc
@@ -96,18 +103,35 @@ public class UserOrder
         int sumVendorFee = (int) (uo.getSumBookPrice() * uo.getVendorsFeePercent() / 100.0);
         int sumCustomerOrderAmount = sumCustomerFee + uo.getSumBookPrice();
 
-        // Only one of these has value at a time
-        if (!Utils.isNullOrEmpty(uo.getVendorName()))
-            vh.vendorName.setText(uo.getVendorName());
-        else
-            vh.customerName.setText(uo.getCustomerName());
+        // --
 
+        // Color
+        setOrderColor(uo, tt);
+
+        // sumCustomerOrderAmount
         vh.sumCustomerOrderAmount.setText(CurrencyFormatter.Instance.format(sumCustomerOrderAmount));
+
+        // sumCustomerFee
         format = r.getString(R.string.userOrder_sumCustomerFee_format);
         vh.sumCustomerFee.setText(String.format(format, sumCustomerFee));
+
+        // customersFeePercent
         format = r.getString(R.string.userOrder_customersFeePercent_format);
         vh.customersFeePercent.setText(String.format(format, uo.getCustomersFeePercent()));
 
+        // Title of cart/transaction
+        if (!Utils.isNullOrEmpty(uo.getVendorName()))
+        {
+            vh.vendorName.setText(uo.getVendorName());
+            vh.customerName.setVisibility(View.GONE);
+        }
+        else
+        {
+            vh.customerName.setText(uo.getCustomerName());
+            vh.vendorName.setVisibility(View.GONE);
+        }
+
+        // Status
         if (isStatusPanelVisible(uo.getStatus()))
         {
             vh.statusPanel.setVisibility(View.VISIBLE);
@@ -118,15 +142,15 @@ public class UserOrder
             vh.statusPanel.setVisibility(View.GONE);
         }
 
+        // Feedback (in finished transactions)
         if (uo.getStatus() == UserOrderStatus.Finished)
         {
-            if (tt == TransactionType.FinishedOrderOwn)
+            if (tt == TransactionType.EarlierBuys)
             {
                 vh.feedbackCustomer_label.setText(r.getString(R.string.Your_feedback_));
                 vh.feedbackVendor_label.setText(r.getString(R.string.The_vendors_feedback_));
-
             }
-            else if (tt == TransactionType.FinishedOrderOthers)
+            else if (tt == TransactionType.InProgressSells)
             {
                 vh.feedbackCustomer_label.setText(r.getString(R.string.The_customers_feedback_));
                 vh.feedbackVendor_label.setText(r.getString(R.string.Your_feedback_));
@@ -141,10 +165,111 @@ public class UserOrder
         {
             vh.feedbackPanel.setVisibility(View.GONE);
         }
-//todo I stopped here
-//vh.books_fragmentContainer;
-//vh.exchangeBooks_fragmentContainer;
+
+        // Products in cart
+        if (!plvm.getProducts().isEmpty())
+            inflateBookBlocks(plvm.getProducts(), /*isExchange*/false, vh.booksContainer);
+
+        // Products in exchange cart
+        if (!plvm.getExchangeProducts().isEmpty())
+        {
+            vh.exchangeBooksPanel.setVisibility(View.VISIBLE);
+            inflateBookBlocks(plvm.getExchangeProducts(), /*isExchange*/true, vh.exchangeBooksContainer);
+        }
     }
+    private void inflateBookBlocks(List<InBookBlockPVM> products, boolean isExchange, ViewGroup container)
+    {
+        container.removeAllViews();
+
+        for (InBookBlockPVM inBookBlockPVM : products)
+        {
+            LayoutInflater inflater = LayoutInflater.from(activity);
+            View bookBlockView = inflater.inflate(R.layout.row_book_block, null);
+            BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(
+                inBookBlockPVM, /*ViewHolder*/null, bookBlockView, activity, isExchange,
+                plvm.getUserOrder(), /*isAddToExchangeCartPossible*/ false
+            ));
+            bookBlock.fill();
+            bookBlock.setupContextMenu();
+
+            container.addView(bookBlockView);
+        }
+    }
+    private void setOrderColor(UserOrderPLVM.UserOrderVM userOrder, TransactionType transactionType)
+    {
+        int colorId;
+
+        switch (userOrder.getStatus())
+        {
+            case Cart:
+                if (transactionType == TransactionType.Carts)
+                    colorId = R.color.Green;
+                else //if (transactionType == TransactionType.InCartsByOthers)
+                    colorId = R.color.Gray;
+                break;
+
+            case BuyedWaiting:
+                if (transactionType == TransactionType.InProgressSells)
+                    colorId = R.color.Green;
+                else //if (transactionType == TransactionType.InProgressBuys)
+                    colorId = R.color.Gray;
+                break;
+
+            case BuyedExchangeOffered:
+                if (transactionType == TransactionType.InProgressBuys)
+                    colorId = R.color.Green;
+                else //if (transactionType == TransactionType.InProgressSells)
+                    colorId = R.color.Gray;
+                break;
+
+            case FinalizedCash:
+            case FinalizedExchange:
+                colorId = R.color.Green;
+                break;
+
+            case Finished:
+                colorId = CalcFinishedColor(userOrder);
+                break;
+
+            case CartDeleting:
+            case Nincs:
+            default:
+                colorId = R.color.Gray;
+                break;
+        }
+
+        vh.root.setBackgroundColor(r.getColor(colorId));
+    }
+
+    private static int CalcFinishedColor(UserOrderPLVM.UserOrderVM userOrder)
+    {
+        Boolean vendorOk = userOrder.getVendorFeedbackedSuccessful();
+        Boolean customerOk = userOrder.getCustomerFeedbackedSuccessful();
+
+        if (vendorOk == null)
+        {
+            if (customerOk == null)
+                return R.color.Gray;
+            else if (customerOk)
+                return R.color.UserOrder_HalfGreen;
+            else //if (!customerOk)
+                return R.color.Red;
+        }
+        else if (vendorOk)
+        {
+            if (customerOk == null)
+                return R.color.UserOrder_HalfGreen;
+            else if (customerOk)
+                return R.color.UserOrder_LightGreen;
+            else //if (!customerOk)
+                return R.color.Red;
+        }
+        else //if (!vendorOk)
+        {
+            return R.color.Red;
+        }
+    }
+
     private static String feedbackToStr(Boolean isFeedbackSuccessful)
     {
         if (isFeedbackSuccessful == null)
@@ -166,20 +291,22 @@ public class UserOrder
 
             case Cart:
             case Finished:
-                // dummies
+                return false;
+
+            // dummies
             case CartDeleting:
             case Nincs:
             default:
                 return false;
         }
     }
-
+    //todo ctx menu for transactions
     public void setupContextMenu()
     {
-        bookBlockView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
+        userOrderView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
         {
             // -- Inflating
-            MenuInflater inflater = new MenuInflater(context);
+            MenuInflater inflater = new MenuInflater(activity);
             inflater.inflate(R.menu.ctx_bookblock, menu);
 
 //            // -- Flags
@@ -302,7 +429,6 @@ public class UserOrder
 //            return item -> {
 //                Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
 //                intent.putExtra(Constants.PARAM_USER_FU, plvm.getProduct().getUserFriendlyUrl());
-//                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //
 //                context.startActivity(intent);
@@ -315,7 +441,6 @@ public class UserOrder
 //            return item -> {
 //                Intent intent = new Intent(BookteraApplication.getAppContext(), ProductGroupDetailsActivity.class);
 //                intent.putExtra(Constants.PARAM_PRODUCT_GROUP_FU, plvm.getProductGroup().getFriendlyUrl());
-//                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //
 //                context.startActivity(intent);

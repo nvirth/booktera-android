@@ -3,7 +3,6 @@ package com.booktera.android.common.bookBlock;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.IdRes;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.UsersProductsFragment;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
@@ -58,26 +56,69 @@ public class BookBlock
     //endregion
 
     private InBookBlockPVM vm;
+    private UserOrderPLVM.UserOrderVM userOrderVm;
+    private boolean isExchangeProduct;
+    private boolean isAddToExchangeCartPossible;
     private ViewHolder vh;
     private View bookBlockView;
     private Context context;
-    //todo this shouldn't be here: dataHolder in BookBlock
-    private BookBlockDataHolder.Base dataHolder;
-
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
-    public BookBlock(InBookBlockPVM vm, View bookBlockView, Context context, BookBlockDataHolder.Base dataHolder)
+    //region Ctor
+    public static class CtorArgs
     {
-        this(vm, new ViewHolder(bookBlockView), bookBlockView, context, dataHolder);
+        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Context context)
+        {
+            this(vm, /*ViewHolder*/null, bookBlockView, context);
+        }
+        public CtorArgs(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Context context)
+        {
+            this(vm, vh, bookBlockView, context, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*isAddToExchangeCartPossible*/ false);
+        }
+        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Context context, boolean isExchange)
+        {
+            this(vm, /*ViewHolder*/null, bookBlockView, context, isExchange, /*userOrderVm*/null, /*isAddToExchangeCartPossible*/ false);
+        }
+        public CtorArgs(
+            InBookBlockPVM vm,
+            ViewHolder vh,
+            View bookBlockView,
+            Context context,
+            boolean isExchange,
+            UserOrderPLVM.UserOrderVM userOrderVm,
+            boolean isAddToExchangeCartPossible
+        )
+        {
+            this.isExchange = isExchange;
+            this.vm = vm;
+            this.vh = vh;
+            this.bookBlockView = bookBlockView;
+            this.context = context;
+            this.userOrderVm = userOrderVm;
+            this.isAddToExchangeCartPossible = isAddToExchangeCartPossible;
+        }
+
+        public boolean isExchange;
+        public InBookBlockPVM vm;
+        public ViewHolder vh;
+        public View bookBlockView;
+        public Context context;
+        public UserOrderPLVM.UserOrderVM userOrderVm;
+        public boolean isAddToExchangeCartPossible;
     }
-    public BookBlock(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Context context, BookBlockDataHolder.Base dataHolder)
+
+    public BookBlock(CtorArgs args)
     {
-        this.vm = vm;
-        this.vh = vh;
-        this.bookBlockView = bookBlockView;
-        this.context = context;
-        this.dataHolder = dataHolder;
+        this.vm = args.vm;
+        this.bookBlockView = args.bookBlockView;
+        this.context = args.context;
+        this.isExchangeProduct = args.isExchange;
+        this.userOrderVm = args.userOrderVm;
+        this.vh = args.vh != null
+            ? args.vh
+            : new ViewHolder(bookBlockView);
     }
+    //endregion
 
     public void fill()
     {
@@ -122,29 +163,17 @@ public class BookBlock
             String productOwnerName = Utils.ifNull(vm.getProduct().getUserName(), "").toLowerCase();
             boolean isOwnBook = productOwnerName.equals(UserData.Instace.getUserNameLowerCase());
 
-            UserOrderPLVM.UserOrderVM userOrderVm = null;
-            boolean isAddToExchangeCartPossible = false;
             boolean isInCart = false;
-            boolean isExchangeProduct = false;
             boolean existsCustomerName = false;
             boolean existsVendorName = false;
-            BookBlockDataHolder.UserOrder userOrderPLVM = dataHolder instanceof BookBlockDataHolder.UserOrder
-                ? (BookBlockDataHolder.UserOrder) dataHolder
-                : null;
-            if (userOrderPLVM != null)
-            {
-                isAddToExchangeCartPossible = userOrderPLVM.isAddToExchangeCartPossible;
-                isExchangeProduct = vm == userOrderPLVM.exchangeProducts.get(userOrderPLVM.actualPosition);
 
-                userOrderVm = userOrderPLVM.userOrder;
-                if (userOrderVm != null)
-                {
-                    isInCart = userOrderVm.getStatus() == UserOrderStatus.Cart;
-                    existsCustomerName = !Utils.isNullOrEmpty(userOrderVm.getCustomerName());
-                    existsVendorName = !Utils.isNullOrEmpty(userOrderVm.getVendorName());
-                }
-            }
             boolean isInUserOrder = userOrderVm != null;
+            if (isInUserOrder)
+            {
+                isInCart = userOrderVm.getStatus() == UserOrderStatus.Cart;
+                existsCustomerName = !Utils.isNullOrEmpty(userOrderVm.getCustomerName());
+                existsVendorName = !Utils.isNullOrEmpty(userOrderVm.getVendorName());
+            }
 
             //-- MenuItems
 
@@ -234,7 +263,6 @@ public class BookBlock
             return item -> {
                 Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
                 intent.putExtra(Constants.PARAM_USER_FU, vm.getProduct().getUserFriendlyUrl());
-                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
@@ -247,7 +275,6 @@ public class BookBlock
             return item -> {
                 Intent intent = new Intent(BookteraApplication.getAppContext(), ProductGroupDetailsActivity.class);
                 intent.putExtra(Constants.PARAM_PRODUCT_GROUP_FU, vm.getProductGroup().getFriendlyUrl());
-                //TODO check if it's ok, or should we use the fragment/activity instance instead of this 'context'
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);

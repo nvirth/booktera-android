@@ -3,10 +3,10 @@ package com.booktera.android.fragments.bookBlock;
 import android.os.Bundle;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.ProductGroupDetailsVM;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
+import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 
-public class ProductGroupDetails_BooksFragment extends BookBlocksFragment
+public class ProductGroupDetails_BooksFragment extends BookBlocksFragmentBase
 {
     private String productGroupFU;
 
@@ -26,7 +26,7 @@ public class ProductGroupDetails_BooksFragment extends BookBlocksFragment
     {
         super.onCreate(savedInstanceState);
 
-        productGroupFU = extractParam(Constants.PARAM_PRODUCT_GROUP_FU);
+        productGroupFU = extractStringParam(Constants.PARAM_PRODUCT_GROUP_FU);
     }
 
     @Override

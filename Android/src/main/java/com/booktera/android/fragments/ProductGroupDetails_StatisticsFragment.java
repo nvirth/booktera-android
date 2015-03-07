@@ -7,15 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.booktera.android.R;
 import com.booktera.android.common.Constants;
-import com.booktera.android.common.bookBlock.BookBlock;
-import com.booktera.android.common.bookBlock.BookBlockDataHolder;
 import com.booktera.android.common.models.ProductGroupDetailsVM;
 import com.booktera.android.fragments.base.BaseFragment;
-import com.booktera.androidclientproxy.lib.enums.BookBlockType;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookRowPLVM;
-import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
-
-import java.util.ArrayList;
 
 public class ProductGroupDetails_StatisticsFragment extends BaseFragment
 {
@@ -63,7 +57,7 @@ public class ProductGroupDetails_StatisticsFragment extends BaseFragment
         View view = inflater.inflate(R.layout.fragment_pgdetails_statistics, container, false);
         vh = new ViewHolder(view);
 
-        productGroupFU = extractParam(Constants.PARAM_PRODUCT_GROUP_FU);
+        productGroupFU = extractStringParam(Constants.PARAM_PRODUCT_GROUP_FU);
         BookRowPLVM.ProductGroupVM statistics = ProductGroupDetailsVM.Instance.getStatistics(productGroupFU);
 
         vh.publisher.setText(statistics.getPublisherName());

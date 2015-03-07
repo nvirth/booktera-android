@@ -6,11 +6,11 @@ import com.booktera.android.R;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.ProductsInCategoryVM;
 import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
+import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InCategoryPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-public class ProductsInCategoryFragment extends BookBlocksFragment
+public class ProductsInCategoryFragment extends BookBlocksFragmentBase
 {
     private String categoryFriendlyUrl;
 

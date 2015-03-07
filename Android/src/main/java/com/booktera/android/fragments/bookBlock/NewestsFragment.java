@@ -1,11 +1,10 @@
 package com.booktera.android.fragments.bookBlock;
 
-import android.view.View;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
+import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.android.common.models.MainVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-public class NewestsFragment extends BookBlocksFragment
+public class NewestsFragment extends BookBlocksFragmentBase
 {
     @Override
     protected void loadData()

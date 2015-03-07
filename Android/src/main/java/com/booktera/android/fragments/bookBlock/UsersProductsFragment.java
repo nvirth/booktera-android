@@ -3,15 +3,13 @@ package com.booktera.android.fragments.bookBlock;
 import android.os.Bundle;
 import com.booktera.android.R;
 import com.booktera.android.common.Constants;
-import com.booktera.android.common.models.SearchVM;
 import com.booktera.android.common.models.UsersProductsVM;
-import com.booktera.android.common.utils.Utils;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
+import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-public class UsersProductsFragment extends BookBlocksFragment
+public class UsersProductsFragment extends BookBlocksFragmentBase
 {
     private String userFU;
 
@@ -30,7 +28,7 @@ public class UsersProductsFragment extends BookBlocksFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        userFU = extractParam(Constants.PARAM_USER_FU);
+        userFU = extractStringParam(Constants.PARAM_USER_FU);
     }
 
     @Override

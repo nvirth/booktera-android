@@ -3,11 +3,11 @@ package com.booktera.android.fragments.bookBlock;
 import android.os.Bundle;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.models.SearchVM;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
+import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-public class SearchFragment extends BookBlocksFragment
+public class SearchFragment extends BookBlocksFragmentBase
 {
     private String searchText;
 

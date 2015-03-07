@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.booktera.android.R;
-import com.booktera.android.fragments.bookBlock.base.BookBlocksFragment;
-import com.booktera.androidclientproxy.lib.proxy.Services;
 
 public class LoremIpsumFragment extends Fragment
 {

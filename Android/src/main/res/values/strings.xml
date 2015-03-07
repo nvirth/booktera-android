@@ -92,13 +92,21 @@
   </string>
   <string name="userOrder_sumAmount">A rendelés összege:&#160;</string>
   <string name="userOrder_sumCustomerFee_format">Ebből jutalék: %s</string>
-  <string name="userOrder_customersFeePercent_format" formatted="false">&#160;(%s%)</string>
+  <string name="userOrder_customersFeePercent_format" formatted="false">&#160;(%s%%)</string>
   <string name="userOrder_status">A rendelés állapota:&#160;</string>
   <string name="userOrder_books_mainLabel"><u>A KOSÁR TARTALMA</u></string>
   <string name="userOrder_exchangeBooks_mainLabel"><u>A CSERE-KOSÁR</u></string>
   <string name="Your_feedback_">A Te értékelésed:&#160;</string>
   <string name="The_vendors_feedback_">Az eladó értékelése:&#160;</string>
   <string name="The_customers_feedback_">A vevő értékelése:&#160;</string>
+  <string name="buy_header_carts">Kosaraim</string>
+  <string name="buy_header_in_progress">Megrendeltek</string>
+  <string name="buy_header_finished">Korábbiak</string>
+  <string name="sell_header_in_others_cart">Más kosarában</string>
+  <string name="sell_header_in_progress">Folyamatban</string>
+  <string name="sell_header_finished">Befejezett</string>
+  <string name="title_activity_buys">Vásárlás</string>
+  <string name="title_activity_sells">Eladás</string>
 
 
 </resources>

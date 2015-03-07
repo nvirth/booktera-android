@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import com.booktera.android.common.Constants;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 
@@ -41,7 +40,7 @@ abstract class BaseActivity extends FragmentActivity
         String errorMsg = "You can't call this activity without passing this parameter: " + paramName;
         Bundle bundle = getIntent().getExtras();
 
-        return Utils.extractParam(bundle, paramName, tag, errorMsg);
+        return Utils.extractStringParam(bundle, paramName, tag, errorMsg);
     }
 
     protected void alert(String title, String message)

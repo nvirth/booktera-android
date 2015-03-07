@@ -3,14 +3,9 @@ package com.booktera.android.fragments.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-import com.booktera.android.R;
-import com.booktera.android.common.Constants;
 import com.booktera.android.common.utils.Utils;
+
+import java.io.Serializable;
 
 public abstract class BaseFragment extends Fragment
 {
@@ -19,12 +14,47 @@ public abstract class BaseFragment extends Fragment
     /**
      * Extracts the given parameter from the 'getArguments()' Bundle. Throws error if it/the bundle is null.
      */
-    protected String extractParam(String paramName)
+    protected String extractStringParam(String paramName)
     {
         String errorMsg = "You can't call this fragment without passing this argument: " + paramName;
         Bundle bundle = getArguments();
 
-        return Utils.extractParam(bundle, paramName, tag, errorMsg);
+        return Utils.extractStringParam(bundle, paramName, tag, errorMsg);
+    }
+
+    /**
+     * Extracts the given parameter from the 'getArguments()' Bundle. Throws error if it/the bundle is null.
+     */
+    protected Serializable extractSerializableParam(String paramName)
+    {
+        String errorMsg = "You can't call this fragment without passing this argument: " + paramName;
+        Bundle bundle = getArguments();
+
+        return Utils.extractSerializableParam(bundle, paramName, tag, errorMsg);
+    }
+
+    /**
+     * Extracts the given parameter from the 'getArguments()' Bundle. Throws error if the bundle is null.
+     * If there is no boolean value in the bundle with the given key, returns false.
+     */
+    protected boolean extractBooleanParam(String paramName)
+    {
+        String errorMsg = "You can't call this fragment without passing this argument: " + paramName;
+        Bundle bundle = getArguments();
+
+        return Utils.extractBooleanParam(bundle, paramName, tag, errorMsg);
+    }
+
+    /**
+     * Extracts the given parameter from the 'getArguments()' Bundle. Throws error if the bundle is null.
+     * If there is no int value in the bundle with the given key, returns 0.
+     */
+    protected int extractIntParam(String paramName)
+    {
+        String errorMsg = "You can't call this fragment without passing this argument: " + paramName;
+        Bundle bundle = getArguments();
+
+        return Utils.extractIntParam(bundle, paramName, tag, errorMsg);
     }
 }
 

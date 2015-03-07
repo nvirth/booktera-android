@@ -1,28 +1,28 @@
-package com.booktera.android.fragments.bookBlock.base;
+package com.booktera.android.fragments.userOrder.base;
 
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
+import com.booktera.android.common.userOrder.UserOrderArrayAdapter;
 import com.booktera.android.fragments.base.ListViewFragmentBase;
-import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
+import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 
-public abstract class BookBlocksFragment extends ListViewFragmentBase
+public abstract class UserOrderFragmentBase extends ListViewFragmentBase
 {
     /**
-     * While implementing, you have to call {@link #applyData(com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM)}
+     * While implementing, you have to call {@link #applyData(UserOrderPLVM[])}
      * with the (asynchronously)downloaded/cached data
      */
     @Override
     protected abstract void loadData();
 
-    protected void applyData(BookBlockPLVM data)
+    protected void applyData(UserOrderPLVM[] data)
     {
         FragmentActivity activityForDebug = getActivity();
 
         getActivity().runOnUiThread(() ->
         {
-            if (data.getProducts().isEmpty())
+            if (data.length == 0)
             {
                 vh.noResultTextView.setVisibility(View.VISIBLE);
             }
@@ -32,8 +32,8 @@ public abstract class BookBlocksFragment extends ListViewFragmentBase
                 Log.d(tag, "getActivity(): " + getActivity());
                 Log.d(tag, "activityForDebug: " + activityForDebug);
 
-                BookBlockArrayAdapter bookBlockArrayAdapter = new BookBlockArrayAdapter(
-                    getActivity().getApplicationContext(),//TODO there was here a nll reference exception once!
+                UserOrderArrayAdapter bookBlockArrayAdapter = new UserOrderArrayAdapter(
+                    getActivity(),//TODO there was here a nll reference exception once!
                     data
                 );
 
