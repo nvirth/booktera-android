@@ -1,9 +1,13 @@
 package com.booktera.android.fragments.base;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import com.booktera.android.common.utils.Utils;
+import com.booktera.androidclientproxy.lib.utils.Action_1;
 
 import java.io.Serializable;
 
@@ -11,6 +15,19 @@ public abstract class BaseFragment extends Fragment
 {
     protected final String tag = ((Object) this).getClass().toString();
 
+    protected void runOnUiThread(Action_1<FragmentActivity> action)
+    {
+        FragmentActivity activity = getActivity();
+        activity.runOnUiThread(() -> {
+            //TODO remove logging after found the null exception
+            Log.d(tag, "getActivity(): " + getActivity());
+            Log.d(tag, "cached activity: " + activity);
+
+            action.run(activity);
+        });
+    }
+
+    //region extract..Param
     /**
      * Extracts the given parameter from the 'getArguments()' Bundle. Throws error if it/the bundle is null.
      */
@@ -56,5 +73,6 @@ public abstract class BaseFragment extends Fragment
 
         return Utils.extractIntParam(bundle, paramName, tag, errorMsg);
     }
+    //endregion
 }
 

@@ -18,9 +18,7 @@ public abstract class BookBlocksFragmentBase extends ListViewFragmentBase
 
     protected void applyData(BookBlockPLVM data)
     {
-        FragmentActivity activityForDebug = getActivity();
-
-        getActivity().runOnUiThread(() ->
+        runOnUiThread(activity ->
         {
             if (data.getProducts().isEmpty())
             {
@@ -28,12 +26,8 @@ public abstract class BookBlocksFragmentBase extends ListViewFragmentBase
             }
             else
             {
-                //TODO remove after found the null exception
-                Log.d(tag, "getActivity(): " + getActivity());
-                Log.d(tag, "activityForDebug: " + activityForDebug);
-
                 BookBlockArrayAdapter bookBlockArrayAdapter = new BookBlockArrayAdapter(
-                    getActivity().getApplicationContext(),//TODO there was here a nll reference exception once!
+                    activity.getApplicationContext(),
                     data
                 );
 

@@ -57,15 +57,15 @@ public class CategoriesFragment extends ListViewFragmentBase
 
     private void applyData(InCategoryCWPLVM dataIn)
     {
-        getActivity().runOnUiThread(() ->
+        runOnUiThread(activity ->
         {
             InCategoryCWPLVM data = dataIn; // To be able to debug within a lambda
 
             // -- Set Title
             if (data.getBaseCategory() == null || Utils.isNullOrEmpty(data.getBaseCategory().getDisplayName()))
-                getActivity().setTitle(getActivity().getString(R.string.app_name));
+                activity.setTitle(activity.getString(R.string.app_name));
             else
-                getActivity().setTitle(data.getBaseCategory().getFullPath());
+                activity.setTitle(data.getBaseCategory().getFullPath());
 
             // -- Fetch data
             if (data.getChildCategoriesWithProducts().size() == 1) // Leaf category
@@ -81,7 +81,7 @@ public class CategoriesFragment extends ListViewFragmentBase
                     categoryNames.add(inCategoryPLVM.getCategory().getDisplayName());
 
                 ArrayAdapter bookBlockArrayAdapter = new ArrayAdapter<>(
-                    getActivity().getApplicationContext(),
+                    activity.getApplicationContext(),
                     R.layout.row_simple_list_item,
                     categoryNames
                 );
@@ -94,7 +94,7 @@ public class CategoriesFragment extends ListViewFragmentBase
                         InCategoryPLVM inCategoryPLVM = data.getChildCategoriesWithProducts().get(position);
                         String categoryFU = inCategoryPLVM.getCategory().getFriendlyUrl();
 
-                        Intent gotoSubcategoryIntent = new Intent(getActivity(), CategoryActivity.class);
+                        Intent gotoSubcategoryIntent = new Intent(activity, CategoryActivity.class);
                         gotoSubcategoryIntent.putExtra(Constants.PARAM_CATEGORY_FU, categoryFU);
 
                         startActivity(gotoSubcategoryIntent);

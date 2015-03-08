@@ -53,8 +53,8 @@ public class UsersProductsFragment extends BookBlocksFragmentBase
                     applyData(bookBlockPLVM);
 
                     // Set Title
-                    getActivity().runOnUiThread(() ->
-                        getActivity().setTitle(userName + getActivity().getString(R.string._someones_books)));
+                    runOnUiThread(activity ->
+                        activity.setTitle(userName + activity.getString(R.string._someones_books)));
                 }
                 , null);
     }

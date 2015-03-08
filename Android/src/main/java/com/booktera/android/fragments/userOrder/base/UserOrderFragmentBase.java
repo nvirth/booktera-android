@@ -18,9 +18,7 @@ public abstract class UserOrderFragmentBase extends ListViewFragmentBase
 
     protected void applyData(UserOrderPLVM[] data)
     {
-        FragmentActivity activityForDebug = getActivity();
-
-        getActivity().runOnUiThread(() ->
+        runOnUiThread(activity ->
         {
             if (data.length == 0)
             {
@@ -28,12 +26,8 @@ public abstract class UserOrderFragmentBase extends ListViewFragmentBase
             }
             else
             {
-                //TODO remove after found the null exception
-                Log.d(tag, "getActivity(): " + getActivity());
-                Log.d(tag, "activityForDebug: " + activityForDebug);
-
                 UserOrderArrayAdapter bookBlockArrayAdapter = new UserOrderArrayAdapter(
-                    getActivity(),//TODO there was here a nll reference exception once!
+                    activity,
                     data
                 );
 
