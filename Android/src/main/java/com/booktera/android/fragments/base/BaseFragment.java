@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment
     {
         FragmentActivity activity = getActivity();
         activity.runOnUiThread(() -> {
-            //TODO remove logging after found the null exception
+            Log.d(tag, "Searching here (and in +2 rows below) for a possibly NullReference exception or smg wrong with the Activity");
             Log.d(tag, "getActivity(): " + getActivity());
             Log.d(tag, "cached activity: " + activity);
 

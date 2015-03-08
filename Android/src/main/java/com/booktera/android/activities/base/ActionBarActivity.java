@@ -119,9 +119,7 @@ abstract class ActionBarActivity extends BaseActivity
     {
         Services.Authentication.logout(
             () -> runOnUiThread(() -> {
-                    UserData.Instace.setAuthenticated(false);
-                    UserData.Instace.setUserName(null);
-                    UserData.Instace.setUserId(0);
+                    UserData.Instace.logOut();
 
                     showToast(getString(R.string.Successfully_logged_out_));
 

@@ -256,7 +256,6 @@ public abstract class RestServiceClientBase
         if (statusCode == HttpStatus.SC_FORBIDDEN
             || statusCode == HttpStatus.SC_UNAUTHORIZED)
         {
-            //TODO test with auth pages: redirectToLoginAction.run();
             redirectToLoginAction.run();
             handled = true;
         }

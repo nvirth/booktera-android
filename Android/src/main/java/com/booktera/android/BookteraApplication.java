@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import com.booktera.android.activities.LoginActivity;
+import com.booktera.android.common.UserData;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
 
 /**
@@ -45,9 +46,18 @@ public class BookteraApplication extends Application
             ));
         RestServiceClientBase.setResources(getAppResources());
         RestServiceClientBase.setRedirectToLoginAction(
-            () -> handler.post(() ->
-                    startActivity(new Intent(this, LoginActivity.class))
-            ));
+            () -> handler.post(() -> {
+                // First log out the user, its session timed out
+                UserData.Instace.logOut();
+
+                // Then redirect to the login page
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }));
     }
 
     public static Resources getAppResources()

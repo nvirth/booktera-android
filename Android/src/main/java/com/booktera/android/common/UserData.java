@@ -50,4 +50,14 @@ public class UserData
     {
         this.userId = userId;
     }
+
+    // --
+
+    public void logOut()
+    {
+        setAuthenticated(false);
+        setUserName(null);
+        setUserId(0);
+    }
+
 }
