@@ -10,28 +10,35 @@
     android:padding="8dp"
     >
   <!--HEADER-->
-  <TextView
-      android:id="@+id/userOrder_vendorName"
-      android:layout_width="wrap_content"
+  <LinearLayout
+      android:id="@+id/userOrder_header"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:singleLine="true"
-      android:ellipsize="end"
-      android:textSize="48sp"
-      android:padding="6dp"
-      android:textColor="@color/TextColor_Main"
-      tools:text="Aant Aant Aant Aant Aant "
-      />
-  <TextView
-      android:id="@+id/userOrder_customerName"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:singleLine="true"
-      android:ellipsize="end"
-      android:textSize="48sp"
-      android:textColor="@color/TextColor_Main"
-      tools:text="ZomiDudu"
-      tools:visibility="gone"
-      />
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/userOrder_vendorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="48sp"
+        android:padding="6dp"
+        android:textColor="@color/TextColor_Main"
+        tools:text="Aant Aant Aant Aant Aant "
+        />
+    <TextView
+        android:id="@+id/userOrder_customerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="48sp"
+        android:textColor="@color/TextColor_Main"
+        tools:text="ZomiDudu"
+        tools:visibility="gone"
+        />
+  </LinearLayout>
   <!--UNDER HEADER-->
   <LinearLayout
       android:layout_width="match_parent"

@@ -46,6 +46,7 @@ public class UserOrder extends CtxMenuBase
         public LinearLayout feedbackPanel;
         public LinearLayout root;
         public LinearLayout exchangeBooksPanel;
+        public LinearLayout header;
 
         public ViewHolder(View view)
         {
@@ -65,6 +66,7 @@ public class UserOrder extends CtxMenuBase
             feedbackPanel = (LinearLayout) view.findViewById(R.id.userOrder_feedbackPanel);
             root = (LinearLayout) view.findViewById(R.id.userOrder_root);
             exchangeBooksPanel = (LinearLayout) view.findViewById(R.id.userOrder_exchangeBooksPanel);
+            header = (LinearLayout) view.findViewById(R.id.userOrder_header);
         }
     }
 
@@ -305,11 +307,11 @@ public class UserOrder extends CtxMenuBase
     @Override
     public void setupContextMenu()
     {
-        userOrderView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
+        vh.header.setOnCreateContextMenuListener((menu, v, menuInfo) ->
         {
             // -- Inflating
             MenuInflater inflater = new MenuInflater(activity);
-            inflater.inflate(R.menu.ctx_bookblock, menu);
+            inflater.inflate(R.menu.ctx_userorder, menu);
 
             // -- Shortcuts
             UserOrderPLVM.UserOrderVM uo = plvm.getUserOrder();
@@ -321,7 +323,7 @@ public class UserOrder extends CtxMenuBase
             boolean isCart = uo.getStatus() == UserOrderStatus.Cart;
             boolean existsCustomerName = !Utils.isNullOrEmpty(uo.getCustomerName());
             boolean existsVendorName = !Utils.isNullOrEmpty(uo.getVendorName());
-            boolean isOwnCart = isCart && existsCustomerName && !existsVendorName;
+            boolean isOwnCart = isCart && !existsCustomerName && existsVendorName;
             boolean existExchangeProducts = !plvm.getExchangeProducts().isEmpty();
             boolean isStatus_BuyedExchangeOffered = uo.getStatus() == UserOrderStatus.BuyedExchangeOffered;
             boolean isFeedbackEnabled = isFeedbackEnabled(uo, tt);
@@ -481,7 +483,7 @@ public class UserOrder extends CtxMenuBase
     //todo implement UserOrder CtxMenuClickListeners
     class CtxMenuClickListeners
     {
-                public MenuItem.OnMenuItemClickListener gotoUsersProducts()
+        public MenuItem.OnMenuItemClickListener gotoUsersProducts()
         {
             return item -> {
                 Utils.showToast("ctx_gotoUsersProducts is not implemented yet");
