@@ -2,14 +2,12 @@ package com.booktera.android.common.userOrder;
 
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
+import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.bookBlock.BookBlock;
 import com.booktera.android.common.utils.CurrencyFormatter;
 import com.booktera.android.common.utils.Utils;
@@ -23,7 +21,7 @@ import java.util.List;
 /**
  * Created by Norbert on 2015.03.06..
  */
-public class UserOrder
+public class UserOrder extends CtxMenuBase
 {
     private static final String tag = UserOrder.class.toString();
     private static final Resources r = BookteraApplication.getAppResources();
@@ -77,7 +75,7 @@ public class UserOrder
     private View userOrderView;
     private FragmentActivity activity;
 
-    //private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
+    private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
     public UserOrder(UserOrderPLVM plvm, View userOrderView, FragmentActivity activity)
     {
@@ -177,6 +175,8 @@ public class UserOrder
             inflateBookBlocks(plvm.getExchangeProducts(), /*isExchange*/true, vh.exchangeBooksContainer);
         }
     }
+
+    //region fill -helpers
     private void inflateBookBlocks(List<InBookBlockPVM> products, boolean isExchange, ViewGroup container)
     {
         container.removeAllViews();
@@ -300,7 +300,9 @@ public class UserOrder
                 return false;
         }
     }
-    //todo ctx menu for transactions
+    //endregion
+
+    @Override
     public void setupContextMenu()
     {
         userOrderView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
@@ -309,192 +311,271 @@ public class UserOrder
             MenuInflater inflater = new MenuInflater(activity);
             inflater.inflate(R.menu.ctx_bookblock, menu);
 
-//            // -- Flags
-//            String titleFormat;
-//            boolean isQuantity_gt_0 = plvm.getProduct().getHowMany() > 0;
-//            boolean isUserAuthenticated = UserData.Instace.isAuthenticated();
-//            boolean isProduct = !Utils.isNullOrEmpty(plvm.getProduct().getDescription());
-//            String productOwnerName = Utils.ifNull(plvm.getProduct().getUserName(), "").toLowerCase();
-//            boolean isOwnBook = productOwnerName.equals(UserData.Instace.getUserNameLowerCase());
-//
-//            UserOrderPLVM.UserOrderVM userOrderVm = null;
-//            boolean isAddToExchangeCartPossible = false;
-//            boolean isInCart = false;
-//            boolean isExchangeProduct = false;
-//            boolean existsCustomerName = false;
-//            boolean existsVendorName = false;
-//            BookBlockDataHolder.UserOrder userOrderPLVM = dataHolder instanceof BookBlockDataHolder.UserOrder
-//                ? (BookBlockDataHolder.UserOrder) dataHolder
-//                : null;
-//            if (userOrderPLVM != null)
-//            {
-//                isAddToExchangeCartPossible = userOrderPLVM.isAddToExchangeCartPossible;
-//                isExchangeProduct = vm == userOrderPLVM.exchangeProducts.get(userOrderPLVM.actualPosition);
-//
-//                userOrderVm = userOrderPLVM.userOrder;
-//                if (userOrderVm != null)
-//                {
-//                    isInCart = userOrderVm.getStatus() == UserOrderStatus.Cart;
-//                    existsCustomerName = !Utils.isNullOrEmpty(userOrderVm.getCustomerName());
-//                    existsVendorName = !Utils.isNullOrEmpty(userOrderVm.getVendorName());
-//                }
-//            }
-//            boolean isInUserOrder = userOrderVm != null;
-//
-//            //-- MenuItems
-//
-//            //UsersProducts
-//            if (!Utils.isNullOrEmpty(vh.userName.getText()))
-//            {
-//                MenuItem ctxUsersProducts = menu.findItem(R.id.bookBlockCtx_gotoUsersProducts);
-//                titleFormat = ctxUsersProducts.getTitle().toString();
-//                ctxUsersProducts.setTitle(String.format(titleFormat, vh.userName.getText()));
-//                enable(ctxUsersProducts);
-//            }
-//
-//            //ProductGroup
-//            if (!Utils.isNullOrEmpty(vh.title.getText()))
-//            {
-//                MenuItem ctxProductGroup = menu.findItem(R.id.bookBlockCtx_gotoProductGroup);
-//                titleFormat = ctxProductGroup.getTitle().toString();
-//                ctxProductGroup.setTitle(String.format(titleFormat, vh.title.getText()));
-//                enable(ctxProductGroup);
-//            }
-//
-//            //AddToCart
-//            if (isQuantity_gt_0 && isUserAuthenticated && isProduct && !isOwnBook && !isInUserOrder)
-//                enable(R.id.bookBlockCtx_addToCart, menu);
-//
-//            //AddToExchangeCart
-//            if (isQuantity_gt_0 && isUserAuthenticated && isProduct && !isInUserOrder && isAddToExchangeCartPossible)
-//                enable(R.id.bookBlockCtx_addToExchangeCart, menu);
-//
-//            //RemoveFromCart, ChangeQuantity (in cart)
-//            if (isInCart && !existsCustomerName && existsVendorName) // isOwnCartItem
-//            {
-//                enable(R.id.bookBlockCtx_removeFromCart, menu);
-//                enable(R.id.bookBlockCtx_changeQuantityInCart, menu);
-//            }
-//
-//            //RemoveFromExchangeCart, ChangeQuantity (in exchange cart)
-//            if (isExchangeProduct && isInUserOrder && userOrderVm.getStatus() == UserOrderStatus.BuyedWaiting)
-//            {
-//                enable(R.id.bookBlockCtx_removeFromExchangeCart, menu);
-//                enable(R.id.bookBlockCtx_changeQuantityInExchangeCart, menu);
-//            }
+            // -- Shortcuts
+            UserOrderPLVM.UserOrderVM uo = plvm.getUserOrder();
+            TransactionType tt = plvm.getTransactionType();
+            String titleFormat;
+
+            // -- Flags, Data
+            String customerOrVendorName = Utils.ifNullOrEmpty(uo.getVendorName(), uo.getCustomerName());
+            boolean isCart = uo.getStatus() == UserOrderStatus.Cart;
+            boolean existsCustomerName = !Utils.isNullOrEmpty(uo.getCustomerName());
+            boolean existsVendorName = !Utils.isNullOrEmpty(uo.getVendorName());
+            boolean isOwnCart = isCart && existsCustomerName && !existsVendorName;
+            boolean existExchangeProducts = !plvm.getExchangeProducts().isEmpty();
+            boolean isStatus_BuyedExchangeOffered = uo.getStatus() == UserOrderStatus.BuyedExchangeOffered;
+            boolean isFeedbackEnabled = isFeedbackEnabled(uo, tt);
+            boolean isInProgressSell_buyedWaiting = uo.getStatus() == UserOrderStatus.BuyedWaiting
+                && tt == TransactionType.InProgressSells;
+
+            // -- Ctx menu items
+            //UsersProducts (always visible)
+            MenuItem ctxUsersProducts = menu.findItem(R.id.userOrderCtx_gotoUsersProducts);
+            titleFormat = ctxUsersProducts.getTitle().toString();
+            ctxUsersProducts.setTitle(String.format(titleFormat, customerOrVendorName));
+            enable(ctxUsersProducts);
+
+            //RemoveThisCart
+            if (isOwnCart)
+            {
+                MenuItem ctxRemoveThisCart = menu.findItem(R.id.userOrderCtx_removeThisCart);
+                titleFormat = ctxRemoveThisCart.getTitle().toString();
+                ctxRemoveThisCart.setTitle(String.format(titleFormat, customerOrVendorName));
+                enable(ctxRemoveThisCart);
+            }
+
+            //RemoveAllCarts
+            if (isOwnCart)
+            {
+                MenuItem ctxRemoveAllCarts = menu.findItem(R.id.userOrderCtx_removeAllCarts);
+                enable(ctxRemoveAllCarts);
+            }
+
+            //SendOrder
+            if (isOwnCart)
+            {
+                MenuItem ctxSendOrder = menu.findItem(R.id.userOrderCtx_sendOrder);
+                titleFormat = ctxSendOrder.getTitle().toString();
+                ctxSendOrder.setTitle(String.format(titleFormat, customerOrVendorName));
+                enable(ctxSendOrder);
+            }
+
+            //AddExchangeProduct
+            if (isInProgressSell_buyedWaiting)
+            {
+                MenuItem ctxAddExchangeProduct = menu.findItem(R.id.userOrderCtx_addExchangeProduct);
+                enable(ctxAddExchangeProduct);
+            }
+
+            //RemoveExchangeCart
+            if (isInProgressSell_buyedWaiting && existExchangeProducts)
+            {
+                MenuItem ctxRemoveExchangeCart = menu.findItem(R.id.userOrderCtx_removeExchangeCart);
+                enable(ctxRemoveExchangeCart);
+            }
+
+            //SendExchangeOffer
+            if (isInProgressSell_buyedWaiting && existExchangeProducts)
+            {
+                MenuItem ctxSendExchangeOffer = menu.findItem(R.id.userOrderCtx_sendExchangeOffer);
+                enable(ctxSendExchangeOffer);
+            }
+
+            //FinalizeOrder_WithoutExchange
+            if (isInProgressSell_buyedWaiting)
+            {
+                MenuItem ctxFinalizeOrder_WithoutExchange = menu.findItem(R.id.userOrderCtx_finalizeOrder_WithoutExchange);
+                enable(ctxFinalizeOrder_WithoutExchange);
+            }
+
+            //FinalizeOrder_AcceptExchange
+            if (isStatus_BuyedExchangeOffered)
+            {
+                MenuItem ctxFinalizeOrder_AcceptExchange = menu.findItem(R.id.userOrderCtx_finalizeOrder_AcceptExchange);
+                enable(ctxFinalizeOrder_AcceptExchange);
+            }
+
+            //FinalizeOrder_DenyExchange
+            if (isStatus_BuyedExchangeOffered)
+            {
+                MenuItem ctxFinalizeOrder_DenyExchange = menu.findItem(R.id.userOrderCtx_finalizeOrder_DenyExchange);
+                enable(ctxFinalizeOrder_DenyExchange);
+            }
+
+            //CloseOrder_Successful
+            if (isFeedbackEnabled)
+            {
+                MenuItem ctxCloseOrder_Successful = menu.findItem(R.id.userOrderCtx_closeOrder_Successful);
+                enable(ctxCloseOrder_Successful);
+            }
+
+            //CloseOrder_Unsuccessful
+            if (isFeedbackEnabled)
+            {
+                MenuItem ctxCloseOrder_Unsuccessful = menu.findItem(R.id.userOrderCtx_closeOrder_Unsuccessful);
+                enable(ctxCloseOrder_Unsuccessful);
+            }
         });
     }
-//
-//    public void enable(@IdRes int menuItemID, ContextMenu menu)
-//    {
-//        enable(menu.findItem(menuItemID));
-//    }
-//    public void enable(MenuItem menuItem)
-//    {
-//        menuItem.setVisible(true);
-//        menuItem.setEnabled(true);
-//        menuItem.setOnMenuItemClickListener(fetchClickListener(menuItem));
-//    }
-//    public MenuItem.OnMenuItemClickListener fetchClickListener(MenuItem menuItem)
-//    {
-//        switch (menuItem.getItemId())
-//        {
-//            case R.id.bookBlockCtx_gotoUsersProducts:
-//                return ctxMenuClickListeners.gotoUsersProducts();
-//            case R.id.bookBlockCtx_gotoProductGroup:
-//                return ctxMenuClickListeners.gotoProductGroup();
-//            case R.id.bookBlockCtx_addToCart:
-//                return ctxMenuClickListeners.addToCart();
-//            case R.id.bookBlockCtx_addToExchangeCart:
-//                return ctxMenuClickListeners.addToExchangeCart();
-//            case R.id.bookBlockCtx_removeFromCart:
-//                return ctxMenuClickListeners.removeFromCart();
-//            case R.id.bookBlockCtx_changeQuantityInCart:
-//                return ctxMenuClickListeners.changeQuantityInCart();
-//            case R.id.bookBlockCtx_changeQuantityInExchangeCart:
-//                return ctxMenuClickListeners.changeQuantityInExchangeCart();
-//            case R.id.bookBlockCtx_removeFromExchangeCart:
-//                return ctxMenuClickListeners.removeFromExchangeCart();
-//
-//            default:
-//                Utils.error("Unrecognised MenuItemID: " + menuItem.getItemId(), tag);
-//                return null; // unreachable
-//        }
-//    }
-//
-//    class CtxMenuClickListeners
-//    {
-//        public MenuItem.OnMenuItemClickListener gotoUsersProducts()
-//        {
-//            return item -> {
-//                Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
-//                intent.putExtra(Constants.PARAM_USER_FU, plvm.getProduct().getUserFriendlyUrl());
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                context.startActivity(intent);
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener gotoProductGroup()
-//        {
-//            return item -> {
-//                Intent intent = new Intent(BookteraApplication.getAppContext(), ProductGroupDetailsActivity.class);
-//                intent.putExtra(Constants.PARAM_PRODUCT_GROUP_FU, plvm.getProductGroup().getFriendlyUrl());
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                context.startActivity(intent);
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener addToCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_addToCart is not implemented yet");
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener addToExchangeCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_addToExchangeCart is not implemented yet");
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener removeFromCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_removeFromCart is not implemented yet");
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener changeQuantityInCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_changeQuantityInCart is not implemented yet");
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener changeQuantityInExchangeCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_changeQuantityInExchangeCart is not implemented yet");
-//                return true;
-//            };
-//        }
-//
-//        public MenuItem.OnMenuItemClickListener removeFromExchangeCart()
-//        {
-//            return item -> {
-//                Utils.showToast("ctx_removeFromExchangeCart is not implemented yet");
-//                return true;
-//            };
-//        }
 
-    //}
+    //region Context menu -helpers
+    public boolean isFeedbackEnabled(UserOrderPLVM.UserOrderVM uo, TransactionType tt)
+    {
+        // InProgress
+        if (uo.getStatus() == UserOrderStatus.FinalizedCash
+            || uo.getStatus() == UserOrderStatus.FinalizedExchange)
+            return true;
+
+        // Finished
+        if (uo.getStatus() == UserOrderStatus.Finished)
+        {
+            // My buy, and I have not feedbacked yet
+            if (tt == TransactionType.EarlierBuys
+                && !uo.getCustomerFeedbackedSuccessful())
+                return true;
+
+            // My sell, and I have not feedbacked yet
+            if (tt == TransactionType.EarlierSells
+                && !uo.getVendorFeedbackedSuccessful())
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public MenuItem.OnMenuItemClickListener fetchClickListener(MenuItem menuItem)
+    {
+        switch (menuItem.getItemId())
+        {
+            case R.id.userOrderCtx_gotoUsersProducts:
+                return ctxMenuClickListeners.gotoUsersProducts();
+            case R.id.userOrderCtx_removeThisCart:
+                return ctxMenuClickListeners.removeThisCart();
+            case R.id.userOrderCtx_removeAllCarts:
+                return ctxMenuClickListeners.removeAllCarts();
+            case R.id.userOrderCtx_sendOrder:
+                return ctxMenuClickListeners.sendOrder();
+            case R.id.userOrderCtx_addExchangeProduct:
+                return ctxMenuClickListeners.addExchangeProduct();
+            case R.id.userOrderCtx_removeExchangeCart:
+                return ctxMenuClickListeners.removeExchangeCart();
+            case R.id.userOrderCtx_sendExchangeOffer:
+                return ctxMenuClickListeners.sendExchangeOffer();
+            case R.id.userOrderCtx_finalizeOrder_WithoutExchange:
+                return ctxMenuClickListeners.finalizeOrder_WithoutExchange();
+            case R.id.userOrderCtx_finalizeOrder_AcceptExchange:
+                return ctxMenuClickListeners.finalizeOrder_AcceptExchange();
+            case R.id.userOrderCtx_finalizeOrder_DenyExchange:
+                return ctxMenuClickListeners.finalizeOrder_DenyExchange();
+            case R.id.userOrderCtx_closeOrder_Successful:
+                return ctxMenuClickListeners.closeOrder_Successful();
+            case R.id.userOrderCtx_closeOrder_Unsuccessful:
+                return ctxMenuClickListeners.closeOrder_Unsuccessful();
+            default:
+                Utils.error("Unrecognised MenuItemID: " + menuItem.getItemId(), tag);
+                return null; // unreachable
+        }
+    }
+
+    //todo implement UserOrder CtxMenuClickListeners
+    class CtxMenuClickListeners
+    {
+                public MenuItem.OnMenuItemClickListener gotoUsersProducts()
+        {
+            return item -> {
+                Utils.showToast("ctx_gotoUsersProducts is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener removeThisCart()
+        {
+            return item -> {
+                Utils.showToast("ctx_removeThisCart is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener removeAllCarts()
+        {
+            return item -> {
+                Utils.showToast("ctx_removeAllCarts is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener sendOrder()
+        {
+            return item -> {
+                Utils.showToast("ctx_sendOrder is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener addExchangeProduct()
+        {
+            return item -> {
+                Utils.showToast("ctx_addExchangeProduct not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener removeExchangeCart()
+        {
+            return item -> {
+                Utils.showToast("ctx_removeExchangeCart not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener sendExchangeOffer()
+        {
+            return item -> {
+                Utils.showToast("ctx_sendExchangeOffer is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener finalizeOrder_WithoutExchange()
+        {
+            return item -> {
+                Utils.showToast("ctx_finalizeOrder_WithoutExchange is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener finalizeOrder_AcceptExchange()
+        {
+            return item -> {
+                Utils.showToast("ctx_finalizeOrder_AcceptExchange is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener finalizeOrder_DenyExchange()
+        {
+            return item -> {
+                Utils.showToast("ctx_finalizeOrder_DenyExchange is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener closeOrder_Successful()
+        {
+            return item -> {
+                Utils.showToast("ctx_closeOrder_Successful is not implemented yet");
+                return true;
+            };
+        }
+
+        public MenuItem.OnMenuItemClickListener closeOrder_Unsuccessful()
+        {
+            return item -> {
+                Utils.showToast("ctx_closeOrder_Unsuccessful is not implemented yet");
+                return true;
+            };
+        }
+    }
+    //endregion
 }

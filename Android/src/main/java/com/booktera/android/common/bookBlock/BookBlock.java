@@ -14,6 +14,7 @@ import com.booktera.android.R;
 import com.booktera.android.activities.ProductGroupDetailsActivity;
 import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.Constants;
+import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
@@ -23,7 +24,7 @@ import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 /**
  * Created by Norbert on 2015.02.10..
  */
-public class BookBlock
+public class BookBlock extends CtxMenuBase
 {
     private static final String tag = BookBlock.class.toString();
 
@@ -147,6 +148,7 @@ public class BookBlock
         Utils.setProductImage(vm, vh.bookImage);
     }
 
+    @Override
     public void setupContextMenu()
     {
         bookBlockView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
@@ -219,16 +221,7 @@ public class BookBlock
         });
     }
 
-    public void enable(@IdRes int menuItemID, ContextMenu menu)
-    {
-        enable(menu.findItem(menuItemID));
-    }
-    public void enable(MenuItem menuItem)
-    {
-        menuItem.setVisible(true);
-        menuItem.setEnabled(true);
-        menuItem.setOnMenuItemClickListener(fetchClickListener(menuItem));
-    }
+    @Override
     public MenuItem.OnMenuItemClickListener fetchClickListener(MenuItem menuItem)
     {
         switch (menuItem.getItemId())
@@ -256,6 +249,7 @@ public class BookBlock
         }
     }
 
+    //todo implement BookBlock CtxMenuClickListeners
     class CtxMenuClickListeners
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()

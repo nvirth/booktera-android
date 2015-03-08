@@ -94,8 +94,12 @@
   <string name="userOrder_sumCustomerFee_format">Ebből jutalék: %s</string>
   <string name="userOrder_customersFeePercent_format" formatted="false">&#160;(%s%%)</string>
   <string name="userOrder_status">A rendelés állapota:&#160;</string>
-  <string name="userOrder_books_mainLabel"><u>A KOSÁR TARTALMA</u></string>
-  <string name="userOrder_exchangeBooks_mainLabel"><u>A CSERE-KOSÁR</u></string>
+  <string name="userOrder_books_mainLabel">
+    <u>A KOSÁR TARTALMA</u>
+  </string>
+  <string name="userOrder_exchangeBooks_mainLabel">
+    <u>A CSERE-KOSÁR</u>
+  </string>
   <string name="Your_feedback_">A Te értékelésed:&#160;</string>
   <string name="The_vendors_feedback_">Az eladó értékelése:&#160;</string>
   <string name="The_customers_feedback_">A vevő értékelése:&#160;</string>
@@ -107,6 +111,18 @@
   <string name="sell_header_finished">Befejezett</string>
   <string name="title_activity_buys">Vásárlás</string>
   <string name="title_activity_sells">Eladás</string>
+  <string name="userOrderCtx_usersProducts_format">\"%s\" könyvei</string>
+  <string name="userOrderCtx_removeThisCart_format">\"%s\" kosár törlése</string>
+  <string name="userOrderCtx_removeAllCarts">Minden kosár törlése</string>
+  <string name="userOrderCtx_sendOrder_format">\"%s\" rendelés leadása</string>
+  <string name="userOrderCtx_addExchangeProduct">Csere-könyv hozzáadása</string>
+  <string name="userOrderCtx_removeExchangeCart">Csere-kosár törlése</string>
+  <string name="userOrderCtx_sendExchangeOffer">Csere-ajánlat elküldése</string>
+  <string name="userOrderCtx_finalizeOrder_WithoutExchange">Nem cserélek, fizessen!</string>
+  <string name="userOrderCtx_finalizeOrder_AcceptExchange">Csere ajánlat elfogadása</string>
+  <string name="userOrderCtx_finalizeOrder_DenyExchange">Csere ajánlat elutasítása</string>
+  <string name="userOrderCtx_closeOrder_Successful">Tranzakció lezárása: Sikeres</string>
+  <string name="userOrderCtx_closeOrder_Unsuccessful">Tranzakció lezárása: Sikertelen</string>
 
 
 </resources>
