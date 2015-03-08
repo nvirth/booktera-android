@@ -2,6 +2,7 @@ package com.booktera.androidclientproxy.lib.proxy.base;
 
 import android.content.res.Resources;
 import android.net.http.AndroidHttpClient;
+import android.text.TextUtils;
 import android.util.Log;
 import com.booktera.androidclientproxy.lib.R;
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
@@ -35,9 +36,9 @@ import java.util.concurrent.Executors;
  * This class is used for communicating with the backend REST services.
  * Note: Initialization required:
  * <ul>
- *     <li>setRedirectToLoginAction</li>
- *     <li>setSendErrorMsgAction</li>
- *     <li>setResources</li>
+ * <li>setRedirectToLoginAction</li>
+ * <li>setSendErrorMsgAction</li>
+ * <li>setResources</li>
  * </ul>
  */
 public abstract class RestServiceClientBase
@@ -193,9 +194,11 @@ public abstract class RestServiceClientBase
     {
         try
         {
-            String path = new URI(r.requestUrl).getPath(); //e.g.: "/EntityManagers/ProductManagerService.svc/GetMainHighlighteds"
+            URI uri = new URI(r.requestUrl);
+            String path = uri.getPath(); //e.g.: "/EntityManagers/ProductManagerService.svc/GetMainHighlighteds"
             String regex = "^.*/(\\w+)Service\\.svc/(\\w+)$";
             String resName = path.replaceFirst(regex, "$1_$2").toLowerCase();
+            resName += applyMockData_specialPostFix(uri);
 
             int rawMockResId = resources.getIdentifier(resName, "raw", resourcePackageName);
             InputStream is = resources.openRawResource(rawMockResId);
@@ -209,6 +212,42 @@ public abstract class RestServiceClientBase
             return false;
         }
     }
+    private String applyMockData_specialPostFix(URI uri)
+    {
+        // TransactionManagerClient's GET fns would conflict other way
+        // Their format is e.g. like this:
+        // (Carts)
+        // "GetUsersCartsVM?vendorId=NUM&customerId="
+        // (InCartsByOthers)
+        // "GetUsersCartsVM?vendorId=   &customerId=NUM"
+
+        String[] specialCases = new String[]{
+            "GetUsersCartsVM",
+            "GetUsersInProgressOrdersVM",
+            "GetUsersFinishedTransactionsVM"
+        };
+
+        boolean isSpecialCase = false;
+        for (String specialCase : specialCases)
+            if (uri.getPath().contains(specialCase))
+                isSpecialCase = true;
+
+        String res = "";
+        if (isSpecialCase)
+        {
+            for (String keyValuePair : uri.getQuery().split("&"))
+            {
+                String[] split = keyValuePair.split("=");
+                String key = split[0];
+                boolean hasValue = split.length > 1;
+
+                if (hasValue)
+                    res += "_" + key.toLowerCase();
+            }
+        }
+
+        return res;
+    }
     private void handleResponseFail(Action_1<HttpResponse> todoIfResponseFailed, HttpResponse response, int statusCode)
     {
         Log.e(tag, "Request ended with code: " + statusCode);
@@ -217,7 +256,7 @@ public abstract class RestServiceClientBase
         if (statusCode == HttpStatus.SC_FORBIDDEN
             || statusCode == HttpStatus.SC_UNAUTHORIZED)
         {
-            //todo test with auth pages: redirectToLoginAction.run();
+            //TODO test with auth pages: redirectToLoginAction.run();
             redirectToLoginAction.run();
             handled = true;
         }
