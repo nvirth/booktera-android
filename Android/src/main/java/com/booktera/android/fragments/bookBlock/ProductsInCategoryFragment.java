@@ -1,6 +1,7 @@
 package com.booktera.android.fragments.bookBlock;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import com.booktera.android.R;
 import com.booktera.android.common.Constants;
@@ -36,7 +37,7 @@ public class ProductsInCategoryFragment extends BookBlocksFragmentBase
     @Override
     protected void loadData()
     {
-        if (Utils.isNullOrEmpty(categoryFriendlyUrl))
+        if (TextUtils.isEmpty(categoryFriendlyUrl))
         {
             vh.noResultTextView.setText(getActivity().getString(R.string._choose_a_category_));
             vh.noResultTextView.setVisibility(View.VISIBLE);

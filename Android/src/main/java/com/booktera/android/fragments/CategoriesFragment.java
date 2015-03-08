@@ -2,6 +2,7 @@ package com.booktera.android.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import com.booktera.android.R;
@@ -62,7 +63,7 @@ public class CategoriesFragment extends ListViewFragmentBase
             InCategoryCWPLVM data = dataIn; // To be able to debug within a lambda
 
             // -- Set Title
-            if (data.getBaseCategory() == null || Utils.isNullOrEmpty(data.getBaseCategory().getDisplayName()))
+            if (data.getBaseCategory() == null || TextUtils.isEmpty(data.getBaseCategory().getDisplayName()))
                 activity.setTitle(activity.getString(R.string.app_name));
             else
                 activity.setTitle(data.getBaseCategory().getFullPath());

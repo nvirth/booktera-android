@@ -2,6 +2,7 @@ package com.booktera.android.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,8 +61,8 @@ public class RegisterActivity extends AuthenticationActivityBase
             String password = vh.password.getText().toString();
             String confirmPassword = vh.confirmPassword.getText().toString();
 
-            if (Utils.isNullOrEmpty(userName) || Utils.isNullOrEmpty(email)
-                || Utils.isNullOrEmpty(password) || Utils.isNullOrEmpty(confirmPassword))
+            if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword))
             {
                 alert(getString(R.string.Error_), getString(R.string.None_of_the_input_fields_may_be_empty));
                 return;

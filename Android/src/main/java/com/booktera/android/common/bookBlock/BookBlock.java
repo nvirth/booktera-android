@@ -3,6 +3,7 @@ package com.booktera.android.common.bookBlock;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.IdRes;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -125,7 +126,7 @@ public class BookBlock extends CtxMenuBase
     {
         // E.g. by ProductGroup, we don't have UserName. In this case, we have to tighten the
         // cover at the BookBlockImage's bottom
-        if (!Utils.isNullOrEmpty(vm.getProduct().getUserName()))
+        if (!TextUtils.isEmpty(vm.getProduct().getUserName()))
             vh.userName.setText(vm.getProduct().getUserName());
         else
             vh.userName.setVisibility(View.GONE);
@@ -159,7 +160,7 @@ public class BookBlock extends CtxMenuBase
             String titleFormat;
             boolean isQuantity_gt_0 = vm.getProduct().getHowMany() > 0;
             boolean isUserAuthenticated = UserData.Instace.isAuthenticated();
-            boolean isProduct = !Utils.isNullOrEmpty(vm.getProduct().getDescription());
+            boolean isProduct = !TextUtils.isEmpty(vm.getProduct().getDescription());
             String productOwnerName = Utils.ifNull(vm.getProduct().getUserName(), "").toLowerCase();
             boolean isOwnBook = productOwnerName.equals(UserData.Instace.getUserNameLowerCase());
 
@@ -171,14 +172,14 @@ public class BookBlock extends CtxMenuBase
             if (isInUserOrder)
             {
                 isInCart = userOrderVm.getStatus() == UserOrderStatus.Cart;
-                existsCustomerName = !Utils.isNullOrEmpty(userOrderVm.getCustomerName());
-                existsVendorName = !Utils.isNullOrEmpty(userOrderVm.getVendorName());
+                existsCustomerName = !TextUtils.isEmpty(userOrderVm.getCustomerName());
+                existsVendorName = !TextUtils.isEmpty(userOrderVm.getVendorName());
             }
 
             //-- MenuItems
 
             //UsersProducts
-            if (!Utils.isNullOrEmpty(vh.userName.getText()))
+            if (!TextUtils.isEmpty(vh.userName.getText()))
             {
                 MenuItem ctxUsersProducts = menu.findItem(R.id.bookBlockCtx_gotoUsersProducts);
                 titleFormat = ctxUsersProducts.getTitle().toString();
@@ -187,7 +188,7 @@ public class BookBlock extends CtxMenuBase
             }
 
             //ProductGroup
-            if (!Utils.isNullOrEmpty(vh.title.getText()))
+            if (!TextUtils.isEmpty(vh.title.getText()))
             {
                 MenuItem ctxProductGroup = menu.findItem(R.id.bookBlockCtx_gotoProductGroup);
                 titleFormat = ctxProductGroup.getTitle().toString();

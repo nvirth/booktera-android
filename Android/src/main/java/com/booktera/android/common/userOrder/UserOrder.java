@@ -2,6 +2,7 @@ package com.booktera.android.common.userOrder;
 
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -120,7 +121,7 @@ public class UserOrder extends CtxMenuBase
         vh.customersFeePercent.setText(String.format(format, uo.getCustomersFeePercent()));
 
         // Title of cart/transaction
-        if (!Utils.isNullOrEmpty(uo.getVendorName()))
+        if (!TextUtils.isEmpty(uo.getVendorName()))
         {
             vh.vendorName.setText(uo.getVendorName());
             vh.customerName.setVisibility(View.GONE);
@@ -321,8 +322,8 @@ public class UserOrder extends CtxMenuBase
             // -- Flags, Data
             String customerOrVendorName = Utils.ifNullOrEmpty(uo.getVendorName(), uo.getCustomerName());
             boolean isCart = uo.getStatus() == UserOrderStatus.Cart;
-            boolean existsCustomerName = !Utils.isNullOrEmpty(uo.getCustomerName());
-            boolean existsVendorName = !Utils.isNullOrEmpty(uo.getVendorName());
+            boolean existsCustomerName = !TextUtils.isEmpty(uo.getCustomerName());
+            boolean existsVendorName = !TextUtils.isEmpty(uo.getVendorName());
             boolean isOwnCart = isCart && !existsCustomerName && existsVendorName;
             boolean existExchangeProducts = !plvm.getExchangeProducts().isEmpty();
             boolean isStatus_BuyedExchangeOffered = uo.getStatus() == UserOrderStatus.BuyedExchangeOffered;

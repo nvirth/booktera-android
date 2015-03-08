@@ -1,5 +1,6 @@
 package com.booktera.android.activities.base;
 
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import com.booktera.android.R;
 import com.booktera.android.common.UserData;
@@ -21,7 +22,7 @@ public abstract class AuthenticationActivityBase extends UnAuthorizedActivity
 {
     protected void doLogin(String userName, String password, ViewGroup root)
     {
-        if (Utils.isNullOrEmpty(userName) || Utils.isNullOrEmpty(password))
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password))
         {
             alert(getString(R.string.Error_), getString(R.string.UserName_and_or_password_mustn_t_be_empty));
             return;

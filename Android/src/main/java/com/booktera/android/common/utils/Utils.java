@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,20 +37,10 @@ public class Utils
     }
     public static String ifNullOrEmpty(String str, String ifNullValue)
     {
-        if (str == null || str.equals(""))
+        if (TextUtils.isEmpty(str))
             return ifNullValue;
         return str;
     }
-    public static boolean isNullOrEmpty(CharSequence str)
-    {
-        //TODO use TextUtils
-        if (str == null)
-            return true;
-
-        str = str instanceof String ? str : str.toString();
-        return str.equals("");
-    }
-
     //endregion
 
     //region setImage
