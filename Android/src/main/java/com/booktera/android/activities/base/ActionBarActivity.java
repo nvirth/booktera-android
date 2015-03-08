@@ -1,12 +1,14 @@
 package com.booktera.android.activities.base;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.booktera.android.R;
 import com.booktera.android.activities.*;
 import com.booktera.android.common.UserData;
-import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
 /**
@@ -23,13 +25,24 @@ abstract class ActionBarActivity extends BaseActivity
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // Display the left-facing caret at the app's logo
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null && !(this instanceof MainActivity))
+            actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         _wasAuthenticated = UserData.Instace.isAuthenticated();
 
         int menuTemplateId = _wasAuthenticated
-            ? R.menu.authorized
-            : R.menu.unauthorized;
+            ? R.menu.actionbar_authorized
+            : R.menu.actionbar_unauthorized;
 
         getMenuInflater().inflate(menuTemplateId, menu);
         return true;
@@ -52,12 +65,14 @@ abstract class ActionBarActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO remove the default comment from onOptionsItemSelected after understanding it...
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId())
         {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            // Normal ActionBar items
             case R.id.action_search:
                 onSearchClicked();
                 return true;

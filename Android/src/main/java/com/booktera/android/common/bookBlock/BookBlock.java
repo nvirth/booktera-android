@@ -123,8 +123,6 @@ public class BookBlock extends CtxMenuBase
 
     public void fill()
     {
-        //TODO check the if-s, when corresponding view will exist
-
         // E.g. by ProductGroup, we don't have UserName. In this case, we have to tighten the
         // cover at the BookBlockImage's bottom
         if (!Utils.isNullOrEmpty(vm.getProduct().getUserName()))
