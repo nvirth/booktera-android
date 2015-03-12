@@ -2,10 +2,9 @@ package com.booktera.androidclientproxy.lib.proxy.base;
 
 import android.content.res.Resources;
 import android.net.http.AndroidHttpClient;
-import android.text.TextUtils;
 import android.util.Log;
 import com.booktera.androidclientproxy.lib.R;
-import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
+import com.booktera.androidclientproxy.lib.common.devMode.DevMode;
 import com.booktera.androidclientproxy.lib.enums.HttpRequestHeader;
 import com.booktera.androidclientproxy.lib.proxy.Request;
 import com.booktera.androidclientproxy.lib.utils.Action;
@@ -44,8 +43,6 @@ import java.util.concurrent.Executors;
  */
 public abstract class RestServiceClientBase
 {
-    public static boolean isMockingEnabled = true;
-
     private static final String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
     private static final String ENCODING = "UTF-8";
     private static final String tag = RestServiceClientBase.class.toString();
@@ -55,9 +52,20 @@ public abstract class RestServiceClientBase
     private static final String actualIp = "192.168.1.103";
     protected final String baseAddress;
     protected String clientClassNameLower;
-    protected String resourcePackageName;
 
     // -- Props
+
+    //region resourcePackageName
+    protected String resourcePackageName;
+    public String getResourcePackageName()
+    {
+        return resourcePackageName;
+    }
+    public void setResourcePackageName(String resourcePackageName)
+    {
+        this.resourcePackageName = resourcePackageName;
+    }
+    //endregion
 
     //region redirectToLoginAction
     private static Action redirectToLoginAction;
@@ -156,11 +164,7 @@ public abstract class RestServiceClientBase
                 {
                     Log.e(tag, "sendRequest", e);
 
-                    boolean mockAppliedSuccessfully = false;
-                    if (isMockingEnabled)
-                        mockAppliedSuccessfully = applyMockData(r);
-
-                    if (mockAppliedSuccessfully)
+                    if (DevMode.Instance.applyMockData(r, this))
                         showMockAppliedErrorMessage();
                     else if (r.todoIfResponseFailed != null)
                         r.todoIfResponseFailed.run(null);
@@ -180,7 +184,7 @@ public abstract class RestServiceClientBase
             }
         );
     }
-    private <T> void handleResponse(Request<T> r, InputStream is) throws IOException
+    public <T> void handleResponse(Request<T> r, InputStream is) throws IOException
     {
         if (r.type != Void.class)
         {

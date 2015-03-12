@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import com.booktera.android.activities.LoginActivity;
+import com.booktera.android.common.Config;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.devMode.DevMode;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
@@ -25,7 +26,7 @@ public class BookteraApplication extends Application
         super.onCreate();
         _this = this;
 
-        InitRestServiceClientBase();
+        InitProxyLib();
 
         // Because we sometimes can't get even a StackTrace while observing an unhandled exception during debugging
         Thread.setDefaultUncaughtExceptionHandler((thread, ex) ->
@@ -35,9 +36,9 @@ public class BookteraApplication extends Application
     }
 
     /**
-     * Inits the RestServiceClientBase class with a defaultErrorMsg action
+     * Initializes the AndroidClientProxy lib's RestServiceClientBase and Config classes
      */
-    private void InitRestServiceClientBase()
+    private void InitProxyLib()
     {
         // A Handler by default post messages to the thread where it is created.
         // We are now on the (main) UI thread
@@ -61,6 +62,9 @@ public class BookteraApplication extends Application
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }));
+
+        // Setting up the lib's developer mode configuration, to be the same as the app's
+        com.booktera.androidclientproxy.lib.common.Config.IsDebug = Config.IsDebug;
     }
 
     public static Resources getAppResources()
