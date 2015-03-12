@@ -16,6 +16,7 @@ import com.booktera.android.activities.ProductGroupDetailsActivity;
 import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.CtxMenuBase;
+import com.booktera.android.common.Helpers;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
@@ -253,14 +254,7 @@ public class BookBlock extends CtxMenuBase
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()
         {
-            return item -> {
-                Intent intent = new Intent(BookteraApplication.getAppContext(), UsersProductsActivity.class);
-                intent.putExtra(Constants.PARAM_USER_FU, vm.getProduct().getUserFriendlyUrl());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                context.startActivity(intent);
-                return true;
-            };
+            return Helpers.gotoUsersProducts(vm.getProduct().getUserFriendlyUrl(), context);
         }
 
         public MenuItem.OnMenuItemClickListener gotoProductGroup()

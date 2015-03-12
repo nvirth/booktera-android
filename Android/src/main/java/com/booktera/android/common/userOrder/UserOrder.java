@@ -3,20 +3,27 @@ package com.booktera.android.common.userOrder;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
 import com.booktera.android.common.CtxMenuBase;
+import com.booktera.android.common.Helpers;
 import com.booktera.android.common.bookBlock.BookBlock;
+import com.booktera.android.common.models.TransactionVM;
 import com.booktera.android.common.utils.CurrencyFormatter;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.TransactionType;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
+import com.booktera.androidclientproxy.lib.proxy.Services;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -77,19 +84,21 @@ public class UserOrder extends CtxMenuBase
     private ViewHolder vh;
     private View userOrderView;
     private FragmentActivity activity;
+    private UserOrderArrayAdapter arrayAdapter;
 
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
-    public UserOrder(UserOrderPLVM plvm, View userOrderView, FragmentActivity activity)
+    public UserOrder(UserOrderPLVM plvm, View userOrderView, FragmentActivity activity, UserOrderArrayAdapter arrayAdapter)
     {
-        this(plvm, new UserOrder.ViewHolder(userOrderView), userOrderView, activity);
+        this(plvm, new UserOrder.ViewHolder(userOrderView), userOrderView, activity, arrayAdapter);
     }
-    public UserOrder(UserOrderPLVM plvm, ViewHolder vh, View userOrderView, FragmentActivity activity)
+    public UserOrder(UserOrderPLVM plvm, ViewHolder vh, View userOrderView, FragmentActivity activity, UserOrderArrayAdapter arrayAdapter)
     {
         this.plvm = plvm;
         this.vh = vh;
         this.userOrderView = userOrderView;
         this.activity = activity;
+        this.arrayAdapter = arrayAdapter;
     }
 
     public void fill()
@@ -486,16 +495,37 @@ public class UserOrder extends CtxMenuBase
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()
         {
-            return item -> {
-                Utils.showToast("ctx_gotoUsersProducts is not implemented yet");
-                return true;
-            };
+            String userFU = Utils.ifNullOrEmpty(
+                plvm.getUserOrder().getCustomerFriendlyUrl(),
+                plvm.getUserOrder().getVendorFriendlyUrl()
+            );
+            return Helpers.gotoUsersProducts(userFU, activity);
         }
 
         public MenuItem.OnMenuItemClickListener removeThisCart()
         {
             return item -> {
-                Utils.showToast("ctx_removeThisCart is not implemented yet");
+                String msg = String.format(r.getString(R.string.removeThisCart_alertMsgFormat), plvm.getUserOrder().getVendorName());
+                String title = r.getString(R.string.removeThisCart_alertMsgTitle);
+                Utils.alert(activity, title, msg, null, (dialog, which) ->
+                    Services.TransactionManager.removeUsersCart(plvm.getUserOrder().getID(),
+                        () -> /*success*/ activity.runOnUiThread(() -> {
+                            Utils.showToast(r.getString(R.string.removeThisCart_successMsg),/*isLong*/ true);
+
+                            // Refresh cached data
+                            List<UserOrderPLVM> carts = TransactionVM.Instance.getCarts();
+                            if (!carts.remove(plvm))
+                                Log.e(tag, "Couldn't remove the cart. UserOrderID: " + plvm.getUserOrder().getID());
+
+                            // Refresh the view
+                            arrayAdapter.remove(plvm);
+                        }),
+                        httpResponse -> /*failure*/{
+                            String _title = r.getString(R.string.Error_);
+                            String _msg = r.getString(R.string.removeThisCart_failureMsg);
+                            Utils.alert(activity, _title, _msg);
+                        }
+                    ));
                 return true;
             };
         }

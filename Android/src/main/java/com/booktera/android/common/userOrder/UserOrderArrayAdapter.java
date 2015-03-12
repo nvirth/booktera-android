@@ -41,7 +41,7 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
         }
 
         UserOrder.ViewHolder vh = (UserOrder.ViewHolder) userOrderView.getTag();
-        UserOrder userOrder = new UserOrder(plvm, vh, userOrderView, activity);
+        UserOrder userOrder = new UserOrder(plvm, vh, userOrderView, activity, this);
         userOrder.fill();
         userOrder.setupContextMenu();
 

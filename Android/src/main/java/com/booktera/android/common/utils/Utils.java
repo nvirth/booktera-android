@@ -1,5 +1,6 @@
 package com.booktera.android.common.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -147,8 +148,8 @@ public class Utils
         //java.lang.NoClassDefFoundError: android.os.BaseBundle
         //return extractParamCore(bundle, paramName, tag, msg, BaseBundle::getString);
         return extractParamCore(bundle, paramName, tag, msg,
-            (_bundle,_paramName) ->
-            _bundle.getString(_paramName));
+            (_bundle, _paramName) ->
+                _bundle.getString(_paramName));
     }
     /**
      * Extracts the given parameter from the Bundle. Throws error if it/the bundle is null.
@@ -167,7 +168,7 @@ public class Utils
         //return extractParamCore(bundle, paramName, tag, msg, BaseBundle::getInt);
         return extractParamCore(bundle, paramName, tag, msg,
             (_bundle, _paramName) ->
-            _bundle.getInt(_paramName));
+                _bundle.getInt(_paramName));
     }
     /**
      * Extracts the given parameter from the Bundle. Throws error if the bundle is null.
@@ -204,6 +205,9 @@ public class Utils
     }
     private static void disableOrEnableControls(ViewGroup vg, boolean enable)
     {
+        if (vg == null)
+            return;
+
         for (int i = 0; i < vg.getChildCount(); i++)
         {
             View child = vg.getChildAt(i);
@@ -218,16 +222,52 @@ public class Utils
     //region alert
     public static void alert(Context context, String title, String message)
     {
-        alert(context, title, message, (dialog, which) -> {/*do nothing*/});
+        alert(context, title, message, (dialog, which) -> {/*do nothing*/}, null, null);
     }
-    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener onClick)
+    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener neutralClick)
     {
-        new AlertDialog.Builder(context)
+        neutralClick = neutralClick == null
+            ? (dialog, which) -> {/*do nothing*/}
+            : neutralClick;
+
+        alert(context, title, message, neutralClick, null, null);
+    }
+    public static void alert(Context context, String title, String message,
+                             DialogInterface.OnClickListener negativeClick, DialogInterface.OnClickListener positiveClick)
+    {
+        negativeClick = negativeClick == null
+            ? (dialog, which) -> {/*do nothing*/}
+            : negativeClick;
+        positiveClick = positiveClick == null
+            ? (dialog, which) -> {/*do nothing*/}
+            : positiveClick;
+
+        alert(context, title, message, null, negativeClick, positiveClick);
+    }
+    private static void alert(Context context, String title, String message,
+                              DialogInterface.OnClickListener neutralClick,
+                              DialogInterface.OnClickListener negativeClick,
+                              DialogInterface.OnClickListener positiveClick)
+    {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(message)
-            .setNeutralButton(android.R.string.ok, onClick)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .show();
+            .setIcon(android.R.drawable.ic_dialog_alert);
+
+        if (neutralClick != null)
+            alertBuilder.setNeutralButton(R.string.ok, neutralClick);
+        if (negativeClick != null)
+            alertBuilder.setNegativeButton(R.string.no, negativeClick);
+        if (positiveClick != null)
+            alertBuilder.setPositiveButton(R.string.yes, positiveClick);
+
+        alertBuilder.show();
     }
     //endregion
+
+    public static void refreshActivity(Activity activity)
+    {
+        activity.finish();
+        activity.startActivity(activity.getIntent());
+    }
 }
