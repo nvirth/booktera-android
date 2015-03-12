@@ -123,6 +123,10 @@
   <string name="userOrderCtx_finalizeOrder_DenyExchange">Csere ajánlat elutasítása</string>
   <string name="userOrderCtx_closeOrder_Successful">Tranzakció lezárása: Sikeres</string>
   <string name="userOrderCtx_closeOrder_Unsuccessful">Tranzakció lezárása: Sikertelen</string>
+  <string name="removeThisCart_alertMsgFormat">Biztos, hogy törölni szeretnéd ezt a kosarat? (%s)</string>
+  <string name="removeThisCart_alertMsgTitle">Törlés megerősítése</string>
+  <string name="removeThisCart_successMsg">Kosár törölve!</string>
+  <string name="removeThisCart_failureMsg">Nem sikerült törölni a kosarad!</string>
 
 
 </resources>

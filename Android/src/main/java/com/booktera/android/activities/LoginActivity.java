@@ -10,12 +10,13 @@ import com.booktera.android.R;
 import com.booktera.android.activities.base.AuthenticationActivityBase;
 import com.booktera.android.common.Config;
 import com.booktera.android.common.Constants;
+import com.booktera.android.common.devMode.DevMode;
 
 public class LoginActivity extends AuthenticationActivityBase
 {
     protected ViewHolder vh;
 
-    class ViewHolder
+    public class ViewHolder
     {
         public EditText userName;
         public EditText password;
@@ -54,11 +55,7 @@ public class LoginActivity extends AuthenticationActivityBase
             startActivityForResult(intent, dummyRequestCode);
         });
 
-        if (Config.IsDebug)
-        {
-            vh.userName.setText("ZomiDudu");
-            vh.password.setText("asdqwe123");
-        }
+        DevMode.Instance.fillLoginForm(vh);
     }
 
     @Override

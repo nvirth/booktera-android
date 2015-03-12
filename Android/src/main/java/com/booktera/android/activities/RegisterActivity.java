@@ -11,6 +11,7 @@ import com.booktera.android.activities.base.AuthenticationActivityBase;
 import com.booktera.android.common.Config;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
+import com.booktera.android.common.devMode.DevMode;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
@@ -21,7 +22,7 @@ public class RegisterActivity extends AuthenticationActivityBase
 {
     protected ViewHolder vh;
 
-    class ViewHolder
+    public class ViewHolder
     {
         public ViewGroup root;
         public EditText userName;
@@ -94,17 +95,6 @@ public class RegisterActivity extends AuthenticationActivityBase
                 }));
         });
 
-        if (Config.IsDebug)
-        {
-            String password = Utils.ifNullOrEmpty(vh.password.getText().toString(), "asdqwe123");
-            vh.password.setText(password);
-            vh.confirmPassword.setText(password);
-
-            String userName = Utils.ifNullOrEmpty(vh.userName.getText().toString(), "test");
-            userName += new Random(new Date().getTime()).nextInt(123456);
-            vh.userName.setText(userName);
-
-            vh.email.setText(userName + "@test.com");
-        }
+        DevMode.Instance.fillRegisterForm(vh);
     }
 }

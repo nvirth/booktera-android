@@ -59,5 +59,11 @@ public class UserData
         setUserName(null);
         setUserId(0);
     }
+    public void logIn(String userName, int userId)
+    {
+        setAuthenticated(true);
+        setUserName(userName);
+        setUserId(userId);
+    }
 
 }

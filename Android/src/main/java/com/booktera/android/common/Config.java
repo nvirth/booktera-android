@@ -14,4 +14,9 @@ public class Config
     public static final String UserImagesUrlDirFormat = UserImagesUrlDir + "/%1s";
 
     public static final boolean IsDebug = BuildConfig.DEBUG;
+    public static class DevModeEnable{
+        public static final boolean MockLogin = true;
+        public static final boolean FillLoginForm = true;
+        public static final boolean FillRegisterForm = true;
+    }
 }

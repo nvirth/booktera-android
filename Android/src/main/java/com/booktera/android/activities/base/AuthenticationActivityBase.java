@@ -34,9 +34,7 @@ public abstract class AuthenticationActivityBase extends UnAuthorizedActivity
             (wasSuccessful, userId) -> runOnUiThread(() -> {
                 if (wasSuccessful)
                 {
-                    UserData.Instace.setAuthenticated(true);
-                    UserData.Instace.setUserName(userName);
-                    UserData.Instace.setUserId(userId);
+                    UserData.Instace.logIn(userName, userId);
 
                     showToast(getString(R.string.Successful_login));
 
