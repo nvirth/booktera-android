@@ -3,11 +3,17 @@ package com.booktera.androidclientproxy.lib.proxy.clients;
 import com.booktera.androidclientproxy.lib.enums.HttpPostVerb;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.clients.interfaces.ITransactionManagerClient;
+import com.booktera.androidclientproxy.lib.utils.GsonHelper;
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 import com.booktera.androidclientproxy.lib.proxy.Request;
 import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionManagerClient extends RestServiceClientBase implements ITransactionManagerClient
 {
@@ -239,9 +245,13 @@ public class TransactionManagerClient extends RestServiceClientBase implements I
     }
 
     @Override
-    public void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    public void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        Type type = new TypeToken<ArrayList<UserOrderPLVM>>()
+        {
+        }.getType();
+
+        Request<List<UserOrderPLVM>> request = new Request<>(type, 2);
         request.requestUrl = baseAddress + "/GetUsersCartsVM";
         request.todoWithResponse = todoWithResponse;
         request.todoIfResponseFailed = todoIfResponseFailed;
@@ -252,9 +262,13 @@ public class TransactionManagerClient extends RestServiceClientBase implements I
     }
 
     @Override
-    public void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    public void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        Type type = new TypeToken<ArrayList<UserOrderPLVM>>()
+        {
+        }.getType();
+
+        Request<List<UserOrderPLVM>> request = new Request<>(type, 2);
         request.requestUrl = baseAddress + "/GetUsersInProgressOrdersVM";
         request.todoWithResponse = todoWithResponse;
         request.todoIfResponseFailed = todoIfResponseFailed;
@@ -265,9 +279,13 @@ public class TransactionManagerClient extends RestServiceClientBase implements I
     }
 
     @Override
-    public void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
+    public void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed)
     {
-        Request<UserOrderPLVM[]> request = new Request<>(UserOrderPLVM[].class, 2);
+        Type type = new TypeToken<ArrayList<UserOrderPLVM>>()
+        {
+        }.getType();
+
+        Request<List<UserOrderPLVM>> request = new Request<>(type, 2);
         request.requestUrl = baseAddress + "/GetUsersFinishedTransactionsVM";
         request.todoWithResponse = todoWithResponse;
         request.todoIfResponseFailed = todoIfResponseFailed;

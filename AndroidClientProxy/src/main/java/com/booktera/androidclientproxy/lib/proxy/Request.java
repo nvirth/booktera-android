@@ -5,19 +5,27 @@ import org.apache.http.HttpResponse;
 import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Request<T>
 {
-    public final Class<T> type;
+    public final Type type;
 
-    public Request(Class<T> type)
+    public Request(Type type)
     {
-        this.type = type;
-        this.requestData = new HashMap<>();
+        this(type, 0);
     }
-    public Request(Class<T> type, int dataCount)
+    public Request(Class<T> clazz)
+    {
+        this(clazz, 0);
+    }
+    public Request(Class<T> clazz, int dataCount)
+    {
+        this((Type) clazz, dataCount);
+    }
+    public Request(Type type, int dataCount)
     {
         this.type = type;
         this.requestData = new HashMap<>(dataCount);

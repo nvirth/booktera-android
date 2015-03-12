@@ -29,7 +29,7 @@ public interface ITransactionManagerClient
     void closeOrderSuccessful(int userOrderId, Action todoAfterResponseReceived, Action_1<HttpResponse> todoIfResponseFailed);
     void closeOrderUnsuccessful(int userOrderId, Action todoAfterResponseReceived, Action_1<HttpResponse> todoIfResponseFailed);
 
-    void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
-    void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
-    void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<UserOrderPLVM[]> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
+    void getUsersCartsVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
+    void getUsersInProgressOrdersVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
+    void getUsersFinishedTransactionsVM(Integer customerId, Integer vendorId, Action_1<List<UserOrderPLVM>> todoWithResponse, Action_1<HttpResponse> todoIfResponseFailed);
 }

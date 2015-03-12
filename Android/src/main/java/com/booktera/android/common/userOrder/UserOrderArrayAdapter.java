@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import com.booktera.android.R;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 
+import java.util.List;
+
 /**
  * Created by Norbert on 2015.03.06..
  */
@@ -16,9 +18,9 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
     public static final int layoutResourceId = R.layout.row_user_order;
     private FragmentActivity activity;
 
-    private UserOrderPLVM[] data;
+    private List<UserOrderPLVM> data;
 
-    public UserOrderArrayAdapter(FragmentActivity activity, UserOrderPLVM[] data)
+    public UserOrderArrayAdapter(FragmentActivity activity, List<UserOrderPLVM> data)
     {
         super(activity, layoutResourceId, data);
 
@@ -29,7 +31,7 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
     @Override
     public View getView(int position, View userOrderView, ViewGroup parent)
     {
-        UserOrderPLVM plvm = data[position];
+        UserOrderPLVM plvm = data.get(position);
 
         if (userOrderView == null)
         {

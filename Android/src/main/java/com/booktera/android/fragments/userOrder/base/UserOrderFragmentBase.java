@@ -1,11 +1,11 @@
 package com.booktera.android.fragments.userOrder.base;
 
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import com.booktera.android.common.userOrder.UserOrderArrayAdapter;
 import com.booktera.android.fragments.base.ListViewFragmentBase;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
+
+import java.util.List;
 
 public abstract class UserOrderFragmentBase extends ListViewFragmentBase
 {
@@ -16,11 +16,11 @@ public abstract class UserOrderFragmentBase extends ListViewFragmentBase
     @Override
     protected abstract void loadData();
 
-    protected void applyData(UserOrderPLVM[] data)
+    protected void applyData(List<UserOrderPLVM> data)
     {
         runOnUiThread(activity ->
         {
-            if (data.length == 0)
+            if (data.isEmpty())
             {
                 vh.noResultTextView.setVisibility(View.VISIBLE);
             }

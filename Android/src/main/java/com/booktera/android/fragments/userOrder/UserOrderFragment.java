@@ -13,6 +13,8 @@ import com.booktera.androidclientproxy.lib.utils.Action_1;
 import com.booktera.androidclientproxy.lib.utils.Action_4;
 import org.apache.http.HttpResponse;
 
+import java.util.List;
+
 public class UserOrderFragment extends UserOrderFragmentBase
 {
     private TransactionType transactionType;
@@ -55,7 +57,7 @@ public class UserOrderFragment extends UserOrderFragmentBase
 
     private static class SelectActionResult
     {
-        public Action_4<Integer, Integer, Action_1<UserOrderPLVM[]>, Action_1<HttpResponse>> serviceCall;
+        public Action_4<Integer, Integer, Action_1<List<UserOrderPLVM>>, Action_1<HttpResponse>> serviceCall;
         public Integer vendorId;
         public Integer customerId;
     }

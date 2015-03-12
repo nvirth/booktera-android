@@ -26,6 +26,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -275,7 +276,7 @@ public abstract class RestServiceClientBase
         String errorMsg = resources.getString(R.string.mock_applied_error_msg);
         sendErrorMsgAction.run(errorMsg);
     }
-    private <T> T fetchResponse(InputStream is, Class<T> type) throws IOException
+    private <T> T fetchResponse(InputStream is, Type type) throws IOException
     {
         if (is == null)
             Utils.error("The fn fetchResponse(...) shouldn't get null InputStream arg. ", tag);
@@ -307,23 +308,22 @@ public abstract class RestServiceClientBase
                 r.requestUrl = buildQueryString(r.requestUrl, r.requestData);
                 httpRequest = new HttpGet(r.requestUrl);
                 break;
+            case DELETE:
+                r.requestUrl = buildQueryString(r.requestUrl, r.requestData);
+                httpRequest = new HttpDelete(r.requestUrl);
+                break;
             case POST:
                 httpRequest = new HttpPost(r.requestUrl);
-                break;
-            case DELETE:
-                httpRequest = new HttpDelete(r.requestUrl);
+                addPostData(r.requestData, httpRequest);
                 break;
             case PUT:
                 httpRequest = new HttpPut(r.requestUrl);
+                addPostData(r.requestData, httpRequest);
                 break;
             default:
                 Utils.error("Unknown http request type: " + r.httpPostVerb, tag);
                 return null; // unreachable
         }
-
-        if (r.httpPostVerb != HttpPostVerb.NON_POST__GET)
-            addPostData(r.requestData, httpRequest);
-
         return httpRequest;
     }
     private void addPostData(Map<String, Object> requestData, HttpRequestBase httpRequest) throws UnsupportedEncodingException
