@@ -536,16 +536,7 @@ public class UserOrder extends CtxMenuBase
                 String.format(r.getString(R.string.sendOrder_succesMsgFormat), r.getString(R.string.buy_header_in_progress)),
                 r.getString(R.string.sendOrder_failureMsg),
                 Services.TransactionManager::sendOrder,
-                () -> {
-                    TransactionVM.Instance.onOrderSent(plvm);
-                    ViewParent parent = userOrderView.getParent();
-                    while (!(parent instanceof ViewPager))
-                    {
-                        parent = parent.getParent();
-                    }
-                    ViewPager viewPager = (ViewPager) parent;
-//                    viewPager.getAdapter().
-                }
+                () -> TransactionVM.Instance.onOrderSent(plvm)
             );
         }
 
