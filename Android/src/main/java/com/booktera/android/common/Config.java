@@ -18,5 +18,6 @@ public class Config
         public static final boolean MockLogin = true;
         public static final boolean FillLoginForm = true;
         public static final boolean FillRegisterForm = true;
+        public static final boolean DisableTransactionCache = true;
     }
 }

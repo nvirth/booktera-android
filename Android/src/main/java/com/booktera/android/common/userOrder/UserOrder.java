@@ -180,19 +180,24 @@ public class UserOrder extends CtxMenuBase
             vh.feedbackPanel.setVisibility(View.GONE);
         }
 
-        // Products in cart
-        if (!plvm.getProducts().isEmpty())
-            inflateBookBlocks(plvm.getProducts(), /*isExchange*/false, vh.booksContainer);
-
-        // Products in exchange cart
-        if (!plvm.getExchangeProducts().isEmpty())
-        {
-            vh.exchangeBooksPanel.setVisibility(View.VISIBLE);
-            inflateBookBlocks(plvm.getExchangeProducts(), /*isExchange*/true, vh.exchangeBooksContainer);
-        }
+        // Products in cart; Products in exchange cart
+        inflateCart();
+        inflateExchangeCart();
     }
 
     //region fill -helpers
+    private void inflateExchangeCart()
+    {
+        vh.exchangeBooksPanel.setVisibility(plvm.getExchangeProducts().isEmpty()
+                ? View.GONE
+                : View.VISIBLE
+        );
+        inflateBookBlocks(plvm.getExchangeProducts(), /*isExchange*/true, vh.exchangeBooksContainer);
+    }
+    private void inflateCart()
+    {
+        inflateBookBlocks(plvm.getProducts(), /*isExchange*/false, vh.booksContainer);
+    }
     private void inflateBookBlocks(List<InBookBlockPVM> products, boolean isExchange, ViewGroup container)
     {
         container.removeAllViews();
@@ -559,10 +564,19 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeExchangeCart()
         {
-            return item -> {
-                Utils.showToast("ctx_removeExchangeCart not implemented yet");
-                return true;
-            };
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.removeExchangeCart_alertMsgFormat), plvm.getUserOrder().getCustomerName()),
+                r.getString(R.string.removeExchangeCart_successMsg),
+                r.getString(R.string.removeExchangeCart_failureMsg),
+                Services.TransactionManager::removeExchangeCart,
+                () -> {
+                    // Refresh cached data
+                    plvm.getExchangeProducts().clear();
+                    // Refresh the view
+                    inflateExchangeCart();
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener sendExchangeOffer()

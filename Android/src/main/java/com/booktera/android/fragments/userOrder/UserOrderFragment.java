@@ -1,6 +1,7 @@
 package com.booktera.android.fragments.userOrder;
 
 import android.os.Bundle;
+import com.booktera.android.common.Config;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.models.TransactionVM;
@@ -31,18 +32,19 @@ public class UserOrderFragment extends UserOrderFragmentBase
     @Override
     protected void loadData()
     {
-        if (TransactionVM.Instance.getTransaction(transactionType) == null)
-        {
-            SelectActionResult sar = selectAction();
-            sar.serviceCall.run(sar.customerId, sar.vendorId, userOrderPLVMs -> {
-                TransactionVM.Instance.setTransaction(userOrderPLVMs, transactionType);
-                applyData(userOrderPLVMs);
-            }, null);
-        }
+        if (TransactionVM.Instance.getTransaction(transactionType) == null
+            || Config.DevModeEnable.DisableTransactionCache)
+            reloadData();
         else
-        {
             applyData(TransactionVM.Instance.getTransaction(transactionType));
-        }
+    }
+    private void reloadData()
+    {
+        SelectActionResult sar = selectAction();
+        sar.serviceCall.run(sar.customerId, sar.vendorId, userOrderPLVMs -> {
+            TransactionVM.Instance.setTransaction(userOrderPLVMs, transactionType);
+            applyData(userOrderPLVMs);
+        }, null);
     }
 
     private static class SelectActionResult

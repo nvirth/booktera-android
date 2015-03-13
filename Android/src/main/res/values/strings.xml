@@ -138,6 +138,9 @@
   </string>
   <string name="sendOrder_succesMsgFormat">Megrendelés feladva! (lásd: \"%s\" fül)</string>
   <string name="sendOrder_failureMsg">Nem sikerült feladni a rendelésed!</string>
+  <string name="removeExchangeCart_alertMsgFormat">Biztos, hogy törölni szeretnéd ezt a csere-kosarat? (%s)</string>
+  <string name="removeExchangeCart_failureMsg">Nem sikerült kiüríteni a csere-kosarad!</string>
+  <string name="removeExchangeCart_successMsg">Csere-kosár kiürítve!</string>
 
 
 </resources>
