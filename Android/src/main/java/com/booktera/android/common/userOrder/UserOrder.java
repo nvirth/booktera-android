@@ -2,6 +2,7 @@ package com.booktera.android.common.userOrder;
 
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.*;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import com.booktera.android.R;
 import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.Helpers;
 import com.booktera.android.common.bookBlock.BookBlock;
+import com.booktera.android.common.models.TransactionVM;
 import com.booktera.android.common.utils.CurrencyFormatter;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.TransactionType;
@@ -18,6 +20,11 @@ import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
+import com.booktera.androidclientproxy.lib.utils.Action;
+import com.booktera.androidclientproxy.lib.utils.Action_1;
+import com.booktera.androidclientproxy.lib.utils.Action_2;
+import com.booktera.androidclientproxy.lib.utils.Action_3;
+import org.apache.http.HttpResponse;
 
 import java.util.List;
 
@@ -499,53 +506,92 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeThisCart()
         {
-            return item -> {
-                String msg = String.format(r.getString(R.string.removeThisCart_alertMsgFormat), plvm.getUserOrder().getVendorName());
-                String title = r.getString(R.string.remove_alertMsgTitle);
-                Utils.alert(activity, title, msg, null, (dialog, which) ->
-                    Services.TransactionManager.removeUsersCart(plvm.getUserOrder().getID(),
-                        () -> /*success*/ activity.runOnUiThread(() -> {
-                            Utils.showToast(r.getString(R.string.removeThisCart_successMsg),/*isLong*/ true);
-                            arrayAdapter.remove(plvm);
-                        }),
-                        httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            String _msg = r.getString(R.string.removeThisCart_failureMsg);
-                            Utils.alert(activity, _title, _msg);
-                        }
-                    )));
-                return true;
-            };
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.removeThisCart_alertMsgFormat), plvm.getUserOrder().getVendorName()),
+                r.getString(R.string.removeThisCart_successMsg),
+                r.getString(R.string.removeThisCart_failureMsg),
+                Services.TransactionManager::removeUsersCart,
+                () -> arrayAdapter.remove(plvm)
+            );
         }
 
         public MenuItem.OnMenuItemClickListener removeAllCarts()
         {
-            return item -> {
-                String msg = r.getString(R.string.removeAllCarts_alertMsgFormat);
-                String title = r.getString(R.string.remove_alertMsgTitle);
-                Utils.alert(activity, title, msg, null, (dialog, which) ->
-                    Services.TransactionManager.removeUsersAllCarts(
-                        () -> /*success*/ activity.runOnUiThread(() -> {
-                            Utils.showToast(r.getString(R.string.removeAllCarts_successMsg),/*isLong*/ true);
-                            arrayAdapter.clear();
-                        }),
-                        httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            String _msg = r.getString(R.string.removeAllCarts_failureMsg);
-                            Utils.alert(activity, _title, _msg);
-                        }
-                    )));
-                return true;
-            };
+            return handleCtxClick(
+                r.getString(R.string.removeAllCarts_alertMsgFormat),
+                r.getString(R.string.removeAllCarts_successMsg),
+                r.getString(R.string.removeAllCarts_failureMsg),
+                Services.TransactionManager::removeUsersAllCarts,
+                arrayAdapter::clear
+            );
+
         }
 
         public MenuItem.OnMenuItemClickListener sendOrder()
         {
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.sendOrder_alertMsgFormat), plvm.getUserOrder().getVendorName()),
+                String.format(r.getString(R.string.sendOrder_succesMsgFormat), r.getString(R.string.buy_header_in_progress)),
+                r.getString(R.string.sendOrder_failureMsg),
+                Services.TransactionManager::sendOrder,
+                () -> {
+                    TransactionVM.Instance.onOrderSent(plvm);
+                    ViewParent parent = userOrderView.getParent();
+                    while (!(parent instanceof ViewPager))
+                    {
+                        parent = parent.getParent();
+                    }
+                    ViewPager viewPager = (ViewPager) parent;
+//                    viewPager.getAdapter().
+                }
+            );
+        }
+
+        //region handleCtxClick
+        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        {
+            return handleCtxClick_core(confirmMsg, () ->
+                modifyOrderAction.run(
+                    intValue,
+                    () -> /*success*/ activity.runOnUiThread(() -> {
+                        Utils.showToast(successMsg,/*isLong*/ true);
+                        refreshViewAfterSuccess.run();
+                    }),
+                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            Utils.alert(activity, _title, errorMsg);
+                        }
+                    )
+                ));
+        }
+        private MenuItem.OnMenuItemClickListener handleCtxClick(String confirmMsg, String successMsg, String errorMsg, Action_2<Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        {
+            return handleCtxClick_core(confirmMsg, () ->
+                modifyOrderAction.run(
+                    () -> /*success*/ activity.runOnUiThread(() -> {
+                        Utils.showToast(successMsg,/*isLong*/ true);
+                        refreshViewAfterSuccess.run();
+                    }),
+                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            Utils.alert(activity, _title, errorMsg);
+                        }
+                    )
+                ));
+        }
+        private MenuItem.OnMenuItemClickListener handleCtxClick_core(String confirmMsg, Action positiveClickAction)
+        {
             return item -> {
-                Utils.showToast("ctx_sendOrder is not implemented yet");
+                String title = r.getString(R.string.Confirm);
+                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
+                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
+                );
                 return true;
             };
         }
+        //endregion
 
         public MenuItem.OnMenuItemClickListener addExchangeProduct()
         {

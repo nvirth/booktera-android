@@ -1,7 +1,5 @@
 package com.booktera.android.common.models.base;
 
-import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,5 +18,9 @@ public class MapCache<TKey, TValue>
     protected void setValue(TKey key, TValue value)
     {
         _cache.put(key, value);
+    }
+    protected void removeValue(TKey key)
+    {
+        _cache.remove(key);
     }
 }

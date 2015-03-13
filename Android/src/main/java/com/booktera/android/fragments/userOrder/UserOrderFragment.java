@@ -17,8 +17,6 @@ import java.util.List;
 
 public class UserOrderFragment extends UserOrderFragmentBase
 {
-    private TransactionType transactionType;
-
     public static UserOrderFragment newInstance(TransactionType transactionType)
     {
         Bundle args = new Bundle();
@@ -28,14 +26,6 @@ public class UserOrderFragment extends UserOrderFragmentBase
         fragment.setArguments(args);
 
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-
-        transactionType = (TransactionType) extractSerializableParam(Constants.PARAM_TRANSACTION_TYPE);
     }
 
     @Override

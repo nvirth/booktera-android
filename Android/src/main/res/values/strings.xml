@@ -133,6 +133,11 @@
   <string name="removeAllCarts_alertMsgFormat">Biztos, hogy törölni szeretnéd MINDEN kosarad?</string>
   <string name="removeAllCarts_successMsg">Minden kosarad törölve!</string>
   <string name="removeAllCarts_failureMsg">Nem sikerült törölni a kosaraid!</string>
+  <string name="Confirm">Megerősítés</string>
+  <string name="sendOrder_alertMsgFormat">Biztos, hogy meg szeretnéd rendelni ennek a kosarnák (%s) a tartalmát?
+  </string>
+  <string name="sendOrder_succesMsgFormat">Megrendelés feladva! (lásd: \"%s\" fül)</string>
+  <string name="sendOrder_failureMsg">Nem sikerült feladni a rendelésed!</string>
 
 
 </resources>

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.booktera.android.R;
+import com.booktera.android.common.models.TransactionVM;
+import com.booktera.androidclientproxy.lib.enums.TransactionType;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.utils.Action;
 
@@ -21,13 +23,21 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
 
     private List<UserOrderPLVM> data;
 
-    public UserOrderArrayAdapter(FragmentActivity activity, List<UserOrderPLVM> data)
+    public UserOrderArrayAdapter(FragmentActivity activity, List<UserOrderPLVM> data, TransactionType transactionType)
     {
         super(activity, layoutResourceId, data);
 
         this.activity = activity;
         this.data = data;
+
+        // Interactivity
+        if (transactionType == TransactionType.InProgressBuys)
+            TransactionVM.Instance.setOrderSentHandler_add(this::add);
+        else if (transactionType == TransactionType.Carts)
+            TransactionVM.Instance.setOrderSentHandler_remove(this::remove);
     }
+
+
 
     @Override
     public View getView(int position, View userOrderView, ViewGroup parent)
@@ -54,7 +64,7 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
     {
         super.notifyDataSetChanged();
 
-        if(onDataSetChangedListener != null)
+        if (onDataSetChangedListener != null)
             onDataSetChangedListener.run();
     }
 
