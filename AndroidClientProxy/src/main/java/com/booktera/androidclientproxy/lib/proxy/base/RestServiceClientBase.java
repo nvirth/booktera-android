@@ -195,64 +195,6 @@ public abstract class RestServiceClientBase
         if (r.todoAfterResponseReceived != null)
             r.todoAfterResponseReceived.run();
     }
-    private <T> boolean applyMockData(Request<T> r)
-    {
-        try
-        {
-            URI uri = new URI(r.requestUrl);
-            String path = uri.getPath(); //e.g.: "/EntityManagers/ProductManagerService.svc/GetMainHighlighteds"
-            String regex = "^.*/(\\w+)Service\\.svc/(\\w+)$";
-            String resName = path.replaceFirst(regex, "$1_$2").toLowerCase();
-            resName += applyMockData_specialPostFix(uri);
-
-            int rawMockResId = resources.getIdentifier(resName, "raw", resourcePackageName);
-            InputStream is = resources.openRawResource(rawMockResId);
-
-            handleResponse(r, is);
-            return true;
-        }
-        catch (Exception e)
-        {
-            Log.e(tag, "", e);
-            return false;
-        }
-    }
-    private String applyMockData_specialPostFix(URI uri)
-    {
-        // TransactionManagerClient's GET fns would conflict other way
-        // Their format is e.g. like this:
-        // (Carts)
-        // "GetUsersCartsVM?vendorId=NUM&customerId="
-        // (InCartsByOthers)
-        // "GetUsersCartsVM?vendorId=   &customerId=NUM"
-
-        String[] specialCases = new String[]{
-            "GetUsersCartsVM",
-            "GetUsersInProgressOrdersVM",
-            "GetUsersFinishedTransactionsVM"
-        };
-
-        boolean isSpecialCase = false;
-        for (String specialCase : specialCases)
-            if (uri.getPath().contains(specialCase))
-                isSpecialCase = true;
-
-        String res = "";
-        if (isSpecialCase)
-        {
-            for (String keyValuePair : uri.getQuery().split("&"))
-            {
-                String[] split = keyValuePair.split("=");
-                String key = split[0];
-                boolean hasValue = split.length > 1;
-
-                if (hasValue)
-                    res += "_" + key.toLowerCase();
-            }
-        }
-
-        return res;
-    }
     private void handleResponseFail(Action_1<HttpResponse> todoIfResponseFailed, HttpResponse response, int statusCode)
     {
         Log.e(tag, "Request ended with code: " + statusCode);
@@ -302,9 +244,7 @@ public abstract class RestServiceClientBase
         }
     }
     private <T> HttpRequestBase prepareHttpRequest(Request<T> r) throws UnsupportedEncodingException
-    //private HttpRequestBase prepareHttpRequest(String url, HttpPostVerb httpPostVerb, Map<String, Object> requestData, String requestData) throws UnsupportedEncodingException
     {
-        //request = prepareHttpRequest(r.requestUrl, r.httpPostVerb, r.requestData, r.requestData);
         HttpRequestBase httpRequest;
         switch (r.httpPostVerb)
         {
@@ -312,10 +252,7 @@ public abstract class RestServiceClientBase
                 r.requestUrl = buildQueryString(r.requestUrl, r.requestData);
                 httpRequest = new HttpGet(r.requestUrl);
                 break;
-            case DELETE:
-                r.requestUrl = buildQueryString(r.requestUrl, r.requestData);
-                httpRequest = new HttpDelete(r.requestUrl);
-                break;
+            case DELETE: // disabling HTTP DELETE requests, until the handling of them is finished on WCF side
             case POST:
                 httpRequest = new HttpPost(r.requestUrl);
                 addPostData(r.requestData, httpRequest);
