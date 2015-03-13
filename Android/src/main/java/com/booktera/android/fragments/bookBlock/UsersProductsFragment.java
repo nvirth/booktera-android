@@ -1,8 +1,10 @@
 package com.booktera.android.fragments.bookBlock;
 
+import android.content.Context;
 import android.os.Bundle;
 import com.booktera.android.R;
 import com.booktera.android.common.Constants;
+import com.booktera.android.common.bookBlock.BookBlockArrayAdapter;
 import com.booktera.android.common.models.UsersProductsVM;
 import com.booktera.android.fragments.bookBlock.base.BookBlocksFragmentBase;
 import com.booktera.androidclientproxy.lib.models.ProductModels.BookBlockPLVM;
@@ -12,11 +14,13 @@ import com.booktera.androidclientproxy.lib.proxy.Services;
 public class UsersProductsFragment extends BookBlocksFragmentBase
 {
     private String userFU;
+    private int userOrderId_forExchange;
 
-    public static UsersProductsFragment newInstance(String userFU)
+    public static UsersProductsFragment newInstance(String userFU, int userOrderId)
     {
         Bundle args = new Bundle();
         args.putString(Constants.PARAM_USER_FU, userFU);
+        args.putInt(Constants.PARAM_USER_ORDER_ID, userOrderId);
 
         UsersProductsFragment fragment = new UsersProductsFragment();
         fragment.setArguments(args);
@@ -29,6 +33,7 @@ public class UsersProductsFragment extends BookBlocksFragmentBase
     {
         super.onCreate(savedInstanceState);
         userFU = extractStringParam(Constants.PARAM_USER_FU);
+        userOrderId_forExchange = extractIntParam(Constants.PARAM_USER_ORDER_ID);
     }
 
     @Override
@@ -57,6 +62,12 @@ public class UsersProductsFragment extends BookBlocksFragmentBase
                         activity.setTitle(userName + activity.getString(R.string._someones_books)));
                 }
                 , null);
+    }
+
+    @Override
+    protected BookBlockArrayAdapter applyData_instantiateAdapter(BookBlockPLVM data, Context context)
+    {
+        return new BookBlockArrayAdapter(context, data, userOrderId_forExchange);
     }
 }
 

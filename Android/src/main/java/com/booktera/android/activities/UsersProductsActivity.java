@@ -14,11 +14,17 @@ public class UsersProductsActivity extends UnAuthorizedActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_products);
 
+        // Mandatory
         String userFU = extractParam(Constants.PARAM_USER_FU);
+
+        // Optional - if set, this will be the Add-to-exchange-cart page
+        Bundle bundle = getIntent().getExtras();
+        int userOrderId = bundle.getInt(Constants.PARAM_USER_ORDER_ID, -1);
+
         runInFragmentTransaction(
             transaction -> transaction.replace(
                 R.id.fragmentContainer,
-                UsersProductsFragment.newInstance(userFU)
+                UsersProductsFragment.newInstance(userFU, userOrderId)
             ));
     }
 }

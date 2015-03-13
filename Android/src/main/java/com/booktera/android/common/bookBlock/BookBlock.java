@@ -2,9 +2,7 @@ package com.booktera.android.common.bookBlock;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.text.TextUtils;
-import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
 import com.booktera.android.activities.ProductGroupDetailsActivity;
-import com.booktera.android.activities.UsersProductsActivity;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.Helpers;
@@ -61,7 +58,7 @@ public class BookBlock extends CtxMenuBase
     private InBookBlockPVM vm;
     private UserOrderPLVM.UserOrderVM userOrderVm;
     private boolean isExchangeProduct;
-    private boolean isAddToExchangeCartPossible;
+    private int userOrderId_forExchange;
     private ViewHolder vh;
     private View bookBlockView;
     private Context context;
@@ -76,11 +73,11 @@ public class BookBlock extends CtxMenuBase
         }
         public CtorArgs(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Context context)
         {
-            this(vm, vh, bookBlockView, context, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*isAddToExchangeCartPossible*/ false);
+            this(vm, vh, bookBlockView, context, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*userOrderId_forExchange*/ -1);
         }
         public CtorArgs(InBookBlockPVM vm, View bookBlockView, Context context, boolean isExchange)
         {
-            this(vm, /*ViewHolder*/null, bookBlockView, context, isExchange, /*userOrderVm*/null, /*isAddToExchangeCartPossible*/ false);
+            this(vm, /*ViewHolder*/null, bookBlockView, context, isExchange, /*userOrderVm*/null, /*userOrderId_forExchange*/ -1);
         }
         public CtorArgs(
             InBookBlockPVM vm,
@@ -89,7 +86,7 @@ public class BookBlock extends CtxMenuBase
             Context context,
             boolean isExchange,
             UserOrderPLVM.UserOrderVM userOrderVm,
-            boolean isAddToExchangeCartPossible
+            int userOrderId_forExchange
         )
         {
             this.isExchange = isExchange;
@@ -98,7 +95,11 @@ public class BookBlock extends CtxMenuBase
             this.bookBlockView = bookBlockView;
             this.context = context;
             this.userOrderVm = userOrderVm;
-            this.isAddToExchangeCartPossible = isAddToExchangeCartPossible;
+            this.userOrderId_forExchange = userOrderId_forExchange;
+
+            // Both of them couldn't be set
+            if ((userOrderVm != null) && (userOrderId_forExchange > 0))
+                Utils.error("BookBlock instantiation error: (userOrderVm != null) ^ (userOrderId_forExchange > 0)", tag);
         }
 
         public boolean isExchange;
@@ -107,7 +108,7 @@ public class BookBlock extends CtxMenuBase
         public View bookBlockView;
         public Context context;
         public UserOrderPLVM.UserOrderVM userOrderVm;
-        public boolean isAddToExchangeCartPossible;
+        public int userOrderId_forExchange;
     }
 
     public BookBlock(CtorArgs args)
@@ -117,6 +118,7 @@ public class BookBlock extends CtxMenuBase
         this.context = args.context;
         this.isExchangeProduct = args.isExchange;
         this.userOrderVm = args.userOrderVm;
+        this.userOrderId_forExchange = args.userOrderId_forExchange;
         this.vh = args.vh != null
             ? args.vh
             : new ViewHolder(bookBlockView);
@@ -162,6 +164,7 @@ public class BookBlock extends CtxMenuBase
             boolean isQuantity_gt_0 = vm.getProduct().getHowMany() > 0;
             boolean isUserAuthenticated = UserData.Instace.isAuthenticated();
             boolean isProduct = !TextUtils.isEmpty(vm.getProduct().getDescription());
+            boolean isAddToExchangeCartPossible = userOrderId_forExchange > 0;
             String productOwnerName = Utils.ifNull(vm.getProduct().getUserName(), "").toLowerCase();
             boolean isOwnBook = productOwnerName.equals(UserData.Instace.getUserNameLowerCase());
 
@@ -202,7 +205,7 @@ public class BookBlock extends CtxMenuBase
                 enable(R.id.bookBlockCtx_addToCart, menu);
 
             //AddToExchangeCart
-            if (isQuantity_gt_0 && isUserAuthenticated && isProduct && !isInUserOrder && isAddToExchangeCartPossible)
+            if (isAddToExchangeCartPossible && isQuantity_gt_0 && isUserAuthenticated && isProduct && !isInUserOrder)
                 enable(R.id.bookBlockCtx_addToExchangeCart, menu);
 
             //RemoveFromCart, ChangeQuantity (in cart)

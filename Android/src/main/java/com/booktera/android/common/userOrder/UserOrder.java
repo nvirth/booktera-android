@@ -1,14 +1,16 @@
 package com.booktera.android.common.userOrder;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
 import com.booktera.android.R;
+import com.booktera.android.activities.UsersProductsActivity;
+import com.booktera.android.common.Constants;
 import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.Helpers;
 import com.booktera.android.common.bookBlock.BookBlock;
@@ -201,7 +203,7 @@ public class UserOrder extends CtxMenuBase
             View bookBlockView = inflater.inflate(R.layout.row_book_block, null);
             BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(
                 inBookBlockPVM, /*ViewHolder*/null, bookBlockView, activity, isExchange,
-                plvm.getUserOrder(), /*isAddToExchangeCartPossible*/ false
+                plvm.getUserOrder(), /*userOrderId_forExchange*/ -1
             ));
             bookBlock.fill();
             bookBlock.setupContextMenu();
@@ -540,54 +542,17 @@ public class UserOrder extends CtxMenuBase
             );
         }
 
-        //region handleCtxClick
-        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
-        {
-            return handleCtxClick_core(confirmMsg, () ->
-                modifyOrderAction.run(
-                    intValue,
-                    () -> /*success*/ activity.runOnUiThread(() -> {
-                        Utils.showToast(successMsg,/*isLong*/ true);
-                        refreshViewAfterSuccess.run();
-                    }),
-                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            Utils.alert(activity, _title, errorMsg);
-                        }
-                    )
-                ));
-        }
-        private MenuItem.OnMenuItemClickListener handleCtxClick(String confirmMsg, String successMsg, String errorMsg, Action_2<Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
-        {
-            return handleCtxClick_core(confirmMsg, () ->
-                modifyOrderAction.run(
-                    () -> /*success*/ activity.runOnUiThread(() -> {
-                        Utils.showToast(successMsg,/*isLong*/ true);
-                        refreshViewAfterSuccess.run();
-                    }),
-                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            Utils.alert(activity, _title, errorMsg);
-                        }
-                    )
-                ));
-        }
-        private MenuItem.OnMenuItemClickListener handleCtxClick_core(String confirmMsg, Action positiveClickAction)
-        {
-            return item -> {
-                String title = r.getString(R.string.Confirm);
-                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
-                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
-                );
-                return true;
-            };
-        }
-        //endregion
-
         public MenuItem.OnMenuItemClickListener addExchangeProduct()
         {
             return item -> {
-                Utils.showToast("ctx_addExchangeProduct not implemented yet");
+                // Shortcut
+                UserOrderPLVM.UserOrderVM uo = plvm.getUserOrder();
+
+                Intent intent = new Intent(activity, UsersProductsActivity.class);
+                intent.putExtra(Constants.PARAM_USER_FU, uo.getCustomerFriendlyUrl());
+                intent.putExtra(Constants.PARAM_USER_ORDER_ID, uo.getID());
+
+                activity.startActivity(intent);
                 return true;
             };
         }
@@ -647,6 +612,51 @@ public class UserOrder extends CtxMenuBase
                 return true;
             };
         }
+
+        //region handleCtxClick
+        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        {
+            return handleCtxClick_core(confirmMsg, () ->
+                modifyOrderAction.run(
+                    intValue,
+                    () -> /*success*/ activity.runOnUiThread(() -> {
+                        Utils.showToast(successMsg,/*isLong*/ true);
+                        refreshViewAfterSuccess.run();
+                    }),
+                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            Utils.alert(activity, _title, errorMsg);
+                        }
+                    )
+                ));
+        }
+        private MenuItem.OnMenuItemClickListener handleCtxClick(String confirmMsg, String successMsg, String errorMsg, Action_2<Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        {
+            return handleCtxClick_core(confirmMsg, () ->
+                modifyOrderAction.run(
+                    () -> /*success*/ activity.runOnUiThread(() -> {
+                        Utils.showToast(successMsg,/*isLong*/ true);
+                        refreshViewAfterSuccess.run();
+                    }),
+                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            Utils.alert(activity, _title, errorMsg);
+                        }
+                    )
+                ));
+        }
+        private MenuItem.OnMenuItemClickListener handleCtxClick_core(String confirmMsg, Action positiveClickAction)
+        {
+            return item -> {
+                String title = r.getString(R.string.Confirm);
+                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
+                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
+                );
+                return true;
+            };
+        }
+        //endregion
+
     }
     //endregion
 }

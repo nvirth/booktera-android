@@ -12,8 +12,7 @@ public class Constants
     public static final String PARAM_USER_NAME = "PARAM_USER_NAME";
     public static final String PARAM_PASSWORD = "PARAM_PASSWORD";
     public static final String PARAM_TRANSACTION_TYPE = "PARAM_TRANSACTION_TYPE";
-    public static final String PARAM_IS_EXCHANGE = "PARAM_IS_EXCHANGE";
-    public static final String PARAM_POSITION = "PARAM_POSITION";
+    public static final String PARAM_USER_ORDER_ID = "PARAM_USER_ORDER_ID";
 
     public static final String DEFAULT_IMAGE_NAME_START = "default";
 }

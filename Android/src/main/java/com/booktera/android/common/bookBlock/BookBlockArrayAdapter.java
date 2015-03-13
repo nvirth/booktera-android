@@ -15,13 +15,19 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
     public static final int layoutResourceId = R.layout.row_book_block;
     private Context context;
     private BookBlockPLVM data;
+    private int userOrderId_forExchange;
 
     public BookBlockArrayAdapter(Context context, BookBlockPLVM data)
+    {
+        this(context, data, -1);
+    }
+    public BookBlockArrayAdapter(Context context, BookBlockPLVM data, int userOrderId)
     {
         super(context, layoutResourceId, data.getProducts());
 
         this.context = context;
         this.data = data;
+        this.userOrderId_forExchange = userOrderId;
     }
 
     @Override
@@ -37,7 +43,10 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
         }
 
         BookBlock.ViewHolder vh = (BookBlock.ViewHolder) bookBlockView.getTag();
-        BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(vm, vh, bookBlockView, context));
+        BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(
+            vm, vh, bookBlockView, context, /*isExchangeProduct*/ false,
+            /*userOrderVm*/null, userOrderId_forExchange)
+        );
         bookBlock.fill();
         bookBlock.setupContextMenu();
 
