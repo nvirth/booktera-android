@@ -513,6 +513,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeThisCart()
         {
+            // Vendor
             return handleCtxClick(
                 plvm.getUserOrder().getID(),
                 String.format(r.getString(R.string.removeThisCart_alertMsgFormat), plvm.getUserOrder().getVendorName()),
@@ -525,6 +526,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeAllCarts()
         {
+            // Vendor
             return handleCtxClick(
                 r.getString(R.string.removeAllCarts_alertMsgFormat),
                 r.getString(R.string.removeAllCarts_successMsg),
@@ -537,6 +539,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener sendOrder()
         {
+            // Customer
             return handleCtxClick(
                 plvm.getUserOrder().getID(),
                 String.format(r.getString(R.string.sendOrder_alertMsgFormat), plvm.getUserOrder().getVendorName()),
@@ -549,6 +552,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener addExchangeProduct()
         {
+            // Vendor
             return item -> {
                 // Shortcut
                 UserOrderPLVM.UserOrderVM uo = plvm.getUserOrder();
@@ -564,6 +568,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeExchangeCart()
         {
+            // Vendor
             return handleCtxClick(
                 plvm.getUserOrder().getID(),
                 String.format(r.getString(R.string.removeExchangeCart_alertMsgFormat), plvm.getUserOrder().getCustomerName()),
@@ -581,6 +586,7 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener sendExchangeOffer()
         {
+            // Vendor
             return handleCtxClick(
                 plvm.getUserOrder().getID(),
                 String.format(r.getString(R.string.sendExchangeOffer_alertMsgFormat), plvm.getUserOrder().getCustomerName()),
@@ -598,26 +604,56 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener finalizeOrder_WithoutExchange()
         {
-            return item -> {
-                Utils.showToast("ctx_finalizeOrder_WithoutExchange is not implemented yet");
-                return true;
-            };
+            // Vendor
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.finalizeOrder_WithoutExchange_alertMsgFormat), plvm.getUserOrder().getCustomerName()),
+                r.getString(R.string.finalizeOrder_WithoutExchange_successMsg),
+                r.getString(R.string.finalizeOrder_WithoutExchange_failureMsg),
+                Services.TransactionManager::finalizeOrderWithoutExchange,
+                () -> {
+                    // Refresh cached data
+                    plvm.getUserOrder().setStatus(UserOrderStatus.FinalizedCash);
+                    // Refresh the view
+                    fill();
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener finalizeOrder_AcceptExchange()
         {
-            return item -> {
-                Utils.showToast("ctx_finalizeOrder_AcceptExchange is not implemented yet");
-                return true;
-            };
+            // Customer
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.finalizeOrder_WithoutExchange_alertMsgFormat), plvm.getUserOrder().getVendorName()),
+                r.getString(R.string.finalizeOrder_WithoutExchange_successMsg),
+                r.getString(R.string.finalizeOrder_WithoutExchange_failureMsg),
+                Services.TransactionManager::finalizeOrderAcceptExchange,
+                () -> {
+                    // Refresh cached data
+                    plvm.getUserOrder().setStatus(UserOrderStatus.FinalizedExchange);
+                    // Refresh the view
+                    fill();
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener finalizeOrder_DenyExchange()
         {
-            return item -> {
-                Utils.showToast("ctx_finalizeOrder_DenyExchange is not implemented yet");
-                return true;
-            };
+            // Customer
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.finalizeOrder_WithoutExchange_alertMsgFormat), plvm.getUserOrder().getVendorName()),
+                r.getString(R.string.finalizeOrder_WithoutExchange_successMsg),
+                r.getString(R.string.finalizeOrder_WithoutExchange_failureMsg),
+                Services.TransactionManager::finalizeOrderDenyExchange,
+                () -> {
+                    // Refresh cached data
+                    plvm.getUserOrder().setStatus(UserOrderStatus.FinalizedCash);
+                    // Refresh the view
+                    fill();
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener closeOrder_Successful()

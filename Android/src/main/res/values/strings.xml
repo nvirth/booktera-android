@@ -146,6 +146,21 @@
   </string>
   <string name="sendExchangeOffer_successMsg">Csere ajánlat elküldve!</string>
   <string name="sendExchangeOffer_failureMsg">Nem sikerült elküldeni a csere-ajánlatod.</string>
+  <string name="finalizeOrder_WithoutExchange_alertMsgFormat">Biztos, hogy csere nélkül szeretnéd véglegesíteni \"%s\"
+    felhasználóval folytatott tranzakciód?
+  </string>
+  <string name="finalizeOrder_WithoutExchange_successMsg">A tranzakció csere nélkül véglegesítve!</string>
+  <string name="finalizeOrder_WithoutExchange_failureMsg">Nem sikerült a tranzakció (csere nélküli) véglegesítése.
+  </string>
+  <string name="finalizeOrder_AcceptExchange_alertMsgFormat">Biztos elfogadod \"%s\" felhasználó csere ajánlatát?
+  </string>
+  <string name="finalizeOrder_AcceptExchange_successMsg">A tranzakció cserével véglegesítve!</string>
+  <string name="finalizeOrder_AcceptExchange_failureMsg">Nem sikerült a tranzakció (cserével történő) véglegesítése.
+  </string>
+  <string name="finalizeOrder_DenyExchange_alertMsgFormat">Biztos elutasítod \"%s\" felhasználó csere ajánlatát?
+  </string>
+  <string name="finalizeOrder_DenyExchange_successMsg">A tranzakció csere nélkül véglegesítve!</string>
+  <string name="finalizeOrder_DenyExchange_failureMsg">Nem sikerült a tranzakció (csere nélküli) véglegesítése.</string>
 
 
 </resources>
