@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.booktera.android.R;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
+import com.booktera.androidclientproxy.lib.utils.Action;
 
 import java.util.List;
 
@@ -46,5 +47,20 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
         userOrder.setupContextMenu();
 
         return userOrderView;
+    }
+
+    @Override
+    public void notifyDataSetChanged()
+    {
+        super.notifyDataSetChanged();
+
+        if(onDataSetChangedListener != null)
+            onDataSetChangedListener.run();
+    }
+
+    private Action onDataSetChangedListener;
+    public void setOnDataSetChangedListener(Action onDataSetChangedListener)
+    {
+        this.onDataSetChangedListener = onDataSetChangedListener;
     }
 }

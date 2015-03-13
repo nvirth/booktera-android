@@ -3,9 +3,7 @@ package com.booktera.android.common.userOrder;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.*;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.booktera.android.BookteraApplication;
@@ -13,7 +11,6 @@ import com.booktera.android.R;
 import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.Helpers;
 import com.booktera.android.common.bookBlock.BookBlock;
-import com.booktera.android.common.models.TransactionVM;
 import com.booktera.android.common.utils.CurrencyFormatter;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.TransactionType;
@@ -22,8 +19,6 @@ import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -506,26 +501,19 @@ public class UserOrder extends CtxMenuBase
         {
             return item -> {
                 String msg = String.format(r.getString(R.string.removeThisCart_alertMsgFormat), plvm.getUserOrder().getVendorName());
-                String title = r.getString(R.string.removeThisCart_alertMsgTitle);
+                String title = r.getString(R.string.remove_alertMsgTitle);
                 Utils.alert(activity, title, msg, null, (dialog, which) ->
                     Services.TransactionManager.removeUsersCart(plvm.getUserOrder().getID(),
                         () -> /*success*/ activity.runOnUiThread(() -> {
                             Utils.showToast(r.getString(R.string.removeThisCart_successMsg),/*isLong*/ true);
-
-                            // Refresh cached data
-                            List<UserOrderPLVM> carts = TransactionVM.Instance.getCarts();
-                            if (!carts.remove(plvm))
-                                Log.e(tag, "Couldn't remove the cart. UserOrderID: " + plvm.getUserOrder().getID());
-
-                            // Refresh the view
                             arrayAdapter.remove(plvm);
                         }),
-                        httpResponse -> /*failure*/{
+                        httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
                             String _title = r.getString(R.string.Error_);
                             String _msg = r.getString(R.string.removeThisCart_failureMsg);
                             Utils.alert(activity, _title, _msg);
                         }
-                    ));
+                    )));
                 return true;
             };
         }
@@ -533,7 +521,20 @@ public class UserOrder extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener removeAllCarts()
         {
             return item -> {
-                Utils.showToast("ctx_removeAllCarts is not implemented yet");
+                String msg = r.getString(R.string.removeAllCarts_alertMsgFormat);
+                String title = r.getString(R.string.remove_alertMsgTitle);
+                Utils.alert(activity, title, msg, null, (dialog, which) ->
+                    Services.TransactionManager.removeUsersAllCarts(
+                        () -> /*success*/ activity.runOnUiThread(() -> {
+                            Utils.showToast(r.getString(R.string.removeAllCarts_successMsg),/*isLong*/ true);
+                            arrayAdapter.clear();
+                        }),
+                        httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            String _msg = r.getString(R.string.removeAllCarts_failureMsg);
+                            Utils.alert(activity, _title, _msg);
+                        }
+                    )));
                 return true;
             };
         }

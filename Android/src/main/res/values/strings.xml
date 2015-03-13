@@ -124,12 +124,15 @@
   <string name="userOrderCtx_closeOrder_Successful">Tranzakció lezárása: Sikeres</string>
   <string name="userOrderCtx_closeOrder_Unsuccessful">Tranzakció lezárása: Sikertelen</string>
   <string name="removeThisCart_alertMsgFormat">Biztos, hogy törölni szeretnéd ezt a kosarat? (%s)</string>
-  <string name="removeThisCart_alertMsgTitle">Törlés megerősítése</string>
+  <string name="remove_alertMsgTitle">Törlés megerősítése</string>
   <string name="removeThisCart_successMsg">Kosár törölve!</string>
   <string name="removeThisCart_failureMsg">Nem sikerült törölni a kosarad!</string>
   <string name="ok">OK</string>
   <string name="no">Mégse</string>
   <string name="yes">OK</string>
+  <string name="removeAllCarts_alertMsgFormat">Biztos, hogy törölni szeretnéd MINDEN kosarad?</string>
+  <string name="removeAllCarts_successMsg">Minden kosarad törölve!</string>
+  <string name="removeAllCarts_failureMsg">Nem sikerült törölni a kosaraid!</string>
 
 
 </resources>

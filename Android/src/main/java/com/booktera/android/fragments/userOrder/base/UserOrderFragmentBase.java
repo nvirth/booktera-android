@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class UserOrderFragmentBase extends ListViewFragmentBase
 {
     /**
-     * While implementing, you have to call {@link #applyData(UserOrderPLVM[])}
+     * While implementing, you have to call {@link #applyData(List)}
      * with the (asynchronously)downloaded/cached data
      */
     @Override
@@ -20,21 +20,24 @@ public abstract class UserOrderFragmentBase extends ListViewFragmentBase
     {
         runOnUiThread(activity ->
         {
-            if (data.isEmpty())
-            {
-                vh.noResultTextView.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                UserOrderArrayAdapter bookBlockArrayAdapter = new UserOrderArrayAdapter(
-                    activity,
-                    data
-                );
+            UserOrderArrayAdapter bookBlockArrayAdapter = new UserOrderArrayAdapter(
+                activity,
+                data
+            );
+            bookBlockArrayAdapter.setOnDataSetChangedListener(
+                () -> showEmptyLabelIf(bookBlockArrayAdapter)
+            );
 
-                vh.listView.setAdapter(bookBlockArrayAdapter);
-                vh.noResultTextView.setVisibility(View.GONE);
-            }
+            vh.listView.setAdapter(bookBlockArrayAdapter);
+            showEmptyLabelIf(bookBlockArrayAdapter);
         });
+    }
+    private void showEmptyLabelIf(UserOrderArrayAdapter bookBlockArrayAdapter)
+    {
+        if (bookBlockArrayAdapter.isEmpty())
+            vh.noResultTextView.setVisibility(View.VISIBLE);
+        else
+            vh.noResultTextView.setVisibility(View.GONE);
     }
 }
 
