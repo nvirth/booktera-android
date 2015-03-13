@@ -581,10 +581,19 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener sendExchangeOffer()
         {
-            return item -> {
-                Utils.showToast("ctx_sendExchangeOffer is not implemented yet");
-                return true;
-            };
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                String.format(r.getString(R.string.sendExchangeOffer_alertMsgFormat), plvm.getUserOrder().getCustomerName()),
+                r.getString(R.string.sendExchangeOffer_successMsg),
+                r.getString(R.string.sendExchangeOffer_failureMsg),
+                Services.TransactionManager::sendExchangeOffer,
+                () -> {
+                    // Refresh cached data
+                    plvm.getUserOrder().setStatus(UserOrderStatus.BuyedExchangeOffered);
+                    // Refresh the view
+                    fill();
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener finalizeOrder_WithoutExchange()

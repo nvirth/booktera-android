@@ -141,6 +141,11 @@
   <string name="removeExchangeCart_alertMsgFormat">Biztos, hogy törölni szeretnéd ezt a csere-kosarat? (%s)</string>
   <string name="removeExchangeCart_failureMsg">Nem sikerült kiüríteni a csere-kosarad!</string>
   <string name="removeExchangeCart_successMsg">Csere-kosár kiürítve!</string>
+  <string name="sendExchangeOffer_alertMsgFormat">Biztos el szeretnéd küldeni ezt a csere-ajánlatot \"%s\"
+    felhasználónak?
+  </string>
+  <string name="sendExchangeOffer_successMsg">Csere ajánlat elküldve!</string>
+  <string name="sendExchangeOffer_failureMsg">Nem sikerült elküldeni a csere-ajánlatod.</string>
 
 
 </resources>
