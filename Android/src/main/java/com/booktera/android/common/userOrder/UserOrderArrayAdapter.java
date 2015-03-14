@@ -45,8 +45,25 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
         else if (transactionType == TransactionType.EarlierBuys
             || transactionType == TransactionType.EarlierSells)
             TransactionVM.Instance.setOrderClosedHandler_add(this::add);
+
+        // BookRemovedFromCart
+        if (transactionType == TransactionType.Carts)
+            TransactionVM.Instance.setBookRemovedFromCartHandler(this::updateView);
+        else if (transactionType == TransactionType.InProgressSells)
+            TransactionVM.Instance.setBookRemovedFromExchangeCartHandler(this::updateView);
+
+        // BecameEmpty
+        if (transactionType == TransactionType.Carts)
+            TransactionVM.Instance.setCartBecameEmptyHandler(this::remove);
     }
 
+    private void updateView(UserOrderPLVM plvm)
+    {
+        // We have to remove, then re-insert the item, to force the adapter to update it
+        int position = this.getPosition(plvm);
+        this.remove(plvm);
+        this.insert(plvm, position);
+    }
 
     @Override
     public View getView(int position, View userOrderView, ViewGroup parent)

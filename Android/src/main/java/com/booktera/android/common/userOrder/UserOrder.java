@@ -205,7 +205,7 @@ public class UserOrder extends CtxMenuBase
             View bookBlockView = inflater.inflate(R.layout.row_book_block, null);
             BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(
                 inBookBlockPVM, /*ViewHolder*/null, bookBlockView, activity, isExchange,
-                plvm.getUserOrder(), /*userOrderId_forExchange*/ -1
+                plvm, /*userOrderId_forExchange*/ -1
             ));
             bookBlock.fill();
             bookBlock.setupContextMenu();
@@ -722,10 +722,11 @@ public class UserOrder extends CtxMenuBase
             );
         }
 
+        //todo extract? (BookBlock duplicated)
         //region handleCtxClick
         private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
         {
-            return handleCtxClick_core(confirmMsg, () ->
+            return alertConfirmThenRun(confirmMsg, () ->
                 modifyOrderAction.run(
                     intValue,
                     () -> /*success*/ activity.runOnUiThread(() -> {
@@ -741,7 +742,7 @@ public class UserOrder extends CtxMenuBase
         }
         private MenuItem.OnMenuItemClickListener handleCtxClick(String confirmMsg, String successMsg, String errorMsg, Action_2<Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
         {
-            return handleCtxClick_core(confirmMsg, () ->
+            return alertConfirmThenRun(confirmMsg, () ->
                 modifyOrderAction.run(
                     () -> /*success*/ activity.runOnUiThread(() -> {
                         Utils.showToast(successMsg,/*isLong*/ true);
@@ -754,7 +755,7 @@ public class UserOrder extends CtxMenuBase
                     )
                 ));
         }
-        private MenuItem.OnMenuItemClickListener handleCtxClick_core(String confirmMsg, Action positiveClickAction)
+        private MenuItem.OnMenuItemClickListener alertConfirmThenRun(String confirmMsg, Action positiveClickAction)
         {
             return item -> {
                 String title = r.getString(R.string.Confirm);

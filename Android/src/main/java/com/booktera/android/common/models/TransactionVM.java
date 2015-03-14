@@ -256,5 +256,62 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
         }
     }
     //endregion
+
+    //region cartBecameEmpty
+    private Action_1<UserOrderPLVM> cartBecameEmptyHandler;
+    /**
+     * Book got removed from the cart, and the cart has no content anymore
+     */
+    public void setCartBecameEmptyHandler(Action_1<UserOrderPLVM> cartBecameEmptyHandler)
+    {
+        this.cartBecameEmptyHandler = cartBecameEmptyHandler;
+    }
+    /**
+     * Book got removed from the cart, and the cart has no content anymore
+     */
+    public void onCartBecameEmpty(UserOrderPLVM plvm)
+    {
+        if (cartBecameEmptyHandler == null)
+            Utils.error("cartBecameEmptyHandler should be set", tag);
+        else
+            cartBecameEmptyHandler.run(plvm);
+    }
+    //endregion
+
+    //region bookRemovedFromCart
+    private Action_1<UserOrderPLVM> bookRemovedFromCartHandler;
+    /**
+     * Book got removed from the cart, and the cart still has content
+     */
+    public void setBookRemovedFromCartHandler(Action_1<UserOrderPLVM> bookRemovedFromCartHandler)
+    {
+        this.bookRemovedFromCartHandler = bookRemovedFromCartHandler;
+    }
+    /**
+     * Book got removed from the cart, and the cart still has content
+     */
+    public void onBookRemovedFromCart(UserOrderPLVM plvm)
+    {
+        if (bookRemovedFromCartHandler == null)
+            Utils.error("bookRemovedFromCartHandler should be set", tag);
+        else
+            bookRemovedFromCartHandler.run(plvm);
+    }
+    //endregion
+
+    //region bookRemovedFromExchangeCart
+    private Action_1<UserOrderPLVM> bookRemovedFromExchangeCartHandler;
+    public void setBookRemovedFromExchangeCartHandler(Action_1<UserOrderPLVM> bookRemovedFromExchangeCartHandler)
+    {
+        this.bookRemovedFromExchangeCartHandler = bookRemovedFromExchangeCartHandler;
+    }
+    public void onBookRemovedFromExchangeCart(UserOrderPLVM plvm)
+    {
+        if (bookRemovedFromExchangeCartHandler == null)
+            Utils.error("bookRemovedFromExchangeCartHandler should be set", tag);
+        else
+            bookRemovedFromExchangeCartHandler.run(plvm);
+    }
+    //endregion
     //endregion
 }

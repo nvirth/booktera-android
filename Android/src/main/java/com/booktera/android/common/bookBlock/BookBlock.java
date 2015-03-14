@@ -22,6 +22,10 @@ import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
+import com.booktera.androidclientproxy.lib.utils.Action;
+import com.booktera.androidclientproxy.lib.utils.Action_1;
+import com.booktera.androidclientproxy.lib.utils.Action_3;
+import org.apache.http.HttpResponse;
 
 /**
  * Created by Norbert on 2015.02.10..
@@ -60,7 +64,7 @@ public class BookBlock extends CtxMenuBase
     //endregion
 
     private InBookBlockPVM vm;
-    private UserOrderPLVM.UserOrderVM userOrderVm;
+    private UserOrderPLVM userOrder;
     private boolean isExchangeProduct;
     private int userOrderId_forExchange;
     private ViewHolder vh;
@@ -77,11 +81,11 @@ public class BookBlock extends CtxMenuBase
         }
         public CtorArgs(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Activity activity)
         {
-            this(vm, vh, bookBlockView, activity, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*userOrderId_forExchange*/ -1);
+            this(vm, vh, bookBlockView, activity, /*isExchangeProduct*/ false, /*userOrder*/null,/*userOrderId_forExchange*/ -1);
         }
         public CtorArgs(InBookBlockPVM vm, View bookBlockView, Activity activity, boolean isExchange)
         {
-            this(vm, /*ViewHolder*/null, bookBlockView, activity, isExchange, /*userOrderVm*/null, /*userOrderId_forExchange*/ -1);
+            this(vm, /*ViewHolder*/null, bookBlockView, activity, isExchange, /*userOrder*/null, /*userOrderId_forExchange*/ -1);
         }
         public CtorArgs(
             InBookBlockPVM vm,
@@ -89,7 +93,7 @@ public class BookBlock extends CtxMenuBase
             View bookBlockView,
             Activity activity,
             boolean isExchange,
-            UserOrderPLVM.UserOrderVM userOrderVm,
+            UserOrderPLVM userOrder,
             int userOrderId_forExchange
         )
         {
@@ -98,12 +102,12 @@ public class BookBlock extends CtxMenuBase
             this.vh = vh;
             this.bookBlockView = bookBlockView;
             this.activity = activity;
-            this.userOrderVm = userOrderVm;
+            this.userOrder = userOrder;
             this.userOrderId_forExchange = userOrderId_forExchange;
 
             // Both of them couldn't be set
-            if ((userOrderVm != null) && (userOrderId_forExchange > 0))
-                Utils.error("BookBlock instantiation error: (userOrderVm != null) ^ (userOrderId_forExchange > 0)", tag);
+            if ((userOrder != null) && (userOrderId_forExchange > 0))
+                Utils.error("BookBlock instantiation error: (userOrder != null) ^ (userOrderId_forExchange > 0)", tag);
         }
 
         public boolean isExchange;
@@ -111,7 +115,7 @@ public class BookBlock extends CtxMenuBase
         public ViewHolder vh;
         public View bookBlockView;
         public Activity activity;
-        public UserOrderPLVM.UserOrderVM userOrderVm;
+        public UserOrderPLVM userOrder;
         public int userOrderId_forExchange;
     }
 
@@ -121,7 +125,7 @@ public class BookBlock extends CtxMenuBase
         this.bookBlockView = args.bookBlockView;
         this.activity = args.activity;
         this.isExchangeProduct = args.isExchange;
-        this.userOrderVm = args.userOrderVm;
+        this.userOrder = args.userOrder;
         this.userOrderId_forExchange = args.userOrderId_forExchange;
         this.vh = args.vh != null
             ? args.vh
@@ -176,9 +180,11 @@ public class BookBlock extends CtxMenuBase
             boolean existsCustomerName = false;
             boolean existsVendorName = false;
 
-            boolean isInUserOrder = userOrderVm != null;
+            UserOrderPLVM.UserOrderVM userOrderVm = null;
+            boolean isInUserOrder = userOrder != null;
             if (isInUserOrder)
             {
+                userOrderVm = userOrder.getUserOrder();
                 isInCart = userOrderVm.getStatus() == UserOrderStatus.Cart;
                 existsCustomerName = !TextUtils.isEmpty(userOrderVm.getCustomerName());
                 existsVendorName = !TextUtils.isEmpty(userOrderVm.getVendorName());
@@ -335,10 +341,41 @@ public class BookBlock extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeFromCart()
         {
-            return item -> {
-                Utils.showToast("ctx_removeFromCart is not implemented yet");
-                return true;
-            };
+            return handleCtxClick(
+                vm.getProduct().getProductInOrderId(),
+                String.format(r.getString(R.string.removeFromCart_alertMsgFormat), vm.getProductGroup().getTitle()),
+                r.getString(R.string.removeFromCart_successMsg),
+                r.getString(R.string.removeFromCart_failureMsg),
+                Services.TransactionManager::removeProductFromCart,
+                () -> /*refreshViewAfterSuccess*/{
+                    userOrder.getProducts().remove(vm);
+                    if (userOrder.getProducts().isEmpty())
+                    {
+                        // Remove the transaction, because it's empty
+                        TransactionVM.Instance.getCarts().remove(userOrder);
+                        TransactionVM.Instance.onCartBecameEmpty(userOrder);
+                    }
+                    else
+                    {
+                        TransactionVM.Instance.onBookRemovedFromCart(userOrder);
+                    }
+                }
+            );
+        }
+
+        public MenuItem.OnMenuItemClickListener removeFromExchangeCart()
+        {
+            return handleCtxClick(
+                vm.getProduct().getProductInOrderId(),
+                String.format(r.getString(R.string.removeFromExchangeCart_alertMsgFormat), vm.getProductGroup().getTitle()),
+                r.getString(R.string.removeFromExchangeCart_successMsg),
+                r.getString(R.string.removeFromExchangeCart_failureMsg),
+                Services.TransactionManager::removeExchangeProduct,
+                () -> /*refreshViewAfterSuccess*/{
+                    userOrder.getExchangeProducts().remove(vm);
+                    TransactionVM.Instance.onBookRemovedFromExchangeCart(userOrder);
+                }
+            );
         }
 
         public MenuItem.OnMenuItemClickListener changeQuantityInCart()
@@ -357,14 +394,6 @@ public class BookBlock extends CtxMenuBase
             };
         }
 
-        public MenuItem.OnMenuItemClickListener removeFromExchangeCart()
-        {
-            return item -> {
-                Utils.showToast("ctx_removeFromExchangeCart is not implemented yet");
-                return true;
-            };
-        }
-
         private void decrementQuantity()
         {
             // Electronic product's qunatity is always 1
@@ -373,5 +402,32 @@ public class BookBlock extends CtxMenuBase
 
         }
 
+        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        {
+            return alertConfirmThenRun(confirmMsg, () ->
+                modifyOrderAction.run(
+                    intValue,
+                    () -> /*success*/ activity.runOnUiThread(() -> {
+                        Utils.showToast(successMsg,/*isLong*/ true);
+                        refreshViewAfterSuccess.run();
+                    }),
+                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            String _title = r.getString(R.string.Error_);
+                            Utils.alert(activity, _title, errorMsg);
+                        }
+                    )
+                ));
+        }
+
+        private MenuItem.OnMenuItemClickListener alertConfirmThenRun(String confirmMsg, Action positiveClickAction)
+        {
+            return item -> {
+                String title = r.getString(R.string.Confirm);
+                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
+                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
+                );
+                return true;
+            };
+        }
     }
 }

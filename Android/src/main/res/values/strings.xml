@@ -184,6 +184,14 @@
   <string name="addToExchangeCart_failureMsg_general">Sajnos nem sikerült kosárba tenned a könyvet. Valószínűleg valaki
     időközben elvitte előled.
   </string>
+  <string name="removeFromCart_successMsg">Könyv kivéve a kosárból!</string>
+  <string name="removeFromCart_failureMsg">Nem sikerült kivenni a könyvet a kosaradból.</string>
+  <string name="removeFromCart_alertMsgFormat">Biztos, hogy ki szeretnéd venni ezt a könyvet a kosaradból? (%s)</string>
+  <string name="removeFromExchangeCart_alertMsgFormat">Biztos, hogy ki szeretnéd venni ezt a könyvet a csere-kosaradból?
+    (%s)
+  </string>
+  <string name="removeFromExchangeCart_successMsg">Könyv kivéve a csere-kosárból!</string>
+  <string name="removeFromExchangeCart_failureMsg">Nem sikerült kivenni a könyvet a csere-kosaradból.</string>
 
 
 </resources>
