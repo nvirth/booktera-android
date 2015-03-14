@@ -30,13 +30,22 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
         this.activity = activity;
         this.data = data;
 
-        // Interactivity
+        // -- Interactivity
+
+        // OrderSent
         if (transactionType == TransactionType.InProgressBuys)
             TransactionVM.Instance.setOrderSentHandler_add(this::add);
         else if (transactionType == TransactionType.Carts)
             TransactionVM.Instance.setOrderSentHandler_remove(this::remove);
-    }
 
+        // OrderClosed
+        if (transactionType == TransactionType.InProgressBuys
+            || transactionType == TransactionType.InProgressSells)
+            TransactionVM.Instance.setOrderClosedHandler_remove(this::remove);
+        else if (transactionType == TransactionType.EarlierBuys
+            || transactionType == TransactionType.EarlierSells)
+            TransactionVM.Instance.setOrderClosedHandler_add(this::add);
+    }
 
 
     @Override

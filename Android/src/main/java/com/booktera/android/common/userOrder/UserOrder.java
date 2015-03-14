@@ -22,10 +22,7 @@ import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
-import com.booktera.androidclientproxy.lib.utils.Action;
-import com.booktera.androidclientproxy.lib.utils.Action_1;
-import com.booktera.androidclientproxy.lib.utils.Action_2;
-import com.booktera.androidclientproxy.lib.utils.Action_3;
+import com.booktera.androidclientproxy.lib.utils.*;
 import org.apache.http.HttpResponse;
 
 import java.util.List;
@@ -452,12 +449,12 @@ public class UserOrder extends CtxMenuBase
         {
             // My buy, and I have not feedbacked yet
             if (tt == TransactionType.EarlierBuys
-                && !uo.getCustomerFeedbackedSuccessful())
+                && uo.getCustomerFeedbackedSuccessful() == null)
                 return true;
 
             // My sell, and I have not feedbacked yet
             if (tt == TransactionType.EarlierSells
-                && !uo.getVendorFeedbackedSuccessful())
+                && uo.getVendorFeedbackedSuccessful() == null)
                 return true;
         }
 
@@ -658,18 +655,68 @@ public class UserOrder extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener closeOrder_Successful()
         {
-            return item -> {
-                Utils.showToast("ctx_closeOrder_Successful is not implemented yet");
-                return true;
-            };
+            // Vendor + Customer
+            return closeOrder(true);
         }
 
         public MenuItem.OnMenuItemClickListener closeOrder_Unsuccessful()
         {
-            return item -> {
-                Utils.showToast("ctx_closeOrder_Unsuccessful is not implemented yet");
-                return true;
-            };
+            // Vendor + Customer
+            return closeOrder(false);
+        }
+
+        private MenuItem.OnMenuItemClickListener closeOrder(boolean wasSuccessful)
+        {
+            // -- Local constants
+            final String SUCCESS_MSG = "successMsg";
+            final String SUCCESS_MSG_FORMAT = "successMsgFormat";
+            final String FINISHED = "finished";
+            final String ALERT_MSG_FORMAT = "alertMsgFormat";
+            final String FAILURE_MSG = "failureMsg";
+
+            // -- getStringResourceId
+            String resourcePackageName = r.getResourcePackageName(R.string.app_name);
+            final String resNameStart = "closeOrder_" + (wasSuccessful ? "Successful_" : "UnSuccessful_");
+            Func_1<String, Integer> getStringResourceId =
+                resNameEnd -> r.getIdentifier(resNameStart + resNameEnd, "string", resourcePackageName);
+
+            // -- Calc, strings...
+            String otherParticipantName = Utils.ifNullOrEmpty(
+                plvm.getUserOrder().getVendorName(),
+                plvm.getUserOrder().getCustomerName()
+            );
+            String successMsg = String.format(r.getString(getStringResourceId.run(SUCCESS_MSG)));
+            switch (plvm.getTransactionType())
+            {
+                case InProgressSells: // Vendor's side
+                    successMsg = String.format(
+                        r.getString(getStringResourceId.run(SUCCESS_MSG_FORMAT)),
+                        r.getString(R.string.sell_header_finished)
+                    );
+                    break;
+                case InProgressBuys: // Customer's side
+                    successMsg = String.format(
+                        r.getString(getStringResourceId.run(SUCCESS_MSG_FORMAT)),
+                        r.getString(R.string.buy_header_finished)
+                    );
+                    break;
+            }
+
+            String confirmMsg = String.format(r.getString(getStringResourceId.run(ALERT_MSG_FORMAT)), otherParticipantName);
+            String errorMsg = r.getString(getStringResourceId.run(FAILURE_MSG));
+            Action_3<Integer, Action, Action_1<HttpResponse>> closeOrderAction =
+                wasSuccessful
+                    ? Services.TransactionManager::closeOrderSuccessful
+                    : Services.TransactionManager::closeOrderUnsuccessful;
+
+            return handleCtxClick(
+                plvm.getUserOrder().getID(),
+                confirmMsg,
+                successMsg,
+                errorMsg,
+                closeOrderAction,
+                () -> TransactionVM.Instance.onOrderClosed(plvm, UserOrder.this, wasSuccessful)
+            );
         }
 
         //region handleCtxClick

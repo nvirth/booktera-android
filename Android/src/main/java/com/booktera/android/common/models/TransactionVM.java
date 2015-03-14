@@ -1,13 +1,14 @@
 package com.booktera.android.common.models;
 
 import com.booktera.android.common.models.base.MapCache;
+import com.booktera.android.common.userOrder.UserOrder;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.TransactionType;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
+import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,6 +90,7 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
 
     // -- Events
 
+    //region orderSent
     private Action_1<UserOrderPLVM> orderSentHandler_add;
     private Action_1<UserOrderPLVM> orderSentHandler_remove;
     public void setOrderSentHandler_add(Action_1<UserOrderPLVM> orderSentHandler_add)
@@ -107,7 +109,8 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
 
         if (orderSentHandler_remove == null)
             Utils.error("orderSentHandler_remove should be set", tag);
-        orderSentHandler_remove.run(plvm);
+        else
+            orderSentHandler_remove.run(plvm);
 
         // It's possible (in current circumstances only in theory though, 2015.03.13), that the
         // add-handler is null. In this case, there is no ArrayAdapter instantiated yet for
@@ -128,4 +131,74 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
             orderSentHandler_add.run(plvm);
 
     }
+    //endregion
+
+    //region orderClosed
+    private Action_1<UserOrderPLVM> orderClosedHandler_add;
+    private Action_1<UserOrderPLVM> orderClosedHandler_remove;
+    public void setOrderClosedHandler_add(Action_1<UserOrderPLVM> orderClosedHandler_add)
+    {
+        this.orderClosedHandler_add = orderClosedHandler_add;
+    }
+    public void setOrderClosedHandler_remove(Action_1<UserOrderPLVM> orderClosedHandler_remove)
+    {
+        this.orderClosedHandler_remove = orderClosedHandler_remove;
+    }
+    public void onOrderClosed(UserOrderPLVM plvm, UserOrder uo, boolean wasSuccessful)
+    {
+        boolean needToMoveToAnotherTab = false;
+        Action ifAddHandlerNotSet = () -> {
+        };
+        switch (plvm.getTransactionType())
+        {
+            // Need to move to another tab
+            //
+            case InProgressBuys:
+                plvm.setTransactionType(TransactionType.EarlierBuys);
+                plvm.getUserOrder().setStatus(UserOrderStatus.Finished);
+                plvm.getUserOrder().setCustomerFeedbackedSuccessful(wasSuccessful);
+
+                ifAddHandlerNotSet = () -> getEarlierBuys().add(plvm);
+
+                needToMoveToAnotherTab = true;
+                break;
+            case InProgressSells:
+                plvm.setTransactionType(TransactionType.EarlierSells);
+                plvm.getUserOrder().setStatus(UserOrderStatus.Finished);
+                plvm.getUserOrder().setVendorFeedbackedSuccessful(wasSuccessful);
+
+                ifAddHandlerNotSet = () -> getEarlierSells().add(plvm);
+
+                needToMoveToAnotherTab = true;
+                break;
+
+            // No need to move to another tab
+            //
+            case EarlierSells: // Vendor's side
+                plvm.getUserOrder().setVendorFeedbackedSuccessful(true);
+                uo.fill();
+                needToMoveToAnotherTab = false;
+                break;
+
+            case EarlierBuys: // Customer's side
+                plvm.getUserOrder().setCustomerFeedbackedSuccessful(true);
+                uo.fill();
+                needToMoveToAnotherTab = false;
+                break;
+        }
+        if (needToMoveToAnotherTab)
+        {
+            if (orderClosedHandler_remove == null)
+                Utils.error("orderClosedHandler_remove should be set", tag);
+            else
+                orderClosedHandler_remove.run(plvm);
+
+            // For possible issues, see onOrderSent(...)
+            if (orderClosedHandler_add == null)
+                ifAddHandlerNotSet.run();
+            else
+                orderClosedHandler_add.run(plvm);
+        }
+    }
+    //endregion
 }

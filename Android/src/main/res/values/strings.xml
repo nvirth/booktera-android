@@ -161,6 +161,19 @@
   </string>
   <string name="finalizeOrder_DenyExchange_successMsg">A tranzakció csere nélkül véglegesítve!</string>
   <string name="finalizeOrder_DenyExchange_failureMsg">Nem sikerült a tranzakció (csere nélküli) véglegesítése.</string>
+  <string name="closeOrder_Successful_successMsg">Tranzakció sikeres-ként lezárva!</string>
+  <string name="closeOrder_Successful_successMsgFormat">Tranzakció sikeres-ként lezárva! (lásd: \"%s\" fül)</string>
+  <string name="closeOrder_Successful_alertMsgFormat">Biztos, hogy sikeres volt a(z) %s felhasználóval folytatott
+    tranzakciód?
+  </string>
+  <string name="closeOrder_Successful_failureMsg">Nem sikerült sikeres-ként lezárni a tranzakciót!</string>
+  <string name="closeOrder_UnSuccessful_successMsg">Tranzakció SIKERTELEN-ként lezárva!</string>
+  <string name="closeOrder_UnSuccessful_successMsgFormat">Tranzakció SIKERTELEN-ként lezárva! (lásd: \"%s\" fül)
+  </string>
+  <string name="closeOrder_UnSuccessful_alertMsgFormat">Biztos, hogy SIKERTELEN volt a(z) %s felhasználóval folytatott
+    tranzakciód?
+  </string>
+  <string name="closeOrder_UnSuccessful_failureMsg">Nem sikerült SIKERTELEN-ként lezárni a tranzakciót!</string>
 
 
 </resources>
