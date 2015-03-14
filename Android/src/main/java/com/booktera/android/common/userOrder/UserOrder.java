@@ -496,7 +496,6 @@ public class UserOrder extends CtxMenuBase
         }
     }
 
-    //todo implement UserOrder CtxMenuClickListeners
     class CtxMenuClickListeners
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()
@@ -611,6 +610,9 @@ public class UserOrder extends CtxMenuBase
                 () -> {
                     // Refresh cached data
                     plvm.getUserOrder().setStatus(UserOrderStatus.FinalizedCash);
+                    if (plvm.getExchangeProducts() != null)
+                        plvm.getExchangeProducts().clear();
+
                     // Refresh the view
                     fill();
                 }
@@ -647,6 +649,8 @@ public class UserOrder extends CtxMenuBase
                 () -> {
                     // Refresh cached data
                     plvm.getUserOrder().setStatus(UserOrderStatus.FinalizedCash);
+                    plvm.getExchangeProducts().clear();
+
                     // Refresh the view
                     fill();
                 }
@@ -670,7 +674,6 @@ public class UserOrder extends CtxMenuBase
             // -- Local constants
             final String SUCCESS_MSG = "successMsg";
             final String SUCCESS_MSG_FORMAT = "successMsgFormat";
-            final String FINISHED = "finished";
             final String ALERT_MSG_FORMAT = "alertMsgFormat";
             final String FAILURE_MSG = "failureMsg";
 
