@@ -161,7 +161,7 @@ public class UserOrder extends CtxMenuBase
                 vh.feedbackCustomer_label.setText(r.getString(R.string.Your_feedback_));
                 vh.feedbackVendor_label.setText(r.getString(R.string.The_vendors_feedback_));
             }
-            else if (tt == TransactionType.InProgressSells)
+            else if (tt == TransactionType.EarlierSells)
             {
                 vh.feedbackCustomer_label.setText(r.getString(R.string.The_customers_feedback_));
                 vh.feedbackVendor_label.setText(r.getString(R.string.Your_feedback_));
