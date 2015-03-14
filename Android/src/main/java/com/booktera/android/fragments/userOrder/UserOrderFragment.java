@@ -39,6 +39,16 @@ public class UserOrderFragment extends UserOrderFragmentBase
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        boolean isCacheValid = TransactionVM.Instance.isTransactionCacheValid(transactionType);
+        if(!isCacheValid)
+            reloadData();
+    }
+
+    @Override
     protected void loadData()
     {
         boolean refreshCache = getArguments().getBoolean(Constants.PARAM_REFRESH_CACHE, false);

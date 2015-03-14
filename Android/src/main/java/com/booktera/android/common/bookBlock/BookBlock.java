@@ -16,6 +16,7 @@ import com.booktera.android.common.Constants;
 import com.booktera.android.common.CtxMenuBase;
 import com.booktera.android.common.Helpers;
 import com.booktera.android.common.UserData;
+import com.booktera.android.common.models.TransactionVM;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
@@ -278,11 +279,13 @@ public class BookBlock extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener addToCart()
         {
             return item -> {
-                Services.TransactionManager.addProductToCart(vm.getProduct().getID(),
+                Services.TransactionManager.addProductToCart(
+                    vm.getProduct().getID(),
                     () /*success*/ -> activity.runOnUiThread(() -> {
                         Utils.showToast(r.getString(R.string.addToCart_successMsg),/*isLong*/ true);
                         // Refresh cached data
                         decrementQuantity();
+                        TransactionVM.Instance.invalidateCartsCache(); // (unnecessary at this time, 2015.03.14)
                         // Refresh view
                         fill();
                     }),
@@ -304,7 +307,28 @@ public class BookBlock extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener addToExchangeCart()
         {
             return item -> {
-                Utils.showToast("ctx_addToExchangeCart is not implemented yet");
+                Services.TransactionManager.addExchangeProduct(
+                    vm.getProduct().getID(),
+                    userOrderId_forExchange,
+                    () /*success*/ -> activity.runOnUiThread(() -> {
+                        Utils.showToast(r.getString(R.string.addToExchangeCart_successMsg),/*isLong*/ true);
+                        // Refresh cached data
+                        decrementQuantity();
+                        TransactionVM.Instance.invalidateInProgressSellsCache();
+                        // Refresh view
+                        fill();
+                    }),
+                    httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
+                        String _errMsg;
+                        if (vm.getProduct().getIsDownloadable())
+                            _errMsg = r.getString(R.string.addToExchangeCart_failureMsg_electronicBook);
+                        else
+                            _errMsg = r.getString(R.string.addToExchangeCart_failureMsg_general);
+
+                        String _title = r.getString(R.string.Error_);
+                        Utils.alert(activity, _title, _errMsg);
+                    }));
+
                 return true;
             };
         }

@@ -21,8 +21,7 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     {
     }
 
-    // --
-
+    //region Transactions (general)
     public List<UserOrderPLVM> getTransaction(TransactionType type)
     {
         return getValue(type.toKey());
@@ -31,9 +30,17 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     {
         setValue(type.toKey(), transactions);
     }
+    public boolean isTransactionCacheValid(TransactionType type)
+    {
+        return isValid(type.toKey());
+    }
+    public void invalidateTransactionCache(TransactionType type)
+    {
+        invalidate(type.toKey());
+    }
+    //endregion
 
-    // --
-
+    //region Transactions by type
     public List<UserOrderPLVM> getCarts()
     {
         return getValue(TransactionType.Carts.toKey());
@@ -41,6 +48,14 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     public void setCarts(List<UserOrderPLVM> transactions)
     {
         setValue(TransactionType.Carts.toKey(), transactions);
+    }
+    public boolean isCartsCacheValid()
+    {
+        return isValid(TransactionType.Carts.toKey());
+    }
+    public void invalidateCartsCache()
+    {
+        invalidate(TransactionType.Carts.toKey());
     }
 
     public List<UserOrderPLVM> getInCartsByOthers()
@@ -51,6 +66,14 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     {
         setValue(TransactionType.InCartsByOthers.toKey(), transactions);
     }
+    public boolean isInCartsByOthersCacheValid()
+    {
+        return isValid(TransactionType.InCartsByOthers.toKey());
+    }
+    public void invalidateInCartsByOthersCache()
+    {
+        invalidate(TransactionType.InCartsByOthers.toKey());
+    }
 
     public List<UserOrderPLVM> getInProgressBuys()
     {
@@ -59,6 +82,14 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     public void setInProgressBuys(List<UserOrderPLVM> transactions)
     {
         setValue(TransactionType.InProgressBuys.toKey(), transactions);
+    }
+    public boolean isInProgressBuysCacheValid()
+    {
+        return isValid(TransactionType.InProgressBuys.toKey());
+    }
+    public void invalidateInProgressBuysCache()
+    {
+        invalidate(TransactionType.InProgressBuys.toKey());
     }
 
     public List<UserOrderPLVM> getInProgressSells()
@@ -69,6 +100,14 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     {
         setValue(TransactionType.InProgressSells.toKey(), transactions);
     }
+    public boolean isInProgressSellsCacheValid()
+    {
+        return isValid(TransactionType.InProgressSells.toKey());
+    }
+    public void invalidateInProgressSellsCache()
+    {
+        invalidate(TransactionType.InProgressSells.toKey());
+    }
 
     public List<UserOrderPLVM> getEarlierBuys()
     {
@@ -77,6 +116,14 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     public void setEarlierBuys(List<UserOrderPLVM> transactions)
     {
         setValue(TransactionType.EarlierBuys.toKey(), transactions);
+    }
+    public boolean isEarlierBuysCacheValid()
+    {
+        return isValid(TransactionType.EarlierBuys.toKey());
+    }
+    public void invalidateEarlierBuysCache()
+    {
+        invalidate(TransactionType.EarlierBuys.toKey());
     }
 
     public List<UserOrderPLVM> getEarlierSells()
@@ -87,9 +134,17 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
     {
         setValue(TransactionType.EarlierSells.toKey(), transactions);
     }
+    public boolean isEarlierSellsCacheValid()
+    {
+        return isValid(TransactionType.EarlierSells.toKey());
+    }
+    public void invalidateEarlierSellsCache()
+    {
+        invalidate(TransactionType.EarlierSells.toKey());
+    }
+    //endregion
 
-    // -- Events
-
+    //region Events
     //region orderSent
     private Action_1<UserOrderPLVM> orderSentHandler_add;
     private Action_1<UserOrderPLVM> orderSentHandler_remove;
@@ -200,5 +255,6 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
                 orderClosedHandler_add.run(plvm);
         }
     }
+    //endregion
     //endregion
 }

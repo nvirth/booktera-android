@@ -179,6 +179,11 @@
   <string name="addToCart_failureMsg_general">Sajnos nem sikerült kosárba tenned a könyvet. Valószínűleg valaki
     időközben elvitte előled.
   </string>
+  <string name="addToExchangeCart_successMsg">Könyv a csere-kosárban!</string>
+  <string name="addToExchangeCart_failureMsg_electronicBook">Elektronikus könyvből csak 1db-ot rendelhetsz.</string>
+  <string name="addToExchangeCart_failureMsg_general">Sajnos nem sikerült kosárba tenned a könyvet. Valószínűleg valaki
+    időközben elvitte előled.
+  </string>
 
 
 </resources>
