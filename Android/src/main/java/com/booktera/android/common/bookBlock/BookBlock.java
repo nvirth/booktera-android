@@ -1,7 +1,8 @@
 package com.booktera.android.common.bookBlock;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.enums.UserOrderStatus;
 import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
+import com.booktera.androidclientproxy.lib.proxy.Services;
 
 /**
  * Created by Norbert on 2015.02.10..
@@ -26,6 +28,7 @@ import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 public class BookBlock extends CtxMenuBase
 {
     private static final String tag = BookBlock.class.toString();
+    private static final Resources r = BookteraApplication.getAppResources();
 
     //region ViewHolder
 
@@ -61,29 +64,29 @@ public class BookBlock extends CtxMenuBase
     private int userOrderId_forExchange;
     private ViewHolder vh;
     private View bookBlockView;
-    private Context context;
+    private Activity activity;
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
     //region Ctor
     public static class CtorArgs
     {
-        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Context context)
+        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Activity activity)
         {
-            this(vm, /*ViewHolder*/null, bookBlockView, context);
+            this(vm, /*ViewHolder*/null, bookBlockView, activity);
         }
-        public CtorArgs(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Context context)
+        public CtorArgs(InBookBlockPVM vm, ViewHolder vh, View bookBlockView, Activity activity)
         {
-            this(vm, vh, bookBlockView, context, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*userOrderId_forExchange*/ -1);
+            this(vm, vh, bookBlockView, activity, /*isExchangeProduct*/ false, /*userOrderVm*/null,/*userOrderId_forExchange*/ -1);
         }
-        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Context context, boolean isExchange)
+        public CtorArgs(InBookBlockPVM vm, View bookBlockView, Activity activity, boolean isExchange)
         {
-            this(vm, /*ViewHolder*/null, bookBlockView, context, isExchange, /*userOrderVm*/null, /*userOrderId_forExchange*/ -1);
+            this(vm, /*ViewHolder*/null, bookBlockView, activity, isExchange, /*userOrderVm*/null, /*userOrderId_forExchange*/ -1);
         }
         public CtorArgs(
             InBookBlockPVM vm,
             ViewHolder vh,
             View bookBlockView,
-            Context context,
+            Activity activity,
             boolean isExchange,
             UserOrderPLVM.UserOrderVM userOrderVm,
             int userOrderId_forExchange
@@ -93,7 +96,7 @@ public class BookBlock extends CtxMenuBase
             this.vm = vm;
             this.vh = vh;
             this.bookBlockView = bookBlockView;
-            this.context = context;
+            this.activity = activity;
             this.userOrderVm = userOrderVm;
             this.userOrderId_forExchange = userOrderId_forExchange;
 
@@ -106,7 +109,7 @@ public class BookBlock extends CtxMenuBase
         public InBookBlockPVM vm;
         public ViewHolder vh;
         public View bookBlockView;
-        public Context context;
+        public Activity activity;
         public UserOrderPLVM.UserOrderVM userOrderVm;
         public int userOrderId_forExchange;
     }
@@ -115,7 +118,7 @@ public class BookBlock extends CtxMenuBase
     {
         this.vm = args.vm;
         this.bookBlockView = args.bookBlockView;
-        this.context = args.context;
+        this.activity = args.activity;
         this.isExchangeProduct = args.isExchange;
         this.userOrderVm = args.userOrderVm;
         this.userOrderId_forExchange = args.userOrderId_forExchange;
@@ -156,7 +159,7 @@ public class BookBlock extends CtxMenuBase
         bookBlockView.setOnCreateContextMenuListener((menu, v, menuInfo) ->
         {
             // -- Inflating
-            MenuInflater inflater = new MenuInflater(context);
+            MenuInflater inflater = new MenuInflater(activity);
             inflater.inflate(R.menu.ctx_bookblock, menu);
 
             // -- Flags
@@ -257,7 +260,7 @@ public class BookBlock extends CtxMenuBase
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()
         {
-            return Helpers.gotoUsersProducts(vm.getProduct().getUserFriendlyUrl(), context);
+            return Helpers.gotoUsersProducts(vm.getProduct().getUserFriendlyUrl(), activity);
         }
 
         public MenuItem.OnMenuItemClickListener gotoProductGroup()
@@ -267,7 +270,7 @@ public class BookBlock extends CtxMenuBase
                 intent.putExtra(Constants.PARAM_PRODUCT_GROUP_FU, vm.getProductGroup().getFriendlyUrl());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                context.startActivity(intent);
+                activity.startActivity(intent);
                 return true;
             };
         }
@@ -275,7 +278,25 @@ public class BookBlock extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener addToCart()
         {
             return item -> {
-                Utils.showToast("ctx_addToCart is not implemented yet");
+                Services.TransactionManager.addProductToCart(vm.getProduct().getID(),
+                    () /*success*/ -> activity.runOnUiThread(() -> {
+                        Utils.showToast(r.getString(R.string.addToCart_successMsg),/*isLong*/ true);
+                        // Refresh cached data
+                        decrementQuantity();
+                        // Refresh view
+                        fill();
+                    }),
+                    httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
+                        String _errMsg;
+                        if (vm.getProduct().getIsDownloadable())
+                            _errMsg = r.getString(R.string.addToCart_failureMsg_electronicBook);
+                        else
+                            _errMsg = r.getString(R.string.addToCart_failureMsg_general);
+
+                        String _title = r.getString(R.string.Error_);
+                        Utils.alert(activity, _title, _errMsg);
+                    }));
+
                 return true;
             };
         }
@@ -318,6 +339,14 @@ public class BookBlock extends CtxMenuBase
                 Utils.showToast("ctx_removeFromExchangeCart is not implemented yet");
                 return true;
             };
+        }
+
+        private void decrementQuantity()
+        {
+            // Electronic product's qunatity is always 1
+            if (!vm.getProduct().getIsDownloadable())
+                vm.getProduct().setHowMany(vm.getProduct().getHowMany() - 1);
+
         }
 
     }

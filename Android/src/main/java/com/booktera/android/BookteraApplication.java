@@ -18,13 +18,18 @@ import com.booktera.androidclientproxy.lib.proxy.base.RestServiceClientBase;
  */
 public class BookteraApplication extends Application
 {
-    private static Application _this;
+    private static BookteraApplication _this;
+    private Handler handler;
 
     @Override
     public void onCreate()
     {
         super.onCreate();
         _this = this;
+
+        // A Handler by default post messages to the thread where it is created.
+        // We are now on the (main) UI thread
+        handler = new Handler();
 
         InitProxyLib();
 
@@ -40,17 +45,13 @@ public class BookteraApplication extends Application
      */
     private void InitProxyLib()
     {
-        // A Handler by default post messages to the thread where it is created.
-        // We are now on the (main) UI thread
-        Handler handler = new Handler();
-
         RestServiceClientBase.setSendErrorMsgAction(
-            (errorMsg) -> handler.post(
+            (errorMsg) -> runOnUiThread(
                 () -> Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show()
             ));
         RestServiceClientBase.setResources(getAppResources());
         RestServiceClientBase.setRedirectToLoginAction(
-            () -> handler.post(() -> {
+            () -> runOnUiThread(() -> {
                 // First log out the user, its session timed out
                 UserData.Instace.logOut();
 
@@ -71,9 +72,16 @@ public class BookteraApplication extends Application
     {
         return _this.getResources();
     }
-
     public static Context getAppContext()
     {
         return _this.getApplicationContext();
+    }
+    public Handler getHandler()
+    {
+        return handler;
+    }
+    public static void runOnUiThread(Runnable runnable)
+    {
+        _this.getHandler().post(runnable);
     }
 }

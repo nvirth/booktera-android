@@ -174,6 +174,11 @@
     tranzakciód?
   </string>
   <string name="closeOrder_UnSuccessful_failureMsg">Nem sikerült SIKERTELEN-ként lezárni a tranzakciót!</string>
+  <string name="addToCart_successMsg">Könyv a kosárban!</string>
+  <string name="addToCart_failureMsg_electronicBook">Elektronikus könyvből csak 1db-ot rendelhetsz.</string>
+  <string name="addToCart_failureMsg_general">Sajnos nem sikerült kosárba tenned a könyvet. Valószínűleg valaki
+    időközben elvitte előled.
+  </string>
 
 
 </resources>

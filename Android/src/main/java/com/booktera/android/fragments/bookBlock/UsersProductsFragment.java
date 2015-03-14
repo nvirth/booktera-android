@@ -1,6 +1,6 @@
 package com.booktera.android.fragments.bookBlock;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import com.booktera.android.R;
 import com.booktera.android.common.Constants;
@@ -65,9 +65,9 @@ public class UsersProductsFragment extends BookBlocksFragmentBase
     }
 
     @Override
-    protected BookBlockArrayAdapter applyData_instantiateAdapter(BookBlockPLVM data, Context context)
+    protected BookBlockArrayAdapter applyData_instantiateAdapter(BookBlockPLVM data, Activity activity)
     {
-        return new BookBlockArrayAdapter(context, data, userOrderId_forExchange);
+        return new BookBlockArrayAdapter(activity, data, userOrderId_forExchange);
     }
 }
 

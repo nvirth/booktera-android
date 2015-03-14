@@ -1,7 +1,6 @@
 package com.booktera.android.fragments.userOrder;
 
 import android.os.Bundle;
-import com.booktera.android.common.Config;
 import com.booktera.android.common.Constants;
 import com.booktera.android.common.UserData;
 import com.booktera.android.common.models.TransactionVM;
@@ -23,6 +22,16 @@ public class UserOrderFragment extends UserOrderFragmentBase
         Bundle args = new Bundle();
         args.putSerializable(Constants.PARAM_TRANSACTION_TYPE, transactionType);
 
+        // Always refresh the caches when instantiating from Activity/ViewPagerAdapter.
+        // This way, they will be refreshed:
+        // * When the user navigates to a Transaction page (from ActionBar) (+)
+        // They won't be refreshed:
+        // * On orientation change (=Activity recreate) (+)
+        // ** They should be, but they won't, because the newly instantiated ViewPagerAdapter
+        //     somehow reuses the existing fragments :)
+        // * On page change (ViewPager) (+)
+        args.putBoolean(Constants.PARAM_REFRESH_CACHE, true);
+
         UserOrderFragment fragment = new UserOrderFragment();
         fragment.setArguments(args);
 
@@ -32,19 +41,30 @@ public class UserOrderFragment extends UserOrderFragmentBase
     @Override
     protected void loadData()
     {
-        if (TransactionVM.Instance.getTransaction(transactionType) == null
-            || Config.DevModeEnable.DisableTransactionCache)
+        boolean refreshCache = getArguments().getBoolean(Constants.PARAM_REFRESH_CACHE, false);
+
+        if (TransactionVM.Instance.getTransaction(transactionType) == null)
+        {
             reloadData();
+        }
         else
+        {
             applyData(TransactionVM.Instance.getTransaction(transactionType));
+            if (refreshCache)
+                reloadData();
+        }
     }
     private void reloadData()
     {
         SelectActionResult sar = selectAction();
-        sar.serviceCall.run(sar.customerId, sar.vendorId, userOrderPLVMs -> {
-            TransactionVM.Instance.setTransaction(userOrderPLVMs, transactionType);
-            applyData(userOrderPLVMs);
-        }, null);
+        sar.serviceCall.run(sar.customerId, sar.vendorId,
+            userOrderPLVMs -> /*success*/{
+                TransactionVM.Instance.setTransaction(userOrderPLVMs, transactionType);
+                applyData(userOrderPLVMs);
+
+                // Cache refreshed
+                getArguments().putBoolean(Constants.PARAM_REFRESH_CACHE, false);
+            }, null);
     }
 
     private static class SelectActionResult

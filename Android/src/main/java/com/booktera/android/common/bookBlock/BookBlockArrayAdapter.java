@@ -1,6 +1,6 @@
 package com.booktera.android.common.bookBlock;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.*;
 import android.widget.ArrayAdapter;
 import com.booktera.android.R;
@@ -13,19 +13,19 @@ import com.booktera.androidclientproxy.lib.models.ProductModels.InBookBlockPVM;
 public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
 {
     public static final int layoutResourceId = R.layout.row_book_block;
-    private Context context;
+    private Activity activity;
     private BookBlockPLVM data;
     private int userOrderId_forExchange;
 
-    public BookBlockArrayAdapter(Context context, BookBlockPLVM data)
+    public BookBlockArrayAdapter(Activity activity, BookBlockPLVM data)
     {
-        this(context, data, -1);
+        this(activity, data, -1);
     }
-    public BookBlockArrayAdapter(Context context, BookBlockPLVM data, int userOrderId)
+    public BookBlockArrayAdapter(Activity activity, BookBlockPLVM data, int userOrderId)
     {
-        super(context, layoutResourceId, data.getProducts());
+        super(activity, layoutResourceId, data.getProducts());
 
-        this.context = context;
+        this.activity = activity;
         this.data = data;
         this.userOrderId_forExchange = userOrderId;
     }
@@ -37,14 +37,14 @@ public class BookBlockArrayAdapter extends ArrayAdapter<InBookBlockPVM>
 
         if (bookBlockView == null)
         {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(activity);
             bookBlockView = inflater.inflate(layoutResourceId, parent, false);
             bookBlockView.setTag(new BookBlock.ViewHolder(bookBlockView));
         }
 
         BookBlock.ViewHolder vh = (BookBlock.ViewHolder) bookBlockView.getTag();
         BookBlock bookBlock = new BookBlock(new BookBlock.CtorArgs(
-            vm, vh, bookBlockView, context, /*isExchangeProduct*/ false,
+            vm, vh, bookBlockView, activity, /*isExchangeProduct*/ false,
             /*userOrderVm*/null, userOrderId_forExchange)
         );
         bookBlock.fill();

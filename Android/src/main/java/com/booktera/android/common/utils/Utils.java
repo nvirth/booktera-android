@@ -220,6 +220,7 @@ public class Utils
     //endregion
 
     //region alert
+    //TODO use Activity instead of Context, because there have to be an activity context
     public static void alert(Context context, String title, String message)
     {
         alert(context, title, message, (dialog, which) -> {/*do nothing*/}, null, null);
