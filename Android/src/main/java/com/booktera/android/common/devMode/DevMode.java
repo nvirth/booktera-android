@@ -26,4 +26,24 @@ public abstract class DevMode implements IDevMode
             return new DevModeOff();
         }
     }
+
+    // -- Enable/Disable flags
+    public static class IsEnabled
+    {
+        // Leave DevMode flags in disabled state here
+        public static boolean MockLogin = false;
+        public static boolean FillLoginForm = false;
+        public static boolean FillRegisterForm = false;
+
+        // Enable DevMode flags here
+        static
+        {
+            if (Config.IsDebug)
+            {
+                MockLogin = true;
+                FillLoginForm = true;
+                FillRegisterForm = true;
+            }
+        }
+    }
 }

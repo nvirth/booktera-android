@@ -26,4 +26,20 @@ public abstract class DevMode implements IDevMode
             return new DevModeOff();
         }
     }
+
+    // -- Enable/Disable flags
+    public static class IsEnabled
+    {
+        // Leave DevMode flags in disabled state here
+        public static boolean MockDataIfNoConnection = false;
+
+        // Enable DevMode flags here
+        static
+        {
+            if (Config.IsDebug)
+            {
+                MockDataIfNoConnection = true;
+            }
+        }
+    }
 }

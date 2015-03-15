@@ -22,21 +22,21 @@ public class DevModeOn implements IDevMode
     @Override
     public void mockLogin()
     {
-        if (Config.DevModeEnable.MockLogin)
+        if (DevMode.IsEnabled.MockLogin)
             _core.mockLogin();
     }
 
     @Override
     public void fillLoginForm(LoginActivity.ViewHolder vh)
     {
-        if (Config.DevModeEnable.FillLoginForm)
+        if (DevMode.IsEnabled.FillLoginForm)
             _core.fillLoginForm(vh);
     }
 
     @Override
     public void fillRegisterForm(RegisterActivity.ViewHolder vh)
     {
-        if (Config.DevModeEnable.FillRegisterForm)
+        if (DevMode.IsEnabled.FillRegisterForm)
             _core.fillRegisterForm(vh);
     }
 }

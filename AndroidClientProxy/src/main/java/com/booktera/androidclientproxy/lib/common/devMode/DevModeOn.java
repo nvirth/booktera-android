@@ -23,7 +23,7 @@ public class DevModeOn implements IDevMode
     @Override
     public <T> boolean applyMockData(Request<T> r, RestServiceClientBase rscb)
     {
-        if (Config.DevModeEnable.MockDataIfNoConnection)
+        if (DevMode.IsEnabled.MockDataIfNoConnection)
             return _core.applyMockData(r, rscb);
 
         return false;
