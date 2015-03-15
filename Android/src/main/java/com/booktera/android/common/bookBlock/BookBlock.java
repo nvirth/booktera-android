@@ -361,6 +361,7 @@ public class BookBlock extends CtxMenuBase
                     }
                     else
                     {
+                        refreshQuantity(/*newQuantity*/ 0,/*refreshSummary*/ true);
                         TransactionVM.Instance.onBookRemovedFromCart(userOrder);
                     }
                 }
@@ -431,7 +432,7 @@ public class BookBlock extends CtxMenuBase
                     }
                     if (newQuantity == 0)
                     {
-                        if(isExchange)
+                        if (isExchange)
                             removeFromExchangeCart_core();
                         else
                             removeFromCart_core();
@@ -479,9 +480,11 @@ public class BookBlock extends CtxMenuBase
         }
 
         /**
-         * In cart/exchange_cart
+         * Refreshes the quantity of this BookBlock.
+         * Used in cart/exchange_cart
          *
-         * @param refreshSummary Set it true if the BookBlock is NOT in exchange cart
+         * @param refreshSummary If true, refreshes the UserOrder's summary.
+         * Set it true if the BookBlock is in cart
          */
         private void refreshQuantity(int newQuantity, boolean refreshSummary)
         {
