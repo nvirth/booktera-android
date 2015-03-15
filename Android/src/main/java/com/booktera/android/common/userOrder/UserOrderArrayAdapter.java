@@ -55,6 +55,10 @@ public class UserOrderArrayAdapter extends ArrayAdapter<UserOrderPLVM>
         // BecameEmpty
         if (transactionType == TransactionType.Carts)
             TransactionVM.Instance.setCartBecameEmptyHandler(this::remove);
+
+        // SummaryChanged
+        if (transactionType == TransactionType.Carts)
+            TransactionVM.Instance.setSummaryChangedHandler(this::updateView);
     }
 
     private void updateView(UserOrderPLVM plvm)

@@ -313,5 +313,21 @@ public class TransactionVM extends MapCache<String, List<UserOrderPLVM>>
             bookRemovedFromExchangeCartHandler.run(plvm);
     }
     //endregion
+
+    //region summaryChanged
+    private Action_1<UserOrderPLVM> summaryChangedHandler;
+    public void setSummaryChangedHandler(Action_1<UserOrderPLVM> summaryChangedHandler)
+    {
+        this.summaryChangedHandler = summaryChangedHandler;
+    }
+    public void onSummaryChanged(UserOrderPLVM plvm)
+    {
+        if (summaryChangedHandler == null)
+            Utils.error("summaryChangedHandler should be set", tag);
+        else
+            summaryChangedHandler.run(plvm);
+    }
+    //endregion
+
     //endregion
 }

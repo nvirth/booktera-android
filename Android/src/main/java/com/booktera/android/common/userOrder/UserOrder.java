@@ -33,7 +33,6 @@ import java.util.List;
 public class UserOrder extends CtxMenuBase
 {
     private static final String tag = UserOrder.class.toString();
-    private static final Resources r = BookteraApplication.getAppResources();
 
     //region ViewHolder
 
@@ -84,7 +83,6 @@ public class UserOrder extends CtxMenuBase
     private UserOrderPLVM plvm;
     private ViewHolder vh;
     private View userOrderView;
-    private FragmentActivity activity;
     private UserOrderArrayAdapter arrayAdapter;
 
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
@@ -95,10 +93,11 @@ public class UserOrder extends CtxMenuBase
     }
     public UserOrder(UserOrderPLVM plvm, ViewHolder vh, View userOrderView, FragmentActivity activity, UserOrderArrayAdapter arrayAdapter)
     {
+        super(activity);
+
         this.plvm = plvm;
         this.vh = vh;
         this.userOrderView = userOrderView;
-        this.activity = activity;
         this.arrayAdapter = arrayAdapter;
     }
 
@@ -721,52 +720,6 @@ public class UserOrder extends CtxMenuBase
                 () -> TransactionVM.Instance.onOrderClosed(plvm, UserOrder.this, wasSuccessful)
             );
         }
-
-        //todo extract? (BookBlock duplicated)
-        //region handleCtxClick
-        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
-        {
-            return alertConfirmThenRun(confirmMsg, () ->
-                modifyOrderAction.run(
-                    intValue,
-                    () -> /*success*/ activity.runOnUiThread(() -> {
-                        Utils.showToast(successMsg,/*isLong*/ true);
-                        refreshViewAfterSuccess.run();
-                    }),
-                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            Utils.alert(activity, _title, errorMsg);
-                        }
-                    )
-                ));
-        }
-        private MenuItem.OnMenuItemClickListener handleCtxClick(String confirmMsg, String successMsg, String errorMsg, Action_2<Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
-        {
-            return alertConfirmThenRun(confirmMsg, () ->
-                modifyOrderAction.run(
-                    () -> /*success*/ activity.runOnUiThread(() -> {
-                        Utils.showToast(successMsg,/*isLong*/ true);
-                        refreshViewAfterSuccess.run();
-                    }),
-                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            Utils.alert(activity, _title, errorMsg);
-                        }
-                    )
-                ));
-        }
-        private MenuItem.OnMenuItemClickListener alertConfirmThenRun(String confirmMsg, Action positiveClickAction)
-        {
-            return item -> {
-                String title = r.getString(R.string.Confirm);
-                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
-                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
-                );
-                return true;
-            };
-        }
-        //endregion
-
     }
     //endregion
 }

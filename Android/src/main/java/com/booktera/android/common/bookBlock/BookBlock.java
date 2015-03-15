@@ -2,7 +2,6 @@ package com.booktera.android.common.bookBlock;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +23,7 @@ import com.booktera.androidclientproxy.lib.models.UserOrderPLVM;
 import com.booktera.androidclientproxy.lib.proxy.Services;
 import com.booktera.androidclientproxy.lib.utils.Action;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
-import com.booktera.androidclientproxy.lib.utils.Action_3;
+import com.booktera.androidclientproxy.lib.utils.Action_4;
 import org.apache.http.HttpResponse;
 
 /**
@@ -33,7 +32,6 @@ import org.apache.http.HttpResponse;
 public class BookBlock extends CtxMenuBase
 {
     private static final String tag = BookBlock.class.toString();
-    private static final Resources r = BookteraApplication.getAppResources();
 
     //region ViewHolder
 
@@ -69,7 +67,6 @@ public class BookBlock extends CtxMenuBase
     private int userOrderId_forExchange;
     private ViewHolder vh;
     private View bookBlockView;
-    private Activity activity;
     private CtxMenuClickListeners ctxMenuClickListeners = new CtxMenuClickListeners();
 
     //region Ctor
@@ -121,9 +118,10 @@ public class BookBlock extends CtxMenuBase
 
     public BookBlock(CtorArgs args)
     {
+        super(args.activity);
+
         this.vm = args.vm;
         this.bookBlockView = args.bookBlockView;
-        this.activity = args.activity;
         this.isExchangeProduct = args.isExchange;
         this.userOrder = args.userOrder;
         this.userOrderId_forExchange = args.userOrderId_forExchange;
@@ -262,7 +260,6 @@ public class BookBlock extends CtxMenuBase
         }
     }
 
-    //todo implement BookBlock CtxMenuClickListeners
     class CtxMenuClickListeners
     {
         public MenuItem.OnMenuItemClickListener gotoUsersProducts()
@@ -341,7 +338,14 @@ public class BookBlock extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeFromCart()
         {
-            return handleCtxClick(
+            return item -> {
+                removeFromCart_core();
+                return true;
+            };
+        }
+        private void removeFromCart_core()
+        {
+            handleCtxClick_core(
                 vm.getProduct().getProductInOrderId(),
                 String.format(r.getString(R.string.removeFromCart_alertMsgFormat), vm.getProductGroup().getTitle()),
                 r.getString(R.string.removeFromCart_successMsg),
@@ -365,7 +369,14 @@ public class BookBlock extends CtxMenuBase
 
         public MenuItem.OnMenuItemClickListener removeFromExchangeCart()
         {
-            return handleCtxClick(
+            return item -> {
+                removeFromExchangeCart_core();
+                return true;
+            };
+        }
+        private void removeFromExchangeCart_core()
+        {
+            handleCtxClick_core(
                 vm.getProduct().getProductInOrderId(),
                 String.format(r.getString(R.string.removeFromExchangeCart_alertMsgFormat), vm.getProductGroup().getTitle()),
                 r.getString(R.string.removeFromExchangeCart_successMsg),
@@ -381,7 +392,7 @@ public class BookBlock extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener changeQuantityInCart()
         {
             return item -> {
-                Utils.showToast("ctx_changeQuantityInCart is not implemented yet");
+                changeQuantity("", /*isExchange*/ false);
                 return true;
             };
         }
@@ -389,45 +400,110 @@ public class BookBlock extends CtxMenuBase
         public MenuItem.OnMenuItemClickListener changeQuantityInExchangeCart()
         {
             return item -> {
-                Utils.showToast("ctx_changeQuantityInExchangeCart is not implemented yet");
+                changeQuantity("", /*isExchange*/ true);
                 return true;
             };
         }
 
+        private void changeQuantity(String errorMsg, boolean isExchange)
+        {
+            errorMsg = Utils.ifNull(errorMsg, "");
+            String body = String.format(r.getString(R.string.changeQuantity_promptBodyMsgFormat),
+                errorMsg, vm.getProductGroup().getTitle());
+
+            Utils.prompt(
+                activity,
+                r.getString(R.string.changeQuantity_titleMsg),
+                body,
+                /*isNumeric*/ true,
+                /*negativeClick*/ null,
+                (_1, _2, userInputStr) -> /*positiveClick*/{
+                    Integer newQuantity = Utils.tryParse(userInputStr);
+                    if (newQuantity == null)
+                    {
+                        changeQuantity(r.getString(R.string.changeQuantity_errorMsg_NaN), isExchange);
+                        return;
+                    }
+                    if (newQuantity < 0)
+                    {
+                        changeQuantity(r.getString(R.string.changeQuantity_errorMsg_Negative), isExchange);
+                        return;
+                    }
+                    if (newQuantity == 0)
+                    {
+                        if(isExchange)
+                            removeFromExchangeCart_core();
+                        else
+                            removeFromCart_core();
+                        return;
+                    }
+                    if (newQuantity == vm.getProduct().getHowMany())
+                    {
+                        Utils.showToast(r.getString(R.string.changeQuantity_notChangedMsg),/*isLong*/true);
+                        return;
+                    }
+                    if (vm.getProduct().getIsDownloadable())// newQuantity==0 already handled
+                    {
+                        Utils.showToast(r.getString(R.string.changeQuantity_notChangedMsg_Electronic),/*isLong*/true);
+                        return;
+                    }
+
+                    Action_4<Integer, Integer, Action, Action_1<HttpResponse>> updateService =
+                        isExchange
+                            ? Services.TransactionManager::updateExchangeProduct
+                            : Services.TransactionManager::updateProductInCart;
+
+                    updateService.run(
+                        vm.getProduct().getProductInOrderId(),
+                        newQuantity,
+                        () -> /*success*/ activity.runOnUiThread(() -> {
+                            Utils.showToast(r.getString(R.string.changeQuantity_successMsg),/*isLong*/true);
+                            refreshQuantity(newQuantity, !isExchange);
+                        }),
+                        httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                            Utils.alert(activity, r.getString(R.string.Error_), r.getString(R.string.changeQuantity_errorMsg));
+                        })
+                    );
+                }
+            );
+        }
+
+        /**
+         * Not in cart
+         */
         private void decrementQuantity()
         {
-            // Electronic product's qunatity is always 1
+            // Electronic product's quantity is always 1
             if (!vm.getProduct().getIsDownloadable())
                 vm.getProduct().setHowMany(vm.getProduct().getHowMany() - 1);
-
         }
 
-        private MenuItem.OnMenuItemClickListener handleCtxClick(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
+        /**
+         * In cart/exchange_cart
+         *
+         * @param refreshSummary Set it true if the BookBlock is NOT in exchange cart
+         */
+        private void refreshQuantity(int newQuantity, boolean refreshSummary)
         {
-            return alertConfirmThenRun(confirmMsg, () ->
-                modifyOrderAction.run(
-                    intValue,
-                    () -> /*success*/ activity.runOnUiThread(() -> {
-                        Utils.showToast(successMsg,/*isLong*/ true);
-                        refreshViewAfterSuccess.run();
-                    }),
-                    httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            String _title = r.getString(R.string.Error_);
-                            Utils.alert(activity, _title, errorMsg);
-                        }
-                    )
-                ));
-        }
+            // Get out all non-numeric characters, then parse it
+            Integer price = Integer.valueOf(vm.getProduct().getPriceString().replaceAll("\\D", ""));
 
-        private MenuItem.OnMenuItemClickListener alertConfirmThenRun(String confirmMsg, Action positiveClickAction)
-        {
-            return item -> {
-                String title = r.getString(R.string.Confirm);
-                Utils.alert(activity, title, confirmMsg, /*negativeClick*/ null,
-                    (dialog, which) /*positiveClick*/ -> positiveClickAction.run()
-                );
-                return true;
-            };
+            int oldQuantity = vm.getProduct().getHowMany();
+
+            if (!vm.getProduct().getIsDownloadable()) // Electronic product's quantity is always 1
+                vm.getProduct().setHowMany(newQuantity);
+
+            if (refreshSummary)
+            {
+                int oldSum = userOrder.getUserOrder().getSumBookPrice();
+                int newSum = oldSum + (newQuantity - oldQuantity) * price;
+                userOrder.getUserOrder().setSumBookPrice(newSum);
+
+                TransactionVM.Instance.onSummaryChanged(userOrder);
+            }
+
+            // Refresh the view
+            fill();
         }
     }
 }

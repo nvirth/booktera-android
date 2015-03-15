@@ -192,6 +192,16 @@
   </string>
   <string name="removeFromExchangeCart_successMsg">Könyv kivéve a csere-kosárból!</string>
   <string name="removeFromExchangeCart_failureMsg">Nem sikerült kivenni a könyvet a csere-kosaradból.</string>
+  <string name="changeQuantity_titleMsg">Mennyiség módosítása</string>
+  <string name="changeQuantity_promptBodyMsgFormat">%1$s A(z) \"%2$s\" könyvből ennyit kérek:</string>
+  <string name="changeQuantity_errorMsg">Nem sikerült módosítani a mennyiséget. Valószínűleg nincs elég könyve az
+    eladónak.
+  </string>
+  <string name="changeQuantity_successMsg">Mennyiség módosítva!</string>
+  <string name="changeQuantity_notChangedMsg_Electronic">Elektronikus könyvből csak 1db-ot kérhetsz.</string>
+  <string name="changeQuantity_notChangedMsg">A mennyiség nem változott!</string>
+  <string name="changeQuantity_errorMsg_Negative">Nem kérhetsz negatív számú könyvet.\n</string>
+  <string name="changeQuantity_errorMsg_NaN">Érvénytelen számformutám.\n</string>
 
 
 </resources>
