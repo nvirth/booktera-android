@@ -165,11 +165,15 @@ public abstract class RestServiceClientBase
                     Log.e(tag, "sendRequest", e);
 
                     if (DevMode.Instance.applyMockData(r, this))
+                    {
                         showMockAppliedErrorMessage();
-                    else if (r.todoIfResponseFailed != null)
-                        r.todoIfResponseFailed.run(null);
+                    }
                     else
+                    {
                         showDefaultErrorMessage();
+                        if (r.todoIfResponseFailed != null)
+                            r.todoIfResponseFailed.run(null);
+                    }
                 }
                 catch (Exception e)
                 {

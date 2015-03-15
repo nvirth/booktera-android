@@ -87,10 +87,9 @@ public class RegisterActivity extends AuthenticationActivityBase
                         })),
                 /*Failure*/
                 httpResponse -> runOnUiThread(() -> {
-                    if (httpResponse == null)
-                        alert(getString(R.string.Error_), getString(com.booktera.androidclientproxy.lib.R.string.default_connection_error_msg));
-                    else
+                    if (httpResponse != null)
                         alert(getString(R.string.Error_), getString(R.string.Unsuccessful_registration_error_msg));
+
                     Utils.enableControls(vh.root);
                 }));
         });

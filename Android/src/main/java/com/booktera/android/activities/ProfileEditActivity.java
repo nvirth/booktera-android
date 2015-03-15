@@ -56,9 +56,7 @@ public class ProfileEditActivity extends AuthorizedActivity
                     finish();
                 }),
                 httpResponse -> runOnUiThread(() -> {
-                    if (httpResponse == null)
-                        showToast(getString(R.string.default_connection_error_msg));
-                    else
+                    if (httpResponse != null)
                         showToast(getString(R.string.profileEdit_save_failureErrorMessage), /*isLong*/ true);
 
                     Utils.enableControls(vh.root);

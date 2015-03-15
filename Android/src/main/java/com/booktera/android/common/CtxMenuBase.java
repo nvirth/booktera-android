@@ -71,11 +71,7 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                    if (httpResponse == null)
-                    {
-                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                    }
-                    else
+                    if (httpResponse != null)
                     {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);
@@ -93,11 +89,7 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                    if (httpResponse == null)
-                    {
-                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                    }
-                    else
+                    if (httpResponse != null)
                     {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);
@@ -116,11 +108,7 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                    if (httpResponse == null)
-                    {
-                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                    }
-                    else
+                    if (httpResponse != null)
                     {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);

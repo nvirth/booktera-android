@@ -293,18 +293,15 @@ public class BookBlock extends CtxMenuBase
                         fill();
                     }),
                     httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
-                        if (httpResponse == null)
+                        if (httpResponse != null)
                         {
-                            Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                            return;
+                            String _title = r.getString(R.string.Error_);
+                            String _errMsg = vm.getProduct().getIsDownloadable()
+                                ? r.getString(R.string.addToCart_failureMsg_electronicBook)
+                                : r.getString(R.string.addToCart_failureMsg_general);
+
+                            Utils.alert(activity, _title, _errMsg);
                         }
-
-                        String _title = r.getString(R.string.Error_);
-                        String _errMsg = vm.getProduct().getIsDownloadable()
-                            ? r.getString(R.string.addToCart_failureMsg_electronicBook)
-                            : r.getString(R.string.addToCart_failureMsg_general);
-
-                        Utils.alert(activity, _title, _errMsg);
                     }));
 
                 return true;
@@ -326,18 +323,15 @@ public class BookBlock extends CtxMenuBase
                         fill();
                     }),
                     httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
-                        if (httpResponse == null)
+                        if (httpResponse != null)
                         {
-                            Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                            return;
+                            String _title = r.getString(R.string.Error_);
+                            String _errMsg = vm.getProduct().getIsDownloadable()
+                                ? r.getString(R.string.addToExchangeCart_failureMsg_electronicBook)
+                                : r.getString(R.string.addToExchangeCart_failureMsg_general);
+
+                            Utils.alert(activity, _title, _errMsg);
                         }
-
-                        String _title = r.getString(R.string.Error_);
-                        String _errMsg = vm.getProduct().getIsDownloadable()
-                            ? r.getString(R.string.addToExchangeCart_failureMsg_electronicBook)
-                            : r.getString(R.string.addToExchangeCart_failureMsg_general);
-
-                        Utils.alert(activity, _title, _errMsg);
                     }));
 
                 return true;
@@ -470,9 +464,7 @@ public class BookBlock extends CtxMenuBase
                             refreshQuantity(newQuantity, !isExchange);
                         }),
                         httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            if (httpResponse == null)
-                                Utils.showToast(r.getString(R.string.default_connection_error_msg));
-                            else
+                            if (httpResponse != null)
                                 Utils.alert(activity, r.getString(R.string.Error_), r.getString(R.string.changeQuantity_errorMsg));
                         })
                     );
