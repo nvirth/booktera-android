@@ -1,1 +1,131 @@
-[{"ExchangeProducts":[],"Products":[{"Product":{"Description":"A könyv egyben van gerincénél kisebb sérülés , hiánytalan szakadás mentes lapok , viszont elszíneződések vannak. ","HowMany":1,"ID":361,"ImageUrl":null,"IsDownloadable":true,"PriceString":"3 044 Ft","ProductInOrderId":1295,"UserFriendlyUrl":"Markucio","UserName":"Markucio"},"ProductGroup":{"AuthorNames":"Kathy Reichs","CategoryFriendlyUrl":null,"CategoryFullPath":null,"Description":"A kissé tüskés modorú Dr. Brennan törvényszéki patológus éppen egy XIX. században elhunyt apáca földi maradványainak kihantolását végzi Montrealban, amikor tűzesethez riasztják. Porig égett egy családi ház. A szakértők gázrobbanásra gyanakodnak.A romok között több holttestet találnak, s a maradványok vizsgálata közben nem egy gyanús körülmény felmerül. Például a tűz fellobbanása előtt miért lőtték agyon az egyik áldozatot, egy hetvenéves hölgyet? Egyáltalán, kié a ház? Miért nem elérhető a tulajdonosa?Megindul a nyomozás, s nem sokra rá előkerül egy iszonyatosan megcsonkított fiatal nő holtteste is.Tempe megszállottan dolgozik - bizonyos nyomok rituális gyilkosságra utalnak.Egyetemista lányok tűnnek el nyomtalanul, akiknek az ismerősei nem hajlandók segíteni a rendőröknek. Miért olyan riadtak, és ki félemlítette meg őket?A szálak Dél-Karolinába vezetnek, ahol hasonló esetek történtek. A szövevényes bűntény felderítése során Tempe is nemegyszer veszélybe kerül, ráadásul kissé kelekótya húga miatt is aggódnia kell, aki váratlanul megjelenik nála...","FriendlyUrl":"Csont-es-bor","ImageUrl":"PG-Csont-es-bor-15315.jpg","IsCheckedByAdmin":false,"PublisherName":"Ulpius-ház Könyvkiadó","RatingPoints":0,"SubTitle":"","SumOfRatings":0,"Title":"Csont és bőr"}}],"TransactionType":0,"UserOrder":{"CustomerAddress":"Magyarország, 4164, Bakonszeg, Soó Rezső utca 84","CustomerAddressId":287,"CustomerFeedbackedSuccessful":null,"CustomerFriendlyUrl":null,"CustomerName":null,"CustomersFeePercent":1,"Date":"\/Date(1426417138721+0100)\/","ID":1232,"Status":1,"SumBookPrice":3044,"VendorAddress":null,"VendorAddressId":null,"VendorFeedbackedSuccessful":null,"VendorFriendlyUrl":"Markucio","VendorName":"Markucio","VendorsFeePercent":0}},{"ExchangeProducts":[],"Products":[{"Product":{"Description":"Néhány lapja hiányzik, de egyékbént jó állapotban van","HowMany":1,"ID":311,"ImageUrl":"P-A-masik-ferfi-992045.jpg","IsDownloadable":false,"PriceString":"2 574 Ft","ProductInOrderId":1287,"UserFriendlyUrl":"Loga","UserName":"Loga"},"ProductGroup":{"AuthorNames":"Ross Macdonald","CategoryFriendlyUrl":null,"CategoryFullPath":null,"Description":"\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.","FriendlyUrl":"A-masik-ferfi","ImageUrl":"PG-A-masik-ferfi-831726.jpg","IsCheckedByAdmin":false,"PublisherName":"Európa Könyvkiadó","RatingPoints":0,"SubTitle":"","SumOfRatings":0,"Title":"A másik férfi"}}],"TransactionType":0,"UserOrder":{"CustomerAddress":"Magyarország, 4164, Bakonszeg, Soó Rezső utca 84","CustomerAddressId":287,"CustomerFeedbackedSuccessful":null,"CustomerFriendlyUrl":null,"CustomerName":null,"CustomersFeePercent":1,"Date":"\/Date(1426417105362+0100)\/","ID":1230,"Status":1,"SumBookPrice":2574,"VendorAddress":null,"VendorAddressId":null,"VendorFeedbackedSuccessful":null,"VendorFriendlyUrl":"Loga","VendorName":"Loga","VendorsFeePercent":0}}]
+[
+  {
+    "ExchangeProducts": [],
+    "Products": [
+      {
+        "Product": {
+          "Description": "A könyv egyben van gerincénél kisebb sérülés , hiánytalan szakadás mentes lapok , viszont elszíneződések vannak. ",
+          "HowMany": 1,
+          "ID": 361,
+          "ImageUrl": null,
+          "IsDownloadable": true,
+          "PriceString": "3 044 Ft",
+          "ProductInOrderId": 1295,
+          "UserFriendlyUrl": "Markucio",
+          "UserName": "Markucio"
+        },
+        "ProductGroup": {
+          "AuthorNames": "Kathy Reichs",
+          "CategoryFriendlyUrl": null,
+          "CategoryFullPath": null,
+          "Description": "A kissé tüskés modorú Dr. Brennan törvényszéki patológus éppen egy XIX. században elhunyt apáca földi maradványainak kihantolását végzi Montrealban, amikor tűzesethez riasztják. Porig égett egy családi ház. A szakértők gázrobbanásra gyanakodnak.A romok között több holttestet találnak, s a maradványok vizsgálata közben nem egy gyanús körülmény felmerül. Például a tűz fellobbanása előtt miért lőtték agyon az egyik áldozatot, egy hetvenéves hölgyet? Egyáltalán, kié a ház? Miért nem elérhető a tulajdonosa?Megindul a nyomozás, s nem sokra rá előkerül egy iszonyatosan megcsonkított fiatal nő holtteste is.Tempe megszállottan dolgozik - bizonyos nyomok rituális gyilkosságra utalnak.Egyetemista lányok tűnnek el nyomtalanul, akiknek az ismerősei nem hajlandók segíteni a rendőröknek. Miért olyan riadtak, és ki félemlítette meg őket?A szálak Dél-Karolinába vezetnek, ahol hasonló esetek történtek. A szövevényes bűntény felderítése során Tempe is nemegyszer veszélybe kerül, ráadásul kissé kelekótya húga miatt is aggódnia kell, aki váratlanul megjelenik nála...",
+          "FriendlyUrl": "Csont-es-bor",
+          "ImageUrl": "PG-Csont-es-bor-15315.jpg",
+          "IsCheckedByAdmin": false,
+          "PublisherName": "Ulpius-ház Könyvkiadó",
+          "RatingPoints": 0,
+          "SubTitle": "",
+          "SumOfRatings": 0,
+          "Title": "Csont és bőr"
+        }
+      },
+      {
+        "Product": {
+          "Description": "Néhány lapja hiányzik, de egyékbént jó állapotban van",
+          "HowMany": 1,
+          "ID": 299,
+          "ImageUrl": "P-A-masik-ferfi-504486.jpg",
+          "IsDownloadable": true,
+          "PriceString": "2 964 Ft",
+          "ProductInOrderId": 1296,
+          "UserFriendlyUrl": "Markucio",
+          "UserName": "Markucio"
+        },
+        "ProductGroup": {
+          "AuthorNames": "Ross Macdonald",
+          "CategoryFriendlyUrl": null,
+          "CategoryFullPath": null,
+          "Description": "\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.",
+          "FriendlyUrl": "A-masik-ferfi",
+          "ImageUrl": "PG-A-masik-ferfi-831726.jpg",
+          "IsCheckedByAdmin": false,
+          "PublisherName": "Európa Könyvkiadó",
+          "RatingPoints": 0,
+          "SubTitle": "",
+          "SumOfRatings": 0,
+          "Title": "A másik férfi"
+        }
+      }
+    ],
+    "TransactionType": 0,
+    "UserOrder": {
+      "CustomerAddress": "Magyarország, 4164, Bakonszeg, Soó Rezső utca 84",
+      "CustomerAddressId": 287,
+      "CustomerFeedbackedSuccessful": null,
+      "CustomerFriendlyUrl": null,
+      "CustomerName": null,
+      "CustomersFeePercent": 1,
+      "Date": "/Date(1426417138721+0100)/",
+      "ID": 1232,
+      "Status": 1,
+      "SumBookPrice": 6008,
+      "VendorAddress": null,
+      "VendorAddressId": null,
+      "VendorFeedbackedSuccessful": null,
+      "VendorFriendlyUrl": "Markucio",
+      "VendorName": "Markucio",
+      "VendorsFeePercent": 0
+    }
+  },
+  {
+    "ExchangeProducts": [],
+    "Products": [
+      {
+        "Product": {
+          "Description": "Néhány lapja hiányzik, de egyékbént jó állapotban van",
+          "HowMany": 1,
+          "ID": 311,
+          "ImageUrl": "P-A-masik-ferfi-992045.jpg",
+          "IsDownloadable": false,
+          "PriceString": "2 574 Ft",
+          "ProductInOrderId": 1287,
+          "UserFriendlyUrl": "Loga",
+          "UserName": "Loga"
+        },
+        "ProductGroup": {
+          "AuthorNames": "Ross Macdonald",
+          "CategoryFriendlyUrl": null,
+          "CategoryFullPath": null,
+          "Description": "\"A sétány macskakövet utánzó burkolata sima és hézagmentes volt, mégis úgy éreztem, mintha térdig ürgelyukakban járnék.\"Egy végsőkig elkeseredett fiatalember arra kéri Lew Archert, a magánnyomozót, hogy segítsen előkeríteni eltűnt feleségét - akivel csak pár napja házasodott össze. Gyanúsított ugyan hamar akad egy kétes múltú csavargó személyében, de az is korán kiderül, hogy nem történt gyilkosság - egyelőre. Dolly, a feleség újra felbukkan a közeli egyetemen, ahová nemrég iratkozott át egy távolabbi intézményből. A labilis személyiségű, múltját titkoló lány, úgy látszik, folyton menekül valami elől - s talán nem is sejti, hogy a legrosszabb helyen kötött ki: az egyetem egyik, szintén messziről érkezett fiatal tanárnője hamarosan bestiális merényletnek esik áldozatul, a kezdetben oly egyszerű ügyet nyomozó Archer pedig egy betegesen zárt közösség bűnfertőjének kellős közepébe csöppen...Ross Macdonald (1915-1983) Agatha Christie-hez és Raymond Chandlerhez hasonlóan elnyerte az Amerikai Krimiírók Szövetségének Nagymester-díját.",
+          "FriendlyUrl": "A-masik-ferfi",
+          "ImageUrl": "PG-A-masik-ferfi-831726.jpg",
+          "IsCheckedByAdmin": false,
+          "PublisherName": "Európa Könyvkiadó",
+          "RatingPoints": 0,
+          "SubTitle": "",
+          "SumOfRatings": 0,
+          "Title": "A másik férfi"
+        }
+      }
+    ],
+    "TransactionType": 0,
+    "UserOrder": {
+      "CustomerAddress": "Magyarország, 4164, Bakonszeg, Soó Rezső utca 84",
+      "CustomerAddressId": 287,
+      "CustomerFeedbackedSuccessful": null,
+      "CustomerFriendlyUrl": null,
+      "CustomerName": null,
+      "CustomersFeePercent": 1,
+      "Date": "/Date(1426417105362+0100)/",
+      "ID": 1230,
+      "Status": 1,
+      "SumBookPrice": 2574,
+      "VendorAddress": null,
+      "VendorAddressId": null,
+      "VendorFeedbackedSuccessful": null,
+      "VendorFriendlyUrl": "Loga",
+      "VendorName": "Loga",
+      "VendorsFeePercent": 0
+    }
+  }
+]

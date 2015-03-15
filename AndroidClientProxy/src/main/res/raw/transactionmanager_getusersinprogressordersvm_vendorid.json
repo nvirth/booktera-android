@@ -1,1 +1,81 @@
-[{"ExchangeProducts":[{"Product":{"Description":"A könyv egyben van gerincénél kisebb sérülés , hiánytalan szakadás mentes lapok , viszont elszíneződések vannak. ","HowMany":1,"ID":361,"ImageUrl":null,"IsDownloadable":true,"PriceString":"3 044 Ft","ProductInOrderId":1294,"UserFriendlyUrl":"Markucio","UserName":"Markucio"},"ProductGroup":{"AuthorNames":"Kathy Reichs","CategoryFriendlyUrl":null,"CategoryFullPath":null,"Description":"A kissé tüskés modorú Dr. Brennan törvényszéki patológus éppen egy XIX. században elhunyt apáca földi maradványainak kihantolását végzi Montrealban, amikor tűzesethez riasztják. Porig égett egy családi ház. A szakértők gázrobbanásra gyanakodnak.A romok között több holttestet találnak, s a maradványok vizsgálata közben nem egy gyanús körülmény felmerül. Például a tűz fellobbanása előtt miért lőtték agyon az egyik áldozatot, egy hetvenéves hölgyet? Egyáltalán, kié a ház? Miért nem elérhető a tulajdonosa?Megindul a nyomozás, s nem sokra rá előkerül egy iszonyatosan megcsonkított fiatal nő holtteste is.Tempe megszállottan dolgozik - bizonyos nyomok rituális gyilkosságra utalnak.Egyetemista lányok tűnnek el nyomtalanul, akiknek az ismerősei nem hajlandók segíteni a rendőröknek. Miért olyan riadtak, és ki félemlítette meg őket?A szálak Dél-Karolinába vezetnek, ahol hasonló esetek történtek. A szövevényes bűntény felderítése során Tempe is nemegyszer veszélybe kerül, ráadásul kissé kelekótya húga miatt is aggódnia kell, aki váratlanul megjelenik nála...","FriendlyUrl":"Csont-es-bor","ImageUrl":"PG-Csont-es-bor-15315.jpg","IsCheckedByAdmin":false,"PublisherName":"Ulpius-ház Könyvkiadó","RatingPoints":0,"SubTitle":"","SumOfRatings":0,"Title":"Csont és bőr"}}],"Products":[{"Product":{"Description":"asd","HowMany":1,"ID":396,"ImageUrl":null,"IsDownloadable":true,"PriceString":"3 400 Ft","ProductInOrderId":1259,"UserFriendlyUrl":"ZomiDudu","UserName":"ZomiDudu"},"ProductGroup":{"AuthorNames":"Tom Bryan","CategoryFriendlyUrl":null,"CategoryFullPath":null,"Description":"Tom Bryan közvetlen hangon megszólaló kortárs skót költő. A kötet sokszínű, multikulturális kaland. Akár New Yorkban, vagy a kanadai indiánok között járunk, akár Spanyolországban, vagy a Skót Felvidék mitikusan suhogó fái alatt sétálunk - a versek az emberihez való viszonyt térképezik föl.","FriendlyUrl":"A-csorgokigyo-utja","ImageUrl":"PG-A-csorgokigyo-utja-967968.jpg","IsCheckedByAdmin":false,"PublisherName":"Magyar Napló Kiadó","RatingPoints":0,"SubTitle":"","SumOfRatings":0,"Title":"A csörgőkígyó útja"}}],"TransactionType":3,"UserOrder":{"CustomerAddress":null,"CustomerAddressId":null,"CustomerFeedbackedSuccessful":null,"CustomerFriendlyUrl":"Markucio","CustomerName":"Markucio","CustomersFeePercent":0,"Date":"\/Date(1426349449301+0100)\/","ID":1221,"Status":10,"SumBookPrice":3400,"VendorAddress":"Magyarország, 4164, Bakonszeg, Soó Rezső utca 84","VendorAddressId":287,"VendorFeedbackedSuccessful":null,"VendorFriendlyUrl":null,"VendorName":null,"VendorsFeePercent":1}}]
+[
+  {
+    "ExchangeProducts": [
+      {
+        "Product": {
+          "Description": "A könyv egyben van gerincénél kisebb sérülés , hiánytalan szakadás mentes lapok , viszont elszíneződések vannak. ",
+          "HowMany": 1,
+          "ID": 361,
+          "ImageUrl": null,
+          "IsDownloadable": true,
+          "PriceString": "3 044 Ft",
+          "ProductInOrderId": 1294,
+          "UserFriendlyUrl": "Markucio",
+          "UserName": "Markucio"
+        },
+        "ProductGroup": {
+          "AuthorNames": "Kathy Reichs",
+          "CategoryFriendlyUrl": null,
+          "CategoryFullPath": null,
+          "Description": "A kissé tüskés modorú Dr. Brennan törvényszéki patológus éppen egy XIX. században elhunyt apáca földi maradványainak kihantolását végzi Montrealban, amikor tűzesethez riasztják. Porig égett egy családi ház. A szakértők gázrobbanásra gyanakodnak.A romok között több holttestet találnak, s a maradványok vizsgálata közben nem egy gyanús körülmény felmerül. Például a tűz fellobbanása előtt miért lőtték agyon az egyik áldozatot, egy hetvenéves hölgyet? Egyáltalán, kié a ház? Miért nem elérhető a tulajdonosa?Megindul a nyomozás, s nem sokra rá előkerül egy iszonyatosan megcsonkított fiatal nő holtteste is.Tempe megszállottan dolgozik - bizonyos nyomok rituális gyilkosságra utalnak.Egyetemista lányok tűnnek el nyomtalanul, akiknek az ismerősei nem hajlandók segíteni a rendőröknek. Miért olyan riadtak, és ki félemlítette meg őket?A szálak Dél-Karolinába vezetnek, ahol hasonló esetek történtek. A szövevényes bűntény felderítése során Tempe is nemegyszer veszélybe kerül, ráadásul kissé kelekótya húga miatt is aggódnia kell, aki váratlanul megjelenik nála...",
+          "FriendlyUrl": "Csont-es-bor",
+          "ImageUrl": "PG-Csont-es-bor-15315.jpg",
+          "IsCheckedByAdmin": false,
+          "PublisherName": "Ulpius-ház Könyvkiadó",
+          "RatingPoints": 0,
+          "SubTitle": "",
+          "SumOfRatings": 0,
+          "Title": "Csont és bőr"
+        }
+      }
+    ],
+    "Products": [
+      {
+        "Product": {
+          "Description": "asd",
+          "HowMany": 1,
+          "ID": 396,
+          "ImageUrl": null,
+          "IsDownloadable": true,
+          "PriceString": "3 400 Ft",
+          "ProductInOrderId": 1259,
+          "UserFriendlyUrl": "ZomiDudu",
+          "UserName": "ZomiDudu"
+        },
+        "ProductGroup": {
+          "AuthorNames": "Tom Bryan",
+          "CategoryFriendlyUrl": null,
+          "CategoryFullPath": null,
+          "Description": "Tom Bryan közvetlen hangon megszólaló kortárs skót költő. A kötet sokszínű, multikulturális kaland. Akár New Yorkban, vagy a kanadai indiánok között járunk, akár Spanyolországban, vagy a Skót Felvidék mitikusan suhogó fái alatt sétálunk - a versek az emberihez való viszonyt térképezik föl.",
+          "FriendlyUrl": "A-csorgokigyo-utja",
+          "ImageUrl": "PG-A-csorgokigyo-utja-967968.jpg",
+          "IsCheckedByAdmin": false,
+          "PublisherName": "Magyar Napló Kiadó",
+          "RatingPoints": 0,
+          "SubTitle": "",
+          "SumOfRatings": 0,
+          "Title": "A csörgőkígyó útja"
+        }
+      }
+    ],
+    "TransactionType": 3,
+    "UserOrder": {
+      "CustomerAddress": null,
+      "CustomerAddressId": null,
+      "CustomerFeedbackedSuccessful": null,
+      "CustomerFriendlyUrl": "Markucio",
+      "CustomerName": "Markucio",
+      "CustomersFeePercent": 0,
+      "Date": "/Date(1426349449301+0100)/",
+      "ID": 1221,
+      "Status": 10,
+      "SumBookPrice": 3400,
+      "VendorAddress": "Magyarország, 4164, Bakonszeg, Soó Rezső utca 84",
+      "VendorAddressId": 287,
+      "VendorFeedbackedSuccessful": null,
+      "VendorFriendlyUrl": null,
+      "VendorName": null,
+      "VendorsFeePercent": 1
+    }
+  }
+]
