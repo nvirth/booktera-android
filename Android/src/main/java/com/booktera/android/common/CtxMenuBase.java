@@ -71,10 +71,16 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                    if (httpResponse == null)
+                    {
+                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                    }
+                    else
+                    {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);
                     }
-                )
+                })
             ));
     }
     protected void handleCtxClick_core(Integer intValue, String confirmMsg, String successMsg, String errorMsg, Action_3<Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
@@ -87,10 +93,16 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                    if (httpResponse == null)
+                    {
+                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                    }
+                    else
+                    {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);
                     }
-                )
+                })
             ));
     }
     protected void handleCtxClick_core(Integer intValue1, Integer intValue2, String confirmMsg, String successMsg, String errorMsg, Action_4<Integer, Integer, Action, Action_1<HttpResponse>> modifyOrderAction, Action refreshViewAfterSuccess)
@@ -104,10 +116,16 @@ public abstract class CtxMenuBase
                     refreshViewAfterSuccess.run();
                 }),
                 httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
+                    if (httpResponse == null)
+                    {
+                        Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                    }
+                    else
+                    {
                         String _title = r.getString(R.string.Error_);
                         Utils.alert(activity, _title, errorMsg);
                     }
-                )
+                })
             ));
     }
     private MenuItem.OnMenuItemClickListener alertConfirmThenRun(String confirmMsg, Action positiveClickAction)

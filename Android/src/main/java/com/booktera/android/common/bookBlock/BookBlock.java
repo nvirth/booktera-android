@@ -293,13 +293,17 @@ public class BookBlock extends CtxMenuBase
                         fill();
                     }),
                     httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
-                        String _errMsg;
-                        if (vm.getProduct().getIsDownloadable())
-                            _errMsg = r.getString(R.string.addToCart_failureMsg_electronicBook);
-                        else
-                            _errMsg = r.getString(R.string.addToCart_failureMsg_general);
+                        if (httpResponse == null)
+                        {
+                            Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                            return;
+                        }
 
                         String _title = r.getString(R.string.Error_);
+                        String _errMsg = vm.getProduct().getIsDownloadable()
+                            ? r.getString(R.string.addToCart_failureMsg_electronicBook)
+                            : r.getString(R.string.addToCart_failureMsg_general);
+
                         Utils.alert(activity, _title, _errMsg);
                     }));
 
@@ -322,13 +326,17 @@ public class BookBlock extends CtxMenuBase
                         fill();
                     }),
                     httpResponse /*failure*/ -> activity.runOnUiThread(() -> {
-                        String _errMsg;
-                        if (vm.getProduct().getIsDownloadable())
-                            _errMsg = r.getString(R.string.addToExchangeCart_failureMsg_electronicBook);
-                        else
-                            _errMsg = r.getString(R.string.addToExchangeCart_failureMsg_general);
+                        if (httpResponse == null)
+                        {
+                            Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                            return;
+                        }
 
                         String _title = r.getString(R.string.Error_);
+                        String _errMsg = vm.getProduct().getIsDownloadable()
+                            ? r.getString(R.string.addToExchangeCart_failureMsg_electronicBook)
+                            : r.getString(R.string.addToExchangeCart_failureMsg_general);
+
                         Utils.alert(activity, _title, _errMsg);
                     }));
 
@@ -462,7 +470,10 @@ public class BookBlock extends CtxMenuBase
                             refreshQuantity(newQuantity, !isExchange);
                         }),
                         httpResponse -> /*failure*/ activity.runOnUiThread(() -> {
-                            Utils.alert(activity, r.getString(R.string.Error_), r.getString(R.string.changeQuantity_errorMsg));
+                            if (httpResponse == null)
+                                Utils.showToast(r.getString(R.string.default_connection_error_msg));
+                            else
+                                Utils.alert(activity, r.getString(R.string.Error_), r.getString(R.string.changeQuantity_errorMsg));
                         })
                     );
                 }
@@ -484,7 +495,7 @@ public class BookBlock extends CtxMenuBase
          * Used in cart/exchange_cart
          *
          * @param refreshSummary If true, refreshes the UserOrder's summary.
-         * Set it true if the BookBlock is in cart
+         *                       Set it true if the BookBlock is in cart
          */
         private void refreshQuantity(int newQuantity, boolean refreshSummary)
         {
