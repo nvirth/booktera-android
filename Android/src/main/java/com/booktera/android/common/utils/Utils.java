@@ -223,35 +223,34 @@ public class Utils
     //endregion
 
     //region alert, prompt
-    //TODO use Activity instead of Context, because there have to be an activity context
-    public static void alert(Context context, String title, String message)
+    public static void alert(Activity activity, String title, String message)
     {
-        buildAlert(context, title, message, (dialog, which) -> {/*do nothing*/}, null, null)
+        buildAlert(activity, title, message, (dialog, which) -> {/*do nothing*/}, null, null)
             .show();
     }
-    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener neutralClick)
+    public static void alert(Activity activity, String title, String message, DialogInterface.OnClickListener neutralClick)
     {
         neutralClick = neutralClick == null
             ? (dialog, which) -> {/*do nothing*/}
             : neutralClick;
 
-        buildAlert(context, title, message, neutralClick, null, null)
+        buildAlert(activity, title, message, neutralClick, null, null)
             .show();
     }
-    public static void alert(Context context, String title, String message,
+    public static void alert(Activity activity, String title, String message,
                              DialogInterface.OnClickListener negativeClick, DialogInterface.OnClickListener positiveClick)
     {
-        buildAlert_with2btns(context, title, message, negativeClick, positiveClick)
+        buildAlert_with2btns(activity, title, message, negativeClick, positiveClick)
             .show();
     }
-    public static void prompt(Context context, String title, String message, boolean isNumeric,
+    public static void prompt(Activity activity, String title, String message, boolean isNumeric,
                               DialogInterface.OnClickListener negativeClick, Action_3<DialogInterface, Integer, String> positiveClick)
     {
-        EditText editText = new EditText(context);
+        EditText editText = new EditText(activity);
         editText.setInputType(isNumeric ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT);
 
         AlertDialog.Builder alertBuilder =
-            buildAlert_with2btns(context, title, message, negativeClick,
+            buildAlert_with2btns(activity, title, message, negativeClick,
                 (dialog, which) -> /*positiveClick*/{
                     positiveClick.run(dialog, which, editText.getText().toString());
                 }
@@ -261,7 +260,7 @@ public class Utils
         alertBuilder.show();
     }
     private static AlertDialog.Builder buildAlert_with2btns(
-        Context context, String title, String message,
+        Activity activity, String title, String message,
         DialogInterface.OnClickListener negativeClick, DialogInterface.OnClickListener positiveClick
     )
     {
@@ -272,16 +271,16 @@ public class Utils
             ? (dialog, which) -> {/*do nothing*/}
             : positiveClick;
 
-        return buildAlert(context, title, message, null, negativeClick, positiveClick);
+        return buildAlert(activity, title, message, null, negativeClick, positiveClick);
     }
     private static AlertDialog.Builder buildAlert(
-        Context context, String title, String message,
+        Activity activity, String title, String message,
         DialogInterface.OnClickListener neutralClick,
         DialogInterface.OnClickListener negativeClick,
         DialogInterface.OnClickListener positiveClick
     )
     {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)
             .setIcon(android.R.drawable.ic_dialog_alert);
