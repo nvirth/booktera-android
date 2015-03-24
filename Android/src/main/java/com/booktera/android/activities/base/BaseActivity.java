@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import com.booktera.android.common.devMode.DevMode;
 import com.booktera.android.common.utils.Utils;
 import com.booktera.androidclientproxy.lib.utils.Action_1;
 
@@ -12,6 +13,13 @@ import com.booktera.androidclientproxy.lib.utils.Action_1;
  */
 abstract class BaseActivity extends FragmentActivity
 {
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        DevMode.Instance.hideTitleBar(this);
+    }
+
     protected final String tag = ((Object) this).getClass().toString();
     protected static final int dummyRequestCode = 1;
 

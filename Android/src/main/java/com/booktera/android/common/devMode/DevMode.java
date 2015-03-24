@@ -34,6 +34,7 @@ public abstract class DevMode implements IDevMode
         public static boolean MockLogin = false;
         public static boolean FillLoginForm = false;
         public static boolean FillRegisterForm = false;
+        public static boolean HideTitleBar = false;
 
         // Enable DevMode flags here
         static
@@ -43,6 +44,7 @@ public abstract class DevMode implements IDevMode
                 MockLogin = true;
                 FillLoginForm = true;
                 FillRegisterForm = true;
+                HideTitleBar = true;
             }
         }
     }

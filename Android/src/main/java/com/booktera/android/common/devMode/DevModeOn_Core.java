@@ -1,6 +1,8 @@
 package com.booktera.android.common.devMode;
 
+import android.app.Activity;
 import android.util.Log;
+import android.view.WindowManager;
 import com.booktera.android.activities.LoginActivity;
 import com.booktera.android.activities.RegisterActivity;
 import com.booktera.android.common.UserData;
@@ -66,5 +68,13 @@ class DevModeOn_Core implements IDevMode
         vh.userName.setText(userName);
 
         vh.email.setText(userName + _emailEndingAtRegister);
+    }
+    @Override
+    public void hideTitleBar(Activity activity)
+    {
+        activity.getWindow().setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
     }
 }

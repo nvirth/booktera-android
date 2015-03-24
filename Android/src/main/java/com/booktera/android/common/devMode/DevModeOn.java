@@ -1,8 +1,8 @@
 package com.booktera.android.common.devMode;
 
+import android.app.Activity;
 import com.booktera.android.activities.LoginActivity;
 import com.booktera.android.activities.RegisterActivity;
-import com.booktera.android.common.Config;
 
 /**
  * This is a decorated version of {@link com.booktera.android.common.devMode.DevModeOn_Core}.
@@ -38,5 +38,11 @@ public class DevModeOn implements IDevMode
     {
         if (DevMode.IsEnabled.FillRegisterForm)
             _core.fillRegisterForm(vh);
+    }
+    @Override
+    public void hideTitleBar(Activity activity)
+    {
+        if (DevMode.IsEnabled.HideTitleBar)
+            _core.hideTitleBar(activity);
     }
 }
