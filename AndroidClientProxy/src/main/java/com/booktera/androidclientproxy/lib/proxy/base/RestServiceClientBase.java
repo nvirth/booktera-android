@@ -49,7 +49,7 @@ public abstract class RestServiceClientBase
     private static final String userAgent = System.getProperty("http.agent");
     private static final CookieStore cookieStore = new BasicCookieStore();
 
-    private static final String actualIp = "192.168.1.101";
+    private static final String actualIp = "192.168.1.100";
     protected final String baseAddress;
     protected String clientClassNameLower;
 
